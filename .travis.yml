@@ -27,7 +27,7 @@ android:
 install:
   # Update sdk tools to latest version and install/update components
   - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-26" # Latest platform required by SDK tools
+  - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL" # Latest platform required by SDK tools
   - echo yes | sdkmanager "extras;android;m2repository"
   - echo yes | sdkmanager "extras;google;m2repository"
 
@@ -37,7 +37,7 @@ before_install:
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-$ANDROID_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
