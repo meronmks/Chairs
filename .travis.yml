@@ -19,14 +19,13 @@ android:
     - android-$ANDROID_EMU_API_LEVEL
     - extra-android-support
 #    - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
-
 # こうしないとエミュレータ関連の記述が無いとエラーになる
 # なお本環境ではエミュレータを定義するとタイムアウトで死ぬので後で考える
 script:
   - ./gradlew build test
   - ./gradlew assembleDebug test
+after_success:
   - bash <(curl -s https://codecov.io/bash) # Codecovとの連携らしい
-
 #before_script:
 #  - echo no | android create avd --force -n test -t android-$ANDROID_EMU_API_LEVEL --abi google_apis/$ANDROID_ABI
 #  - emulator -avd test -no-window &
