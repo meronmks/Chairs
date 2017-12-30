@@ -7,10 +7,11 @@ import java.util.*
 
 /**
  * Created by meron on 2017/12/28.
- * AccessTokenを保存しておくモデルクラス
+ * Mastodonのアカウントを保存しておくモデルクラス
  */
-open class AccessToken(
+open class MastodonAccount(
         @PrimaryKey open var id : String = UUID.randomUUID().toString(),
-        @Required open var instanceName : String = "",
-        @Required open var accessToken : String = ""
+        open var instanceName : String = "",
+        open var userName : String = "",
+        open var accessToken : String = ""
 ) : RealmObject(){}
