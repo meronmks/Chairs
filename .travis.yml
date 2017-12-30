@@ -19,18 +19,6 @@ android:
     - extra-android-support
     - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
 
-install:
-  # Update sdk tools to latest version and install/update components
-  - echo yes | sdkmanager "tools"
-  - echo yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL" # Latest platform required by SDK tools
-  - echo yes | sdkmanager "extras;android;m2repository"
-  - echo yes | sdkmanager "extras;google;m2repository"
-
-before_install:
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-
 before_script:
   - echo no | android create avd --force -n test -t android-$ANDROID_EMU_API_LEVEL --abi google_apis/$ANDROID_ABI
   - emulator -avd test -no-window &
