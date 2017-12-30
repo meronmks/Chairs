@@ -20,6 +20,10 @@ android:
     - extra-android-support
 #    - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMU_API_LEVEL
 
+script:
+  - ./gradlew build test
+  - ./gardlew assembleDebug test
+
 #before_script:
 #  - echo no | android create avd --force -n test -t android-$ANDROID_EMU_API_LEVEL --abi google_apis/$ANDROID_ABI
 #  - emulator -avd test -no-window &
