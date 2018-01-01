@@ -21,8 +21,10 @@ android:
   - android-$ANDROID_EMU_API_LEVEL
   - extra-android-support
 script:
-  - ./gradlew build test
+  #- ./gradlew build test
+  - ./gradlew build jacocoTestReport assembleAndroidTest
   - ./gradlew assembleDebug test
+  - ./gradlew connectedCheck
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - ./gradlew uploadDeployGateDevelopDebug
