@@ -28,7 +28,7 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
-  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
+  - sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL #21まで
 licenses:
   - android-sdk-preview-license-.+
   - android-sdk-license-.+
