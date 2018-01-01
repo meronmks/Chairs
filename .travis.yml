@@ -24,7 +24,8 @@ script:
   - ./gradlew build test
   - ./gradlew assembleDebug test
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - secure: "NNkQuSwkhstUB8U+U1+dcEo7MWQwJNQgeO4nID24qLybHfG5EYMHUCdvXpL5atQ7r8j6wHXE0IV8O9gaL8XDGnZow0g1pRg/ZFSTR/gd6xEG+ReOsxMWAOvSZ7W498NRqVlBCr15dCnLopxdo7t05Q0iTzpFeJrfSRyhLCAYfqHqAnKGnp2IIL7eJk7xHWNG6tJimIk04OCGwRxrYXXFbAKub7IIs+4GdeviYysMtUKUg+CklrJa14tXcftixx8qUoTlb8DTtMp3KMYOgedIT8mX4SlaxbhMvg62TCzG+5IZME3JEMrLXJv/gjQs/hYuybywqFqIpuLuf+Iblvaq8HaQ7BsBTmkzozPPGK71G231jZ6T6sDQcFhn8yODckeglyBTXyW0jQOkmCcYvVQy/oL5iABTzfLz73XYoM9zrvxEm3ix0cpMVwP9yv375bgc7pGdjB2XmbaHLldOahqxVOJ0bC8YuwQPzpZTPpDJN6Csq80Jgsr+86gQf1avrvUIYwmf4U+VUgtjddlZrsO51m5f+Kc0qhUPtL/YLrbFXLrVqD+9mr/CSpauhht6LOw8EUnO4nvdt/SFxVJ8oBzyOnihhGEM7QLhFZ7p3wi3xYGEyyjUC1e/mNNZuprFbkaiuu+5cC+FOwdz8D4nG8ZYL4ocRBkubxbuqv6ynwg9y5k="
+  #- bash <(curl -s https://codecov.io/bash)
   - ./gradlew uploadDeployGateDevelopDebug
 notifications:
   slack:
