@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: "realm-android"
+
+apply plugin: 'deploygate'
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
@@ -22,6 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -35,4 +41,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j:1.6.0'
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j-rx:1.6.0'
+    compile 'com.deploygate:sdk:4.0.0'
+}
+
+deploygate {
+    userName = "$System.env.DEPLOYGATE_USER"
+    token = "$System.env.DEPLOYGATE_TOKEN"
 }
