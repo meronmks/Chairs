@@ -5,11 +5,8 @@ env:
   global:
   - ANDROID_API_LEVEL=26
   - ANDROID_BUILD_TOOLS_VERSION=26.0.3
-  - ANDROID_EMU_API_LEVEL=25
+  - ANDROID_TARGET=android-25
   - ANDROID_ABI=armeabi-v7a
-  - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
-  - ADB_INSTALL_TIMEOUT=20
-  - QEMU_AUDIO_DRV=none
   - DEPLOYGATE_USER=meronmks
   - secure: "XUYo9QZufYJ6k15D6OXRh2UDrlEfmijcvTqgj68dCtw5Dj4RWPgHqpzT8VaPaWlODWcGtwg/WK6wQ5S6Ip8iUguXS/uWMgrxlzUVi+ZCnFb9OQ3YFGQip7+jW8g6BPu7aPI+U3Z9SMja94v5HxE0TkXl7sy8Qnur7dnaWVPO3hkN52pYL/A1zvr26/2mx1JQt4RTgE/9lD/Abgf63QnyqphnOZ73iH2+ZFoj6wtEfiNfNCrfLQnaiXSKrBk5IJIHjP0GAHKAHEH5z/m4YQhE7ixrD+RijgxzArfGibl/sCLG2p2L0wno1sMz7TuqbG/pFePYjUxc3hYCamjGCnqvJtx7gw8o6hbq/aERWwMvoeEWnR6NETPd2SSb5+76SM0v+hRri+vdvoOsE4H9+v5mlIIWZmHtKDWXWzfM8V6tWmLSCxTkHTqHmcnmGWJyAgLZItPyoFUuDaaFVQWYo/LnQzfVXKR4ateCe9pG5uE/PkEJt8nb4lnYgFJ99jPeab4zPxfgoycFk+fuczbi9KxSngLh5Hdbo0Y5W/brFapiRCVoyjiuK8P2pjXrL3LA/L2KlndaDXeV800alO3UDxIv6+BnGDngxz4x5G7b/v/6cbiyHDhmhAIM1hsjy7GHUSPbC1ciMjNu52WgZDe5EpXNy9JpEICjCZ1L6szbJ+Or22s="
 android:
@@ -18,14 +15,17 @@ android:
   - platform-tools
   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
   - android-$ANDROID_API_LEVEL
-  - android-$ANDROID_EMU_API_LEVEL
-  - extra-android-support
+  - extra-android-m2repository
+  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 script:
-  - ./gradlew build test
-  - ./gradlew assembleDebug test
+  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
 after_success:
-  - secure: "NNkQuSwkhstUB8U+U1+dcEo7MWQwJNQgeO4nID24qLybHfG5EYMHUCdvXpL5atQ7r8j6wHXE0IV8O9gaL8XDGnZow0g1pRg/ZFSTR/gd6xEG+ReOsxMWAOvSZ7W498NRqVlBCr15dCnLopxdo7t05Q0iTzpFeJrfSRyhLCAYfqHqAnKGnp2IIL7eJk7xHWNG6tJimIk04OCGwRxrYXXFbAKub7IIs+4GdeviYysMtUKUg+CklrJa14tXcftixx8qUoTlb8DTtMp3KMYOgedIT8mX4SlaxbhMvg62TCzG+5IZME3JEMrLXJv/gjQs/hYuybywqFqIpuLuf+Iblvaq8HaQ7BsBTmkzozPPGK71G231jZ6T6sDQcFhn8yODckeglyBTXyW0jQOkmCcYvVQy/oL5iABTzfLz73XYoM9zrvxEm3ix0cpMVwP9yv375bgc7pGdjB2XmbaHLldOahqxVOJ0bC8YuwQPzpZTPpDJN6Csq80Jgsr+86gQf1avrvUIYwmf4U+VUgtjddlZrsO51m5f+Kc0qhUPtL/YLrbFXLrVqD+9mr/CSpauhht6LOw8EUnO4nvdt/SFxVJ8oBzyOnihhGEM7QLhFZ7p3wi3xYGEyyjUC1e/mNNZuprFbkaiuu+5cC+FOwdz8D4nG8ZYL4ocRBkubxbuqv6ynwg9y5k="
-  #- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
   - ./gradlew uploadDeployGateDevelopDebug
 notifications:
   slack:
