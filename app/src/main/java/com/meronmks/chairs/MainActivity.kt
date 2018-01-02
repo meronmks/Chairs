@@ -1,5 +1,6 @@
 package com.meronmks.chairs
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.meronmks.chairs.data.database.MastodonAccount
@@ -19,7 +20,9 @@ class MainActivity : AppCompatActivity() {
         mRealm = Realm.getInstance(realmConfig)
         val accessTokens = readAccessToken()
         if (accessTokens.count() == 0){
-
+            val intent = Intent(this, SetInstanceNameActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

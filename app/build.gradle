@@ -9,7 +9,6 @@ apply plugin: "realm-android"
 apply plugin: 'deploygate'
 
 apply plugin: 'jacoco-android'
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
@@ -49,4 +48,16 @@ dependencies {
 deploygate {
     userName = "$System.env.DEPLOYGATE_USER"
     token = "$System.env.DEPLOYGATE_TOKEN"
+    apks {
+        // 'uploadDeployGateDevelopDebug'タスクで使用されます
+        developDebug {
+            // set target file
+            sourceFile = file("${project.rootDir}/app/build/outputs/apk/app-develop-debug.apk")
+            // 便利情報: 現在のコミットの git のハッシュ を使うとトラブルシューティングを楽にできます
+            // ここでエラーになる場合はGitのパスが通ってない?
+            def hash = "git rev-parse --short HEAD".execute([], project.rootDir).in.text.trim()
+            // ビルドのメッセージとして設定します
+            message = "debug build ${hash}"
+        }
+    }
 }

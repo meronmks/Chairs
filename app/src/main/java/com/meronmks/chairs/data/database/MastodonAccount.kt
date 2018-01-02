@@ -13,5 +13,6 @@ open class MastodonAccount(
         @PrimaryKey open var id : String = UUID.randomUUID().toString(),
         open var instanceName : String = "",
         open var userName : String = "",
-        open var accessToken : String = ""
+        open var accessToken : String = "",
+        open var lastLogin : Date = Date()
 ) : RealmObject(){}
