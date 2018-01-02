@@ -51,6 +51,7 @@ deploygate {
     apks {
         // 'uploadDeployGateDevelopDebug'タスクで使用されます
         developDebug {
+            sourceFile = file("${project.rootDir}/app/build/outputs/apk/debug/app-debug.apk")
             // 便利情報: 現在のコミットの git のハッシュ を使うとトラブルシューティングを楽にできます
             // ここでエラーになる場合はGitのパスが通ってない?
             def hash = "git rev-parse --short HEAD".execute([], project.rootDir).in.text.trim()
