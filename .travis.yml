@@ -37,6 +37,15 @@ before_install:
   - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
   - chmod +x gradlew
+install:
+  # Update sdk tools to latest version and install/update components
+  - echo no | sdkmanager "tools"
+  - echo no | sdkmanager "platforms;android-$ANDROID_API" # Latest platform required by SDK tools
+  - echo no | sdkmanager "extras;android;m2repository"
+  - echo no | sdkmanager "extras;google;m2repository"
+  - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+
 script:
   - ./gradlew test
   - ./gradlew assembleDebug test

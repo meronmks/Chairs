@@ -59,3 +59,19 @@ deploygate {
         }
     }
 }
+
+task jacoco(type: JacocoReport, dependsOn: 'testDebug') {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = true
+    }
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.class',
+            ])
+    sourceDirectories = files('src/main/java')
+    executionData = files('build/jacoco/testDebug.exec')
+}
