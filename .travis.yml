@@ -47,16 +47,16 @@ install:
   - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
 script:
-  - ./gradlew :app:assembleDebug :app:test
-  - ./gradlew :app:build :app:jacocoTestReport :app:assembleAndroidTest
+  - ./gradlew assembleDebug test
+  - ./gradlew testDebugUnitTest
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
-  - ./gradlew :app:connectedCheck
+  - ./gradlew connectedCheck
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - ./gradlew :app:uploadDeployGateDevelopDebug
+  - ./gradlew uploadDeployGateDevelopDebug
 notifications:
   slack:
     secure: mzQNR8KamIy41sfrrdeCP2XcA5+jngPdpeJYyC8KSoyBdpLGNJg4vp5fYkLKVAr9AJU9N1vi/tmaEnVhVuvEZlWd8ce46rXYoh8IH5ODgCvFn9KqePBpfq9cPaoJRsmWzaK+oqyHvz19hPHSGuUW5+Op+Mglxcod5t0kJH+nrmpnRepu6Az9h+P1M2dQYi94Ma7aDXHEFROssPqUk299efcWT/DSp6PpAokREJap1MW862Ay8YdxQZGX/tnlihtfapHB+NYnCorCvyiMrSveqrG4r6/7WxyD41VG1gmxurDNi0xxMnPyNnbOO8nXYTddJG5dlsuL45bIM5BHXIBWSJm6SyVysKU0A3raOzEYfBYrPg683g3Sc8K/88UtRmCAQZmDvtnBseZMcVYqOzOsKPYD/JeFYjiIH1R4FtghSFjdbmnhZk3iNgRuzlnjgEmu2cF93VA7qYhq/RAzKr1sZWj5H6l9ieG2yij50MawQ2HT3Ki3Y/0BCCshHdrdXHNICavcwcU0bHZ0lJ2MG4wmaxJMn45R23PQ7mrrBkrbE9uO0wlJYu9Z6iF40iR+i5rE2emC8HJw6PvKJ4Qae+qPdsFt9d/W8aOqx4PvfO8/pG7FsZO6wrJJLJcs2GqDShgT5gtlYeMEJ0d0bkOyM286IhBN0pDtrrkL6hQ7TNvTexI=

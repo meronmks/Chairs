@@ -8,7 +8,7 @@ apply plugin: "realm-android"
 
 apply plugin: 'deploygate'
 
-apply plugin: 'jacoco-android'
+apply plugin: 'jacoco'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
@@ -53,7 +53,7 @@ deploygate {
         developDebug {
             sourceFile = file("${project.rootDir}/app/build/outputs/apk/debug/app-debug.apk")
             // 便利情報: 現在のコミットの git のハッシュ を使うとトラブルシューティングを楽にできます
-            // ここでエラーになる場合はGitのパスが通ってない?
+            // ここでエラーになる場合はGitのパスが通ってない
             def hash = "git rev-parse --short HEAD".execute([], project.rootDir).in.text.trim()
             // ビルドのメッセージとして設定します
             message = "debug build ${hash}"
@@ -61,18 +61,27 @@ deploygate {
     }
 }
 
-task jacoco(type: JacocoReport, dependsOn: 'testDebug') {
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
+
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
     reports {
         xml.enabled = true
         html.enabled = true
-        csv.enabled = true
     }
-    classDirectories = fileTree(
-            dir: './build/intermediates/classes/debug',
-            excludes: ['**/R.class',
-                       '**/R$*.class',
-                       '**/BuildConfig.class',
-            ])
-    sourceDirectories = files('src/main/java')
-    executionData = files('build/jacoco/testDebug.exec')
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/androidTest/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree], [kotlinDebugTree])
+    executionData = fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ])
 }
