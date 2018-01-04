@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".OAuth.SetInstanceNameActivity" />
         <activity android:name=".OAuth.LoginActivity" />
+        <activity android:name=".ViewPages.HomeViewPage"></activity>
     </application>
 
 </manifest>
