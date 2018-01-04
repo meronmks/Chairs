@@ -4,35 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.meronmks.chairs.SetInstanceNameActivity">
-
-    <EditText
-        android:id="@+id/instanceNameEditText"
+    tools:context="com.meronmks.chairs.OAuth.SetInstanceNameActivity">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/instanceNameEditTextLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="接続先インスタンス"
-        android:inputType="textPersonName"
-        android:text="mstdn.jp"
+        android:layout_margin="16dp"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <EditText
+            android:id="@+id/instanceNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="接続先インスタンス"
+            android:inputType="textPersonName"
+            android:text="mstdn.jp" />
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/addInstanceButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:onClick="addInstance"
         android:text="Add Instance"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instanceNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/instanceNameEditTextLayout" />
 </android.support.constraint.ConstraintLayout>

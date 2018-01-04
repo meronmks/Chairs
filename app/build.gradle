@@ -43,6 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile "org.mockito:mockito-android:2.13.0"
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j:1.6.0'
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j-rx:1.6.0'
     compile 'com.deploygate:sdk:4.0.0'
@@ -59,7 +60,7 @@ deploygate {
             sourceFile = file("${project.rootDir}/app/build/outputs/apk/debug/app-debug.apk")
             // 便利情報: 現在のコミットの git のハッシュ を使うとトラブルシューティングを楽にできます
             // ここでエラーになる場合はGitのパスが通ってない
-            def hash = "git rev-parse --short HEAD".execute([], project.rootDir).in.text.trim()
+            def hash = "git log -1 --oneline".execute([], project.rootDir).in.text.trim()
             // ビルドのメッセージとして設定します
             message = "debug build ${hash}"
         }

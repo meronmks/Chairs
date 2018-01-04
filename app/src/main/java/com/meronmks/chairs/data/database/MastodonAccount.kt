@@ -15,4 +15,4 @@ open class MastodonAccount(
         open var userName : String = "",
         open var accessToken : String = "",
         open var lastLogin : Date = Date()
-) : RealmObject(){}
+) : RealmObject()

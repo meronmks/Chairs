@@ -1,8 +1,9 @@
-package com.meronmks.chairs
+package com.meronmks.chairs.initialize
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.meronmks.chairs.OAuth.SetInstanceNameActivity
 import com.meronmks.chairs.data.database.MastodonAccount
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SetInstanceNameActivity::class.java)
             startActivity(intent)
             finish()
+        }else{
+            
         }
     }
 

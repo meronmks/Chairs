@@ -1,41 +1,31 @@
-package com.meronmks.chairs
+package com.meronmks.chairs.Tools
 
-import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
-import android.view.View
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.api.*
+import com.sys1yagi.mastodon4j.api.Scope
+import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
+import com.sys1yagi.mastodon4j.api.method.Accounts
 import com.sys1yagi.mastodon4j.api.method.Apps
-import kotlinx.android.synthetic.main.activity_set_instance_name.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
 import okhttp3.OkHttpClient
 
-class SetInstanceNameActivity : AppCompatActivity() {
+/**
+ * Created by meron on 2018/01/04.
+ * Mastodonへログインする
+ */
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_instance_name)
-    }
-
-    fun addInstance(view: View) = launch(UI){
-        val appRegistration = registerApp(instanceNameEditText.text.toString()).await()
-        OAuthLogin(instanceNameEditText.text.toString(), appRegistration)
-    }
+class MastodonLoginTool(private val instanceName: String){
 
     /**
      * アプリケーション登録
      */
-    private fun registerApp(instanceName : String): Deferred<AppRegistration> = async(CommonPool){
+    fun registerAppAsync(): Deferred<AppRegistration> = async(CommonPool){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return@async apps.createApp(
@@ -49,14 +39,20 @@ class SetInstanceNameActivity : AppCompatActivity() {
     /**
      * OAuth認証
      */
-    private fun OAuthLogin(instanceName: String, appRegistration: AppRegistration) {
+    fun oAuthAsync(clientId : String) :Deferred<Uri> = async(CommonPool){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
-        val clientId = appRegistration.clientId
         val apps = Apps(client)
 
         val urlString = apps.getOAuthUrl(clientId, Scope(Scope.Name.ALL))
-        val url = Uri.parse(urlString)
-        val intent = Intent(Intent.ACTION_VIEW, url)
-        startActivity(intent)
+        return@async Uri.parse(urlString)
+    }
+
+    /**
+     * Login処理
+     */
+    fun loginAsync(clientId: String, clientSecret : String, authCode : String) : Deferred<AccessToken> = async(CommonPool){
+        val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
+        val apps = Apps(client)
+        return@async apps.getAccessToken(clientId, clientSecret, code = authCode).execute()
     }
 }
