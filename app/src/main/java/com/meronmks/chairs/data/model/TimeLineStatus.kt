@@ -19,13 +19,13 @@ class TimeLineStatus(private val status : Status){
     var isFavourited: Boolean = status.isFavourited
 
     //トゥートのお気に入り数
-    fun favouritedCount() = (status.favouritesCount + offsetMap.getValue(isFavourited)).takeIf { it > 0 }?.toString() ?: ""
+    fun favouritedCount() = (status.favouritesCount + offsetMap.getValue(isFavourited)).takeIf { it > 0 } ?: 0
 
     //トゥートがブーストされているかどうか
     var isReblogged : Boolean = status.isReblogged
 
     //トゥートのブースト数
-    fun rebloggedCount() = (status.reblogsCount + offsetMap.getValue(isReblogged)).takeIf { it > 0 }?.toString() ?: ""
+    fun rebloggedCount() = (status.reblogsCount + offsetMap.getValue(isReblogged)).takeIf { it > 0 } ?: 0
 
     //トゥートがブーストである場合にはブースト元のトゥートを表す
     val reblog: TimeLineStatus? = status.reblog?.let {
