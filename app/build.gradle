@@ -34,6 +34,7 @@ android {
     }
 }
 
+def powerMockVersion = '1.6.3'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -44,6 +45,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testCompile "org.mockito:mockito-core:2.13.0"
+    testCompile "org.robolectric:robolectric:3.4.2"
+    testCompile "org.powermock:powermock-module-junit4:${powerMockVersion}"
+    testCompile "org.powermock:powermock-module-junit4-rule:${powerMockVersion}"
+    testCompile("org.powermock:powermock-api-mockito:${powerMockVersion}") {
+        // to exclude wrong version of hamcrest-core. use mockito-core instead.
+        exclude module: 'mockito-all'
+    }
+    testCompile "org.powermock:powermock-classloading-xstream:${powerMockVersion}"
     androidTestCompile "org.mockito:mockito-android:2.13.0"
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j:1.6.0'
     compile 'com.github.sys1yagi.mastodon4j:mastodon4j-rx:1.6.0'

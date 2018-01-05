@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.meronmks.chairs.OAuth.SetInstanceNameActivity
+import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.data.database.MastodonAccount
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -25,7 +26,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }else{
-            
+            val intent = Intent(this, HomeViewPage::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
