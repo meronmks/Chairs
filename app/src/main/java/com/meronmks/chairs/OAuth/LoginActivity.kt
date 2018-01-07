@@ -1,5 +1,6 @@
 package com.meronmks.chairs.OAuth
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -27,12 +28,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var appRegistration : AppRegistration
     private lateinit var accessToken : String
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         mastodonLogin = MastodonLoginTool(intent.getStringExtra("instanceName"))
-
-        //テキストの変更監視
+        step1TextView.text = "${intent.getStringExtra("instanceName")}${getString(R.string.step1Text)}"
         authCodeEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?)  {
                 if(authCodeEditText.text.isNotEmpty()) {
