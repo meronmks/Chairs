@@ -14,24 +14,14 @@ class HomeFragmentPagerAdapter(fm : FragmentManager) : FragmentPagerAdapter(fm) 
     private val PAGE_COUNT = 4
     private val tabTitles = arrayOf("Tab1", "Tab2", "Tab3", "Tab4")
 
-    override fun getItem(position: Int): Fragment {
+    override fun getItem(position: Int): Fragment? {
         when(position){
-            0 -> {
-                return HomeFragment()
-            }
-            1 -> {
-                return HomeFragment()
-            }
-            2 -> {
-                return HomeFragment()
-            }
-            3 -> {
-                return HomeFragment()
-            }
-            else -> {
-                return HomeFragment()
-            }
+            0 -> return HomeFragment()
+            1 -> return HomeFragment()
+            2 -> return HomeFragment()
+            3 -> return HomeFragment()
         }
+        return null
     }
 
     override fun getCount(): Int {
