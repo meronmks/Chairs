@@ -13,5 +13,10 @@ class HomeViewPage : AppCompatActivity() {
         setContentView(R.layout.activity_home_view_page)
         homeViewPager.adapter = HomeFragmentPagerAdapter(supportFragmentManager)
         homeTabs.setupWithViewPager(homeViewPager)
+        homeTabs.getTabAt(0)?.setIcon(R.drawable.ic_home_black_24dp)
+        homeTabs.getTabAt(1)?.setIcon(R.drawable.ic_notifications_black_24dp)
+        homeTabs.getTabAt(2)?.setIcon(R.drawable.ic_format_list_bulleted_black_24dp)
+        homeTabs.getTabAt(3)?.setIcon(R.drawable.ic_people_black_24dp)
+        homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
     }
 }

@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:hint="接続先インスタンス"
             android:inputType="textPersonName"
+            android:ems="10"
             android:text="mstdn.jp" />
     </android.support.design.widget.TextInputLayout>
     <Button
