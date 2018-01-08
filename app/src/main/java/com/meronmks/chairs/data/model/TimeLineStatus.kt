@@ -51,4 +51,8 @@ class TimeLineStatus(private val status : Status){
 
     //トゥート本文が隠されるときの最初に表示されるべきテキスト
     val spoilerText : String = status.spoilerText
+
+    val avater : String = status.account!!.avatar
+
+    val userName : String = status.account!!.userName
 }

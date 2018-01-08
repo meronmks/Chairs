@@ -6,4 +6,5 @@
     <string name="tootEditTextHint">今なにしてる？</string>
     <string name="step2Text">Step2: ブラウザでログインと認証後、表示される認証コードをコピーし、再びChairsに戻ってきて貼り付けてください。</string>
     <string name="step1Text">へOAuthログインを実行します。\nStep1: 下にあるSTART OAUTHボタンを押してください。</string>
+    <string name="emptyToot">トゥートがありません</string>
 </resources>
