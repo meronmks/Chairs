@@ -23,11 +23,11 @@ class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(conte
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.toot_item, parent, false)
+            view = layoutInflater.inflate(R.layout.toot_item, parent, false)!!
         }
         val item = getItem(position) as TimeLineStatus
 
-        view!!.userNameTextView.text = item.userName
+        view.userNameTextView.text = item.userName
         view.tootTextView.text = item.content()
         Glide.with(context).load(item.avater).into(view.avatarImageButton)
         return view
