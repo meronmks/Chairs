@@ -37,11 +37,6 @@ class TimeLineStatusTest {
     }
 
     @Test
-    fun トゥート本文がリソースと正しいか() {
-        assertEquals("<p>やばい。トイレがお友達状態</p>", timeLineStatus.content())
-    }
-
-    @Test
     fun お気に入り済みにしたときに正しい数になっているか(){
         val expected = timeLineStatus.favouritedCount() + 1
         timeLineStatus.isFavourited = true

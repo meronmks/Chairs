@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/avatarImageButton"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,12 +17,23 @@
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
+        android:id="@+id/displayNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="displayName"
+        app:layout_constraintEnd_toStartOf="@+id/userNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/avatarImageButton"
+        app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
+
+    <TextView
         android:id="@+id/userNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="userName"
-        app:layout_constraintStart_toEndOf="@+id/avatarImageButton"
+        android:layout_marginEnd="8dp"
+        android:text="\@userName"
+        app:layout_constraintEnd_toStartOf="@+id/timeTextView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
 
     <TextView
@@ -32,8 +43,18 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Toot"
+        android:text="tootText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatarImageButton"
-        app:layout_constraintTop_toBottomOf="@+id/userNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/displayNameTextView" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
+
 </android.support.constraint.ConstraintLayout>

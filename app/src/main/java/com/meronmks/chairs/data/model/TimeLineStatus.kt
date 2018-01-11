@@ -2,6 +2,7 @@ package com.meronmks.chairs.data.model
 
 import android.text.Html
 import android.text.Spanned
+import android.widget.TextView
 import com.sys1yagi.mastodon4j.api.entity.Context
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.meronmks.chairs.extensions.fromHtml
@@ -36,12 +37,12 @@ class TimeLineStatus(private val status : Status){
     }
 
     //トゥートの内容。HTML形式なので変換
-    fun content(context: android.content.Context) : Spanned {
+    fun content() : String {
         var content = status.content
         for (it in status.emojis) {
             content = content.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
         }
-        return content.fromHtml(context)
+        return content
     }
 
     //トゥートされた時刻
