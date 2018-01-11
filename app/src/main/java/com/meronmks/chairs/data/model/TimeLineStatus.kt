@@ -1,9 +1,9 @@
 package com.meronmks.chairs.data.model
 
+import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.widget.TextView
-import com.sys1yagi.mastodon4j.api.entity.Context
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.meronmks.chairs.extensions.fromHtml
 

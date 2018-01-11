@@ -1,6 +1,7 @@
 package com.meronmks.chairs.ViewPages.Adapter
 
 import android.content.Context
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(conte
         view.displayNameTextView.text = item.displayName
         view.userNameTextView.text = item.userName
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
+        view.timeTextView.text = item.createAt(context, 0)
         Glide.with(context).load(item.avater).into(view.avatarImageButton)
         return view
     }
