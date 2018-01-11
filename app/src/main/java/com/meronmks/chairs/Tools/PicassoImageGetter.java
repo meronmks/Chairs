@@ -52,8 +52,8 @@ public class PicassoImageGetter implements Html.ImageGetter {
 
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
-            int width = drawable.getIntrinsicWidth();
-            int height = drawable.getIntrinsicHeight();
+            int width = drawable.getIntrinsicWidth() / 3;
+            int height = drawable.getIntrinsicHeight() / 3;
             drawable.setBounds(0, 0, width, height);
             setBounds(0, 0, width, height);
             if (textView != null) {
