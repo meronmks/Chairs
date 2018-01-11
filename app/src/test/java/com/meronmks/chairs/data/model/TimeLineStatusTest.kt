@@ -1,6 +1,7 @@
 package com.meronmks.chairs.data.model
 
 import com.google.gson.Gson
+import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Status
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
@@ -32,8 +33,12 @@ class TimeLineStatusTest {
             strbuilder.append(it)
         }
         fileReader.close()
-
         timeLineStatus = TimeLineStatus(Gson().fromJson(strbuilder.toString(), Status::class.java))
+    }
+
+    @Test
+    fun トゥート本文がリソースと正しいか() {
+        assertEquals("<p>やばい。トイレがお友達状態</p>", timeLineStatus.content())
     }
 
     @Test
