@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".OAuth.SetInstanceNameActivity" />
         <activity android:name=".OAuth.LoginActivity" />
-        <activity android:name=".ViewPages.HomeViewPage"></activity>
+        <activity android:name=".ViewPages.HomeViewPage"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

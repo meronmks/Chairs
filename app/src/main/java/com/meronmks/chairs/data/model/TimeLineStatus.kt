@@ -1,7 +1,10 @@
 package com.meronmks.chairs.data.model
 
+import android.text.Html
+import android.text.Spanned
 import com.sys1yagi.mastodon4j.api.entity.Context
 import com.sys1yagi.mastodon4j.api.entity.Status
+import com.meronmks.chairs.extensions.fromHtml
 
 /**
  * Created by meron on 2018/01/04.
@@ -32,9 +35,13 @@ class TimeLineStatus(private val status : Status){
         TimeLineStatus(it)
     }
 
-    //トゥートの内容。HTML形式
-    fun content() : String{
-        return status.content
+    //トゥートの内容。HTML形式なので変換
+    fun content(context: android.content.Context) : Spanned {
+        var content = status.content
+        for (it in status.emojis) {
+            content = content.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
+        }
+        return content.fromHtml(context)
     }
 
     //トゥートされた時刻
@@ -52,7 +59,12 @@ class TimeLineStatus(private val status : Status){
     //トゥート本文が隠されるときの最初に表示されるべきテキスト
     val spoilerText : String = status.spoilerText
 
+    //トゥートをした人の画像
     val avater : String = status.account!!.avatar
 
+    //トゥートをした人のユーザー名
     val userName : String = status.account!!.userName
+
+    //トゥートをした人の表示名
+    val displayName : String = status.account!!.displayName
 }
