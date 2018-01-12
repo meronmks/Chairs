@@ -4,4 +4,9 @@
     <string name="step2Text">Step2: ブラウザでログインと認証後、表示される認証コードをコピーし、再びChairsに戻ってきて貼り付けてください。</string>
     <string name="step1Text">へOAuthログインを実行します。\nStep1: 下にあるSTART OAUTHボタンを押してください。</string>
     <string name="emptyToot">トゥートがありません</string>
+    <string name="status_now">now</string>
+    <string name="status_second">%1$ds</string>
+    <string name="status_min">%1$dm</string>
+    <string name="status_hour">%1$dh</string>
+    <string name="status_day">%1$dd</string>
 </resources>

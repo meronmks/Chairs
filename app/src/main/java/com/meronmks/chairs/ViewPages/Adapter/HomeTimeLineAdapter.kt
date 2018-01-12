@@ -30,7 +30,7 @@ class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(conte
         view.displayNameTextView.text = item.displayName
         view.userNameTextView.text = """@${item.userName}"""
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
-        view.timeTextView.text = item.createAt(context, 0)
+        view.timeTextView.text = item.createAt(context, java.lang.System.currentTimeMillis())
         Glide.with(context).load(item.avater).into(view.avatarImageButton)
         return view
     }

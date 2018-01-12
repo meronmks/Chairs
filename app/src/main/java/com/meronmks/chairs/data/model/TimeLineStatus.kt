@@ -4,8 +4,10 @@ import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.widget.TextView
+import com.meronmks.chairs.R
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.meronmks.chairs.extensions.fromHtml
+import com.meronmks.chairs.extensions.toIsoZonedDateTime
 
 /**
  * Created by meron on 2018/01/04.
@@ -47,8 +49,19 @@ class TimeLineStatus(private val status : Status){
 
     //トゥートされた時刻
     fun createAt(context : Context, now : Long) : String{
-        val tootCreateAt = status.createdAt
-        return  tootCreateAt
+        val tootCreateAt = status.createdAt.toIsoZonedDateTime().toInstant().toEpochMilli()
+        val elapsed = (now - tootCreateAt) / 1000
+        return when {
+            elapsed < 3 ->
+                context.getString(R.string.status_now)
+            elapsed < 60 ->
+                context.getString(R.string.status_second, elapsed)
+            elapsed < 3600 ->
+                context.getString(R.string.status_min, elapsed / 60)
+            elapsed < 3600 * 24 ->
+                context.getString(R.string.status_hour, elapsed / (3600))
+            else -> context.getString(R.string.status_day, elapsed / (3600 * 24))
+        }
     }
 
     //トゥートの添付メディアが隠されるべきかどうか
