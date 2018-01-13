@@ -1,6 +1,7 @@
 package com.meronmks.chairs.data.model
 
 import com.google.gson.Gson
+import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
 import com.meronmks.chairs.extensions.fromHtml
 import com.meronmks.chairs.extensions.toIsoZonedDateTime
@@ -15,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -26,6 +28,7 @@ import java.io.InputStreamReader
  *
  */
 @RunWith(RobolectricTestRunner::class)
+@Config(constants = BuildConfig::class, sdk = [21])
 class TimeLineStatusTest {
 
     lateinit var timeLineStatus : TimeLineStatus
