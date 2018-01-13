@@ -47,7 +47,7 @@ install:
   - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
 script:
-  - ./gradlew test
+  - ./gradlew clean build test jacocoTestReport check
   - ./gradlew assembleDebug
 after_success:
   - bash <(curl -s https://codecov.io/bash)
