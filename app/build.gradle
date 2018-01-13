@@ -9,6 +9,7 @@ apply plugin: "realm-android"
 apply plugin: 'deploygate'
 
 apply plugin: 'jacoco'
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.3"
