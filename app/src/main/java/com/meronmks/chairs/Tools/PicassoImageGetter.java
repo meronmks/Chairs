@@ -14,7 +14,7 @@ import com.squareup.picasso.Target;
 /**
  * Created by meron on 2018/01/12.
  * https://medium.com/@rajeefmk/android-textview-and-image-loading-from-url-part-1-a7457846abb6 より
- * Kotlinにツールで変換するとバグるのでこのまま使う
+ * Kotlinにツールで変換するとバグるのでこのまま使う（Targetを記入した瞬間プラグインがクラッシュする）
  */
 
 public class PicassoImageGetter implements Html.ImageGetter {
@@ -52,11 +52,10 @@ public class PicassoImageGetter implements Html.ImageGetter {
 
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
-            int width = drawable.getIntrinsicWidth() / 3;
-            int height = drawable.getIntrinsicHeight() / 3;
-            drawable.setBounds(0, 0, width, height);
-            setBounds(0, 0, width, height);
             if (textView != null) {
+                int size = textView.getLineHeight();
+                drawable.setBounds(0, 0, size, size);
+                setBounds(0, 0, size, size);
                 textView.setText(textView.getText());
             }
         }
