@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Html
 import android.text.Spanned
 import android.text.Spannable
+import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import com.meronmks.chairs.Tools.PicassoImageGetter
 
@@ -20,5 +21,6 @@ fun String.fromHtml(context: Context, textView : TextView) : Spanned {
     } else {
         result = Html.fromHtml(this, imageGetter, null) as Spannable
     }
+    textView.movementMethod = LinkMovementMethod.getInstance()
     return result
 }
