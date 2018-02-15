@@ -53,13 +53,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/step2TextView">
 
-        <EditText
-            android:id="@+id/authCodeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ここに認証コードを貼り付ける"
-            android:ems="10"
-            android:inputType="textPersonName"/>
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="login"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/authCodeEditTextLayout" />
 
 </android.support.constraint.ConstraintLayout>
