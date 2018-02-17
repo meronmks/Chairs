@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.content.ClipData
-
+import com.meronmks.chairs.extensions.showToastandLogE
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 
 
 class LoginActivity : AppCompatActivity() {
@@ -35,18 +36,20 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        LoginButton.isEnabled = false
         mastodonLogin = MastodonLoginTool(intent.getStringExtra("instanceName"))
         step1TextView.text = "${intent.getStringExtra("instanceName")}${getString(R.string.step1Text)}"
     }
 
-    fun startOAuth(view : View) = launch(UI){
+    fun startOAuth() = launch(UI){
         appRegistration = mastodonLogin.registerAppAsync().await()
         val url = mastodonLogin.oAuthAsync(appRegistration.clientId).await()
         val intent = Intent(Intent.ACTION_VIEW, url)
+        LoginButton.isEnabled = true
         startActivity(intent)
     }
 
-    fun login(view : View) = launch(UI){
+    fun login() = launch(UI){
         dataBase = DataBaseTool(baseContext)
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val cd = cm.primaryClip
@@ -60,8 +63,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(baseContext, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }catch (e: Exception){
-            Toast.makeText(baseContext, e.message, Toast.LENGTH_SHORT).show()
+        }catch (e: Mastodon4jRequestException){
+            if(e.response?.code() == 401){
+                getString(R.string.AuthenticationFaild).showToastandLogE(baseContext)
+            }
+        }
+        catch (e: Exception){
+            e.message.toString().showToastandLogE(baseContext)
         }
     }
 }
