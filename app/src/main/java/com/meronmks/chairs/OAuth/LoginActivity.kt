@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         step1TextView.text = "${intent.getStringExtra("instanceName")}${getString(R.string.step1Text)}"
     }
 
-    fun startOAuth() = launch(UI){
+    fun startOAuth(view: View) = launch(UI){
         appRegistration = mastodonLogin.registerAppAsync().await()
         val url = mastodonLogin.oAuthAsync(appRegistration.clientId).await()
         val intent = Intent(Intent.ACTION_VIEW, url)
@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun login() = launch(UI){
+    fun login(view: View) = launch(UI){
         dataBase = DataBaseTool(baseContext)
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val cd = cm.primaryClip
