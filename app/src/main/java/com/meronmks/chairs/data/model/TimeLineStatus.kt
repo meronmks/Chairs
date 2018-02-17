@@ -81,4 +81,10 @@ class TimeLineStatus(private val status : Status){
 
     //トゥートをした人の表示名
     val displayName : String = status.account!!.displayName
+
+    //トゥートのID
+    var tootID : Long = status.id
+
+    //トゥート時刻（生データ）
+    var tootCreateAt : Long = status.createdAt.toIsoZonedDateTime().toInstant().toEpochMilli()
 }

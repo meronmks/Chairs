@@ -24,18 +24,27 @@ class HomeFragment : Fragment() {
 
     lateinit var dataBase : DataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
+    lateinit var adapter : HomeTimeLineAdapter
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBase = DataBaseTool(context)
         timeLine = MastodonTimeLineTool(dataBase.readInstanceName(), dataBase.readAccessToken())
-        val adapter = HomeTimeLineAdapter(context)
+        adapter = HomeTimeLineAdapter(context)
         homeTootList.adapter = adapter
-        launch(UI){
-            val list = getTimeLine()
-            list.forEach {
-                adapter.add(TimeLineStatus(it))
-            }
+        refresHomeTimeLine()
+        homeTootListRefresh.setOnRefreshListener {
+            refresHomeTimeLine(Range(sinceId = adapter.getItem(0).tootID))
         }
+    }
+
+    fun refresHomeTimeLine(range: Range = Range()) = launch(UI){
+        homeTootListRefresh.isRefreshing = true
+        val list = getTimeLine(range)
+        list.forEach {
+            adapter.add(TimeLineStatus(it))
+        }
+        adapter.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        homeTootListRefresh.isRefreshing = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +56,7 @@ class HomeFragment : Fragment() {
         dataBase.close()
     }
 
-    suspend fun getTimeLine(): List<Status> {
-        return timeLine.getHomeAsync(Range()).await()
+    suspend fun getTimeLine(range: Range = Range()): List<Status> {
+        return timeLine.getHomeAsync(range).await()
     }
 }
