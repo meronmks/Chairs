@@ -16,6 +16,7 @@ android {
     defaultConfig {
         applicationId "com.meronmks.chairs"
         minSdkVersion 21
+        //noinspection OldTargetApi
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -83,5 +84,10 @@ deploygate {
             // ビルドのメッセージとして設定します
             message = "debug build ${hash}"
         }
+    }
+}
+kotlin {
+    experimental {
+        coroutines "enable"
     }
 }
