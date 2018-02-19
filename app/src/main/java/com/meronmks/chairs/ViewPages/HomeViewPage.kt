@@ -29,14 +29,11 @@ class HomeViewPage : AppCompatActivity() {
         homeTabs.getTabAt(3)?.setIcon(R.drawable.ic_people_black_24dp)
         homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
         sendTootImageButton.setOnClickListener {
-            launch(UI) {
-                try {
-                    tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
-                    tootEditText.text.clear()
-                }catch (e: Exception){
-                    e.message?.showToastandLogE(baseContext)
-                }
-
+            try {
+                val status = tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public)
+                tootEditText.text.clear()
+            }catch (e: Exception){
+                e.message?.showToastandLogE(baseContext)
             }
         }
     }
