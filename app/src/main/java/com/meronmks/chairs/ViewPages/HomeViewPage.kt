@@ -6,6 +6,7 @@ import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonTootTool
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
+import com.meronmks.chairs.extensions.showToastandLogD
 import com.meronmks.chairs.extensions.showToastandLogE
 import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.activity_home_view_page.*
@@ -32,6 +33,7 @@ class HomeViewPage : AppCompatActivity() {
             try {
                 val status = tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public)
                 tootEditText.text.clear()
+                getString(R.string.SuccessPostToot).showToastandLogD(baseContext)
             }catch (e: Exception){
                 e.message?.showToastandLogE(baseContext)
             }
