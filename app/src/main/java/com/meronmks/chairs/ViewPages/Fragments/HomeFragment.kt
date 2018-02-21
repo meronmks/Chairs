@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonTimeLineTool
-import com.meronmks.chairs.ViewPages.Adapter.HomeTimeLineAdapter
+import com.meronmks.chairs.ViewPages.Adapter.List.HomeTimeLineAdapter
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status

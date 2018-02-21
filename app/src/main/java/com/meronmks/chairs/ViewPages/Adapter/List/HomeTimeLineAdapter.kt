@@ -1,4 +1,4 @@
-package com.meronmks.chairs.ViewPages.Adapter
+package com.meronmks.chairs.ViewPages.Adapter.List
 
 import android.content.Context
 import android.provider.ContactsContract
