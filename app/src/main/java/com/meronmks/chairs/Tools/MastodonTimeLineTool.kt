@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient
 
 /**
  * Created by meron on 2018/01/04.
+ * タイムラインを取得する奴
  */
 class MastodonTimeLineTool(private val instanceName : String, private val accessToken : String){
     fun getHomeAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
