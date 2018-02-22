@@ -23,6 +23,7 @@ class HomeViewPage : AppCompatActivity() {
         dataBase = DataBaseTool(baseContext)
         tootTool = MastodonTootTool(dataBase.readInstanceName(), dataBase.readAccessToken())
         homeViewPager.adapter = HomeFragmentPagerAdapter(supportFragmentManager)
+        homeViewPager.offscreenPageLimit = homeViewPager.adapter.count - 1  //保持するページを全ページに
         homeTabs.setupWithViewPager(homeViewPager)
         homeTabs.getTabAt(0)?.setIcon(R.drawable.ic_home_black_24dp)
         homeTabs.getTabAt(1)?.setIcon(R.drawable.ic_notifications_black_24dp)
