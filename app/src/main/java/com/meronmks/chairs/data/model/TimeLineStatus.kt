@@ -77,7 +77,7 @@ class TimeLineStatus(private val status : Status){
     val avater : String = status.account!!.avatar
 
     //トゥートをした人のユーザー名
-    val userName : String = status.account!!.userName
+    val userName : String = status.account!!.acct
 
     //トゥートをした人の表示名
     val displayName : String = status.account!!.displayName
