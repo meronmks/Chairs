@@ -3,6 +3,7 @@ package com.meronmks.chairs.extensions
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.deploygate.sdk.DeployGate
 import com.meronmks.chairs.BuildConfig
 
 /**
@@ -20,19 +21,21 @@ fun String.showToast(context: Context, duration: Int){
 /**
  * デバッグ表示
  */
-fun String.showToastandLogD(context: Context, tag: String = "Debug"){
+fun String.showToastLogD(context: Context, tag: String = "Debug"){
     if (BuildConfig.DEBUG){
         Log.d(tag, this)
     }
+    DeployGate.logDebug(this)
     Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
 }
 
 /**
  * エラー表示
  */
-fun String.showToastandLogE(context: Context,  tag: String = "Error"){
+fun String.showToastLogE(context: Context, tag: String = "Error"){
     if (BuildConfig.DEBUG){
         Log.e(tag, this)
     }
+    DeployGate.logError(this)
     Toast.makeText(context, this, Toast.LENGTH_LONG).show()
 }

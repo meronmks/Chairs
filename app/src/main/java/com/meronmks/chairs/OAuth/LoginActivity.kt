@@ -6,10 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonAccountTool
@@ -19,8 +16,7 @@ import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
-import android.content.ClipData
-import com.meronmks.chairs.extensions.showToastandLogE
+import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 
 
@@ -65,11 +61,11 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }catch (e: Mastodon4jRequestException){
             if(e.response?.code() == 401){
-                getString(R.string.AuthenticationFaild).showToastandLogE(baseContext)
+                getString(R.string.AuthenticationFaild).showToastLogE(baseContext)
             }
         }
         catch (e: Exception){
-            e.message.toString().showToastandLogE(baseContext)
+            e.message.toString().showToastLogE(baseContext)
         }
     }
 }
