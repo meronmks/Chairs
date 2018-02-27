@@ -43,4 +43,7 @@ class NotificationModel(private val notif : Notification){
 
     //アクションを行った人物のアイコン
     val actionAvater : String? = notif.account?.avatar
+
+    //通知ID
+    val id : Long = notif.id
 }

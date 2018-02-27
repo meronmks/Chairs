@@ -13,6 +13,7 @@ import com.meronmks.chairs.data.model.NotificationModel
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
+import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
@@ -30,25 +31,25 @@ class NotificationFragment : Fragment() {
         dataBase = DataBaseTool(context)
         notification = MastodonNotificationTool(dataBase.readInstanceName(), dataBase.readAccessToken())
         adapter = NotificationAdapter(context)
-        homeTootList.adapter = adapter
+        notificationList.adapter = adapter
         refresNotification()
-        homeTootListRefresh.setOnRefreshListener {
-//            refresNotification(Range(sinceId = adapter.getItem(0).tootID))
+        notificationListRefresh.setOnRefreshListener {
+            refresNotification(Range(sinceId = adapter.getItem(0).id))
         }
     }
 
     fun refresNotification(range: Range = Range()) = launch(UI){
-        homeTootListRefresh.isRefreshing = true
+        notificationListRefresh.isRefreshing = true
         val list = getNotification(range)
         list.forEach {
            adapter.add(NotificationModel(it))
         }
         adapter.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        homeTootListRefresh.isRefreshing = false
+        notificationListRefresh.isRefreshing = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home_time_line, container, false)
+        return inflater.inflate(R.layout.fragment_notification, container, false)
     }
 
     override fun onDestroy() {
