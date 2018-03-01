@@ -15,6 +15,10 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import android.text.Editable
+import android.text.TextWatcher
+
+
 
 class HomeViewPage : AppCompatActivity() {
 

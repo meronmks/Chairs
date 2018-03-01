@@ -44,6 +44,7 @@ class TimeLineStatus(private val status : Status){
         for (it in status.emojis) {
             content = content.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
         }
+        content = content.replace("</?p>".toRegex(), "")
         return content
     }
 
@@ -87,4 +88,7 @@ class TimeLineStatus(private val status : Status){
 
     //トゥート時刻（生データ）
     var tootCreateAt : Long = status.createdAt.toIsoZonedDateTime().toInstant().toEpochMilli()
+
+    //投稿したクライアント名
+    val via : String = if(status.application != null) status.application!!.name else "Web"
 }

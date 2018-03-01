@@ -54,6 +54,7 @@ class NotificationModel(private val notif : Notification){
             for (it in notif.status!!.emojis) {
                 content = content.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
             }
+            content = content.replace("</?p>".toRegex(), "")
             return content
         }else{
             return ""
