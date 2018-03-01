@@ -69,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
+                android:background="@null"
                 android:src="@drawable/ic_send_black_24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/instanceNameEditTextLayout"
                 app:layout_constraintEnd_toEndOf="parent"
