@@ -82,8 +82,8 @@ class TimeLineStatusTest {
     }
 
     @Test
-    fun トゥート本文がリソースと正しいか() {
-        assertEquals("<p>やばい。トイレがお友達状態</p>", timeLineStatus.content())
+    fun トゥート本文が意図したものか() {
+        assertEquals("やばい。トイレがお友達状態", timeLineStatus.content())
     }
 
     @Test
