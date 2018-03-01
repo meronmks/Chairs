@@ -42,11 +42,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="tootText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/avatarImageButton"
+        app:layout_constraintStart_toStartOf="@+id/displayNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/displayNameTextView" />
 
     <TextView
@@ -57,5 +56,14 @@
         android:text="time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
+
+    <TextView
+        android:id="@+id/clientViaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="via"
+        app:layout_constraintStart_toStartOf="@+id/tootTextView"
+        app:layout_constraintTop_toBottomOf="@+id/tootTextView" />
 
 </android.support.constraint.ConstraintLayout>

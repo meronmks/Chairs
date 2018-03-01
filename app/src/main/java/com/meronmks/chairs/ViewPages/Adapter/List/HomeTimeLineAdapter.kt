@@ -28,9 +28,10 @@ class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(conte
         }
         val item = getItem(position) as TimeLineStatus
         view.displayNameTextView.text = item.displayName
-        view.userNameTextView.text = """@${item.userName}"""
+        view.userNameTextView.text = "@${item.userName}"
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
         view.timeTextView.text = item.createAt(context, java.lang.System.currentTimeMillis())
+        view.clientViaTextView.text = "Via : ${item.via}"
         Glide.with(context).load(item.avater).into(view.avatarImageButton)
         return view
     }
