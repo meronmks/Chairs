@@ -46,4 +46,17 @@ class NotificationModel(private val notif : Notification){
 
     //通知ID
     val id : Long = notif.id
+
+    //どのトゥートに対する通知か（無ければ非表示）
+    fun content() : String {
+        if (notif.status != null) {
+            var content = notif.status!!.content
+            for (it in notif.status!!.emojis) {
+                content = content.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
+            }
+            return content
+        }else{
+            return ""
+        }
+    }
 }

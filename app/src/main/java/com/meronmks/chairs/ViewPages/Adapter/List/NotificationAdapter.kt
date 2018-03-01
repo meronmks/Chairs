@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.R
 import com.meronmks.chairs.data.model.NotificationModel
+import com.meronmks.chairs.extensions.fromHtml
 import kotlinx.android.synthetic.main.toot_item.view.*
 
 /**
@@ -19,12 +20,12 @@ class NotificationAdapter(context: Context) : ArrayAdapter<NotificationModel>(co
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.toot_item, parent, false)!!
+            view = layoutInflater.inflate(R.layout.notification_item, parent, false)!!
         }
         val item = getItem(position) as NotificationModel
         view.displayNameTextView.text = "${item.actionDisplayName} is ${item.type}"
         view.userNameTextView.text = "@${item.actionUserName}"
-//        view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
+        view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
         view.timeTextView.text = item.createAt(context, java.lang.System.currentTimeMillis())
         Glide.with(context).load(item.actionAvater).into(view.avatarImageButton)
         return view
