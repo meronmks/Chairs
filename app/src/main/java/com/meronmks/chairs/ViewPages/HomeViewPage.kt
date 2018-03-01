@@ -9,7 +9,10 @@ import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
 import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.entity.Status
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.activity_home_view_page.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 class HomeViewPage : AppCompatActivity() {
 
@@ -29,12 +32,16 @@ class HomeViewPage : AppCompatActivity() {
         homeTabs.getTabAt(3)?.setIcon(R.drawable.ic_people_black_24dp)
         homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
         sendTootImageButton.setOnClickListener {
-            try {
-                val status = tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public)
-                tootEditText.text.clear()
-                getString(R.string.SuccessPostToot).showToastLogD(baseContext)
-            }catch (e: Exception){
-                e.message?.showToastLogE(baseContext)
+            launch(UI){
+                try {
+                    tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
+                    tootEditText.text.clear()
+                    getString(R.string.SuccessPostToot).showToastLogD(baseContext)
+                }catch (e: Mastodon4jRequestException){
+                    "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
+                }catch (e: Exception){
+                    e.message?.showToastLogE(baseContext)
+                }
             }
         }
     }

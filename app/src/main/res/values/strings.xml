@@ -11,4 +11,5 @@
     <string name="status_day">%1$dd</string>
     <string name="AuthenticationFaild">認証に失敗しました</string>
     <string name="SuccessPostToot">投稿しました</string>
+    <string name="postFaild">投稿に失敗しました</string>
 </resources>
