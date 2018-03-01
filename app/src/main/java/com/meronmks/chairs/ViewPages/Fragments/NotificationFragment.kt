@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonNotificationTool
@@ -26,6 +27,7 @@ class NotificationFragment : Fragment() {
     lateinit var dataBase : DataBaseTool
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
+    var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBase = DataBaseTool(context)
@@ -36,9 +38,23 @@ class NotificationFragment : Fragment() {
         notificationListRefresh.setOnRefreshListener {
             refresNotification(Range(sinceId = adapter.getItem(0).id))
         }
+        notificationList.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
+                if(notificationList.lastVisiblePosition == adapter.count - 1){
+                    refresNotification(Range(maxId = adapter.getItem(adapter.count - 1).id))
+                }
+            }
+
+            override fun onScroll(p0: AbsListView?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+        })
     }
 
     fun refresNotification(range: Range = Range()) = launch(UI){
+        if(loadLock)return@launch
+        loadLock = true
         notificationListRefresh.isRefreshing = true
         val list = getNotification(range)
         list.forEach {
@@ -46,6 +62,7 @@ class NotificationFragment : Fragment() {
         }
         adapter.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         notificationListRefresh.isRefreshing = false
+        loadLock = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
