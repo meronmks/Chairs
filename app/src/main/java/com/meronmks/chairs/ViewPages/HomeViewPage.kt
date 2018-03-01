@@ -2,10 +2,12 @@ package com.meronmks.chairs.ViewPages
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonTootTool
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
+import com.meronmks.chairs.extensions.showToast
 import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -36,7 +38,7 @@ class HomeViewPage : AppCompatActivity() {
                 try {
                     tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
                     tootEditText.text.clear()
-                    getString(R.string.SuccessPostToot).showToastLogD(baseContext)
+                    getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
                 }catch (e: Mastodon4jRequestException){
                     "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
                 }catch (e: Exception){
