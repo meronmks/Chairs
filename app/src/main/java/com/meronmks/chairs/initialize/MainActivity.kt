@@ -4,16 +4,16 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.meronmks.chairs.OAuth.SetInstanceNameActivity
-import com.meronmks.chairs.Tools.DataBaseTool
+import com.meronmks.chairs.Tools.AccountDataBaseTool
 import com.meronmks.chairs.ViewPages.HomeViewPage
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var dataBase : DataBaseTool
+    lateinit var accountDataBase: AccountDataBaseTool
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBase = DataBaseTool(this)
-        val accounts = dataBase.readAccounts()
+        accountDataBase = AccountDataBaseTool(this)
+        val accounts = accountDataBase.readAccounts()
         if (accounts.count() == 0){
             val intent = Intent(this, SetInstanceNameActivity::class.java)
             startActivity(intent)
@@ -27,6 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        dataBase.close()
+        accountDataBase.close()
     }
 }

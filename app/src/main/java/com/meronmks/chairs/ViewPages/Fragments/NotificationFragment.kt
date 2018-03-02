@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.DataBaseTool
+import com.meronmks.chairs.Tools.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonNotificationTool
 import com.meronmks.chairs.ViewPages.Adapter.List.NotificationAdapter
 import com.meronmks.chairs.data.model.NotificationModel
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
-import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -24,14 +23,14 @@ import kotlinx.coroutines.experimental.launch
  */
 class NotificationFragment : Fragment() {
 
-    lateinit var dataBase : DataBaseTool
+    lateinit var accountDataBase: AccountDataBaseTool
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
     var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dataBase = DataBaseTool(context)
-        notification = MastodonNotificationTool(dataBase.readInstanceName(), dataBase.readAccessToken())
+        accountDataBase = AccountDataBaseTool(context)
+        notification = MastodonNotificationTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         adapter = NotificationAdapter(context)
         notificationList.adapter = adapter
         refresNotification()
@@ -71,7 +70,7 @@ class NotificationFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        dataBase.close()
+        accountDataBase.close()
     }
 
     suspend fun getNotification(range: Range = Range()): List<Notification> {

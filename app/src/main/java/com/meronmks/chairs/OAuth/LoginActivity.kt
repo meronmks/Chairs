@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.DataBaseTool
+import com.meronmks.chairs.Tools.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonAccountTool
 import com.meronmks.chairs.Tools.MastodonLoginTool
 import com.meronmks.chairs.initialize.MainActivity
@@ -22,7 +22,7 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var dataBase : DataBaseTool
+    private lateinit var accountDataBase: AccountDataBaseTool
     private lateinit var mastodonLogin: MastodonLoginTool
     private lateinit var userName : String
     private lateinit var appRegistration : AppRegistration
@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun login(view: View) = launch(UI){
-        dataBase = DataBaseTool(baseContext)
+        accountDataBase = AccountDataBaseTool(baseContext)
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val cd = cm.primaryClip
         try{
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
             val user = account.getVerifyCredentialsAsync().await()
             if(user.userName.isEmpty()) return@launch
             userName = user.userName
-            dataBase.saveAccount(appRegistration.instanceName, userName, accessToken)
+            accountDataBase.saveAccount(appRegistration.instanceName, userName, accessToken)
             val intent = Intent(baseContext, MainActivity::class.java)
             startActivity(intent)
             finish()

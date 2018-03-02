@@ -2,12 +2,11 @@ package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.DataBaseTool
+import com.meronmks.chairs.Tools.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonTimeLineTool
 import com.meronmks.chairs.ViewPages.Adapter.List.HomeTimeLineAdapter
 import com.meronmks.chairs.data.model.TimeLineStatus
@@ -26,14 +25,14 @@ import android.widget.AbsListView
  */
 class HomeFragment : Fragment() {
 
-    lateinit var dataBase : DataBaseTool
+    lateinit var accountDataBase: AccountDataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
     lateinit var adapter : HomeTimeLineAdapter
     var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dataBase = DataBaseTool(context)
-        timeLine = MastodonTimeLineTool(dataBase.readInstanceName(), dataBase.readAccessToken())
+        accountDataBase = AccountDataBaseTool(context)
+        timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         adapter = HomeTimeLineAdapter(context)
         homeTootList.adapter = adapter
         refresHomeTimeLine()
@@ -73,7 +72,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        dataBase.close()
+        accountDataBase.close()
     }
 
     suspend fun getTimeLine(range: Range = Range()): List<Status> {

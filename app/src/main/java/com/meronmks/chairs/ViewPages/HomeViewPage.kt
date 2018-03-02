@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.DataBaseTool
+import com.meronmks.chairs.Tools.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonTootTool
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
 import com.meronmks.chairs.extensions.showToast
@@ -19,13 +19,13 @@ import android.view.KeyEvent
 
 class HomeViewPage : AppCompatActivity() {
 
-    lateinit var dataBase : DataBaseTool
+    lateinit var accountDataBase: AccountDataBaseTool
     lateinit var tootTool : MastodonTootTool
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
-        dataBase = DataBaseTool(baseContext)
-        tootTool = MastodonTootTool(dataBase.readInstanceName(), dataBase.readAccessToken())
+        accountDataBase = AccountDataBaseTool(baseContext)
+        tootTool = MastodonTootTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         homeViewPager.adapter = HomeFragmentPagerAdapter(supportFragmentManager)
         homeViewPager.offscreenPageLimit = homeViewPager.adapter.count - 1  //保持するページを全ページに
         homeTabs.setupWithViewPager(homeViewPager)
@@ -42,7 +42,7 @@ class HomeViewPage : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        dataBase.close()
+        accountDataBase.close()
     }
 
     private fun postToot() = launch(UI){
