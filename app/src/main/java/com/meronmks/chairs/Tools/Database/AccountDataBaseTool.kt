@@ -1,4 +1,4 @@
-package com.meronmks.chairs.Tools
+package com.meronmks.chairs.Tools.Database
 
 import android.content.Context
 import com.meronmks.chairs.data.database.MastodonAccount

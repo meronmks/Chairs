@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.AccountDataBaseTool
+import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonAccountTool
 import com.meronmks.chairs.Tools.MastodonLoginTool
 import com.meronmks.chairs.initialize.MainActivity

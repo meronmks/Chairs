@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.AccountDataBaseTool
+import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonNotificationTool
 import com.meronmks.chairs.ViewPages.Adapter.List.NotificationAdapter
 import com.meronmks.chairs.data.model.NotificationModel

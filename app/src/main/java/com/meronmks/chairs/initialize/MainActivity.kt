@@ -4,7 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.meronmks.chairs.OAuth.SetInstanceNameActivity
-import com.meronmks.chairs.Tools.AccountDataBaseTool
+import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.ViewPages.HomeViewPage
 
 class MainActivity : AppCompatActivity() {

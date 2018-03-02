@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.meronmks.chairs.R
-import com.meronmks.chairs.Tools.AccountDataBaseTool
+import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonTootTool
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
 import com.meronmks.chairs.extensions.showToast
