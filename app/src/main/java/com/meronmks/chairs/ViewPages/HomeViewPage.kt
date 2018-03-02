@@ -60,12 +60,17 @@ class HomeViewPage : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shift＋Enterの読み取り
+     * エミュでは動作しない模様（別のショトカに取られてる？）
+     */
     private fun textEditonKeyDown(){
-        tootEditText.setOnEditorActionListener { textView, actionID, event ->
-            if(event.isShiftPressed && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN){
+        tootEditText.setOnKeyListener { view, keyCode, event ->
+            if(event.isShiftPressed && keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN){
                 postToot()
+                return@setOnKeyListener true
             }
-            return@setOnEditorActionListener false
+            return@setOnKeyListener false
         }
     }
 }
