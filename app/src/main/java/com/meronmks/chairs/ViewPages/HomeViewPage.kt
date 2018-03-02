@@ -8,15 +8,12 @@ import com.meronmks.chairs.Tools.DataBaseTool
 import com.meronmks.chairs.Tools.MastodonTootTool
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
 import com.meronmks.chairs.extensions.showToast
-import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.KeyEvent
 
 
@@ -40,7 +37,7 @@ class HomeViewPage : AppCompatActivity() {
         sendTootImageButton.setOnClickListener {
             postToot()
         }
-        textEditonKeyDown()
+        textEditorKeyDown()
     }
 
     override fun onDestroy() {
@@ -64,7 +61,7 @@ class HomeViewPage : AppCompatActivity() {
      * Shift＋Enterの読み取り
      * エミュでは動作しない模様（別のショトカに取られてる？）
      */
-    private fun textEditonKeyDown(){
+    private fun textEditorKeyDown(){
         tootEditText.setOnKeyListener { view, keyCode, event ->
             if(event.isShiftPressed && keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN){
                 postToot()
