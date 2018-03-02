@@ -17,7 +17,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.text.Editable
 import android.text.TextWatcher
-
+import android.view.KeyEvent
 
 
 class HomeViewPage : AppCompatActivity() {
@@ -38,22 +38,34 @@ class HomeViewPage : AppCompatActivity() {
         homeTabs.getTabAt(3)?.setIcon(R.drawable.ic_people_black_24dp)
         homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
         sendTootImageButton.setOnClickListener {
-            launch(UI){
-                try {
-                    tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
-                    tootEditText.text.clear()
-                    getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
-                }catch (e: Mastodon4jRequestException){
-                    "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
-                }catch (e: Exception){
-                    e.message?.showToastLogE(baseContext)
-                }
-            }
+            postToot()
         }
+        textEditonKeyDown()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         dataBase.close()
+    }
+
+    private fun postToot() = launch(UI){
+        try {
+            tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
+            tootEditText.text.clear()
+            getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
+        }catch (e: Mastodon4jRequestException){
+            "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
+        }catch (e: Exception){
+            e.message?.showToastLogE(baseContext)
+        }
+    }
+
+    private fun textEditonKeyDown(){
+        tootEditText.setOnEditorActionListener { textView, actionID, event ->
+            if(event.isShiftPressed && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN){
+                postToot()
+            }
+            return@setOnEditorActionListener false
+        }
     }
 }
