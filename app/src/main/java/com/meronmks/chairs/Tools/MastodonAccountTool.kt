@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.method.Accounts
+import com.sys1yagi.mastodon4j.rx.RxAccounts
+import com.sys1yagi.mastodon4j.rx.RxStreaming
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
