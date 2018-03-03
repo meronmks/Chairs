@@ -2,6 +2,8 @@ package com.meronmks.chairs.ViewPages
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
@@ -38,6 +40,12 @@ class HomeViewPage : AppCompatActivity() {
             postToot()
         }
         textEditorKeyDown()
+        textCounter()
+    }
+
+    override fun onPostResume() {
+        tootCounterText.text = "${500 - tootEditText.text.length}"
+        super.onPostResume()
     }
 
     override fun onDestroy() {
@@ -69,5 +77,22 @@ class HomeViewPage : AppCompatActivity() {
             }
             return@setOnKeyListener false
         }
+    }
+
+    /**
+     * 入力された文字のカウント処理
+     */
+    private fun textCounter(){
+        tootEditText.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                tootCounterText.text = "${500 - tootEditText.text.length}"
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
 }
