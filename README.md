@@ -3,8 +3,9 @@
 [![codecov](https://codecov.io/gh/meronmks/Chairs/branch/master/graph/badge.svg)](https://codecov.io/gh/meronmks/Chairs)\
 [<img src="https://dply.me/g06yf0/button/large" alt="Try it on your device via DeployGate">](https://dply.me/g06yf0#install)
 
-Android5.0以上で動作するMastdonに対応したクライアント。\
+Android5.0以上で動作するMastodon専用クライアント。\
 kotlin Ver1.2.21
+![アプリの動作](resources/アプリ動作.gif)
 # 使用ライブラリ
 [mastodon4j](https://github.com/sys1yagi/mastodon4j)\
 [realm](https://realm.io/jp/)\
