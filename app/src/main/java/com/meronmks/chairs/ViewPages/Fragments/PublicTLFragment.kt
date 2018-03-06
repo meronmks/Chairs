@@ -10,7 +10,7 @@ import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.Tools.MastodonTimeLineTool
-import com.meronmks.chairs.ViewPages.Adapter.List.HomeTimeLineAdapter
+import com.meronmks.chairs.ViewPages.Adapter.List.TimeLineAdapter
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogE
@@ -28,14 +28,14 @@ import kotlinx.coroutines.experimental.launch
 class PublicTLFragment : Fragment() {
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
-    lateinit var adapter : HomeTimeLineAdapter
+    lateinit var adapter : TimeLineAdapter
     var loadLock : Boolean = false
     lateinit var shutdownable : Shutdownable
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
-        adapter = HomeTimeLineAdapter(context)
+        adapter = TimeLineAdapter(context)
         homeTootList.adapter = adapter
         refreshPublicTimeLine()
         homeTootListRefresh.setOnRefreshListener {

@@ -18,7 +18,7 @@ import com.meronmks.chairs.extensions.fromHtml
  * Created by meron on 2018/01/09.
  */
 
-class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(context, 0) {
+class TimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(context, 0) {
     val layoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -26,7 +26,8 @@ class HomeTimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(conte
         if (view == null) {
             view = layoutInflater.inflate(R.layout.toot_item, parent, false)!!
         }
-        val item = getItem(position) as TimeLineStatus
+        var item = getItem(position) as TimeLineStatus
+        if (item.reblog != null) item = item.reblog!!
         view.displayNameTextView.text = item.displayName
         view.userNameTextView.text = "@${item.userName}"
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
