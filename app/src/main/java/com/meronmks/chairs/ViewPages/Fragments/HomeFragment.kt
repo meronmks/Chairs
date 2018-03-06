@@ -1,8 +1,6 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +21,6 @@ import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
-import com.sys1yagi.mastodon4j.api.method.Streaming
 
 
 /**
@@ -43,14 +40,14 @@ class HomeFragment : Fragment() {
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         adapter = HomeTimeLineAdapter(context)
         homeTootList.adapter = adapter
-        refresHomeTimeLine()
+        refreshHomeTimeLine()
         homeTootListRefresh.setOnRefreshListener {
-            refresHomeTimeLine(Range(sinceId = adapter.getItem(0).tootID))
+            refreshHomeTimeLine(Range(sinceId = adapter.getItem(0).tootID))
         }
         homeTootList.setOnScrollListener(object : AbsListView.OnScrollListener {
             override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
                 if(homeTootList.lastVisiblePosition == adapter.count - 1){
-                    refresHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
+                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
                 }
             }
 
@@ -62,7 +59,7 @@ class HomeFragment : Fragment() {
         CreateHandler()
     }
 
-    fun refresHomeTimeLine(range: Range = Range()) = launch(UI){
+    fun refreshHomeTimeLine(range: Range = Range()) = launch(UI){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true

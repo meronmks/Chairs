@@ -5,6 +5,7 @@ import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.method.Accounts
+import com.sys1yagi.mastodon4j.api.method.Public
 import com.sys1yagi.mastodon4j.api.method.Timelines
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
@@ -22,5 +23,21 @@ class MastodonTimeLineTool(private val instanceName : String, private val access
                 .build()
         val timeLine = Timelines(client)
         return@async timeLine.getHome(range).execute().part
+    }
+
+    fun getPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+        val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+                .accessToken(accessToken)
+                .build()
+        val publicTL = Public(client)
+        return@async publicTL.getFederatedPublic(range).execute().part
+    }
+
+    fun getLocalPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+        val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+                .accessToken(accessToken)
+                .build()
+        val publicTL = Public(client)
+        return@async publicTL.getLocalPublic(range).execute().part
     }
 }
