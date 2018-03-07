@@ -17,23 +17,30 @@
 
     <TextView
         android:id="@+id/displayNameTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:maxLines="2"
+        android:singleLine="true"
         android:text="displayName"
         app:layout_constraintEnd_toStartOf="@+id/userNameTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@+id/avatarImageButton"
         app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
 
     <TextView
         android:id="@+id/userNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="\@userName"
         app:layout_constraintEnd_toStartOf="@+id/timeTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/displayNameTextView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
 
     <TextView
@@ -49,11 +56,13 @@
 
     <TextView
         android:id="@+id/timeTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="time"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/userNameTextView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageButton" />
 
     <TextView
@@ -65,10 +74,35 @@
         app:layout_constraintStart_toStartOf="@+id/tootTextView"
         app:layout_constraintTop_toBottomOf="@+id/tootTextView" />
 
+    <TextView
+        android:id="@+id/rb2Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Reblog by @hoge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/clientViaTextView"
+        app:layout_constraintTop_toBottomOf="@+id/clientViaTextView" />
+
     <Space
+        android:id="@+id/itemMarginSpace"
         android:layout_width="8dp"
         android:layout_height="8dp"
-        app:layout_constraintStart_toStartOf="@id/clientViaTextView"
-        app:layout_constraintTop_toBottomOf="@+id/clientViaTextView" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rb2Name" />
+
+    <Space
+        android:id="@+id/lastItemMaginSpace"
+        android:layout_width="8dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rb2Name" />
 
 </android.support.constraint.ConstraintLayout>

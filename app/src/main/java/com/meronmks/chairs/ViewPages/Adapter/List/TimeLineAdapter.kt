@@ -1,7 +1,6 @@
 package com.meronmks.chairs.ViewPages.Adapter.List
 
 import android.content.Context
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.meronmks.chairs.R
 import com.meronmks.chairs.data.model.TimeLineStatus
 import kotlinx.android.synthetic.main.toot_item.view.*
-import android.webkit.WebSettings
 import com.meronmks.chairs.extensions.fromHtml
 
 
@@ -18,8 +16,8 @@ import com.meronmks.chairs.extensions.fromHtml
  * Created by meron on 2018/01/09.
  */
 
-class TimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(context, 0) {
-    val layoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+class TimeLineAdapter(context: Context?) : ArrayAdapter<TimeLineStatus>(context, 0) {
+    val layoutInflater: LayoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
@@ -27,7 +25,13 @@ class TimeLineAdapter(context: Context) : ArrayAdapter<TimeLineStatus>(context, 
             view = layoutInflater.inflate(R.layout.toot_item, parent, false)!!
         }
         var item = getItem(position) as TimeLineStatus
-        if (item.reblog != null) item = item.reblog!!
+        if(count-1 != position)view.lastItemMaginSpace.visibility = View.GONE
+        view.rb2Name.visibility = View.GONE
+        if (item.reblog != null){
+            view.rb2Name.visibility = View.VISIBLE
+            view.rb2Name.text = "Reblog by @${item.userName}"
+            item = item.reblog!!
+        }
         view.displayNameTextView.text = item.displayName
         view.userNameTextView.text = "@${item.userName}"
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)
