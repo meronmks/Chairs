@@ -18,6 +18,7 @@ import kotlinx.coroutines.experimental.launch
 import android.widget.AbsListView
 import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.extensions.StreamingAsyncTask
+import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
         homeTootList.setOnScrollListener(object : AbsListView.OnScrollListener {
             override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
                 if(homeTootList.lastVisiblePosition == adapter.count - 1){
-//                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
+                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
                 }
             }
 
@@ -112,5 +113,9 @@ class HomeFragment : Fragment() {
 
     suspend fun getTimeLine(range: Range = Range()): List<Status> {
         return timeLine.getHomeAsync(range).await()
+    }
+
+    fun listScroll2Top(){
+        homeTootList.smoothScrollToPosition(0)
     }
 }

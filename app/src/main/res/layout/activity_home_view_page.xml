@@ -34,63 +34,68 @@
 
         </android.support.v4.view.ViewPager>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+    </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/instanceNameEditTextLayout"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="?android:attr/colorBackgroundFloating"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/instanceNameEditTextLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sendTootImageButton"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <EditText
+                android:id="@+id/tootEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="@string/tootEditTextHint" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <ImageButton
+                android:id="@+id/sendTootImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/ic_send_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/instanceNameEditTextLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/instanceNameEditTextLayout" />
+
+            <TextView
+                android:id="@+id/tootCounterText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/sendTootImageButton"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <EditText
-                    android:id="@+id/tootEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:ems="10"
-                    android:hint="@string/tootEditTextHint" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight=".2">
-
-                <ImageButton
-                    android:id="@+id/sendTootImageButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:src="@drawable/ic_send_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/instanceNameEditTextLayout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/instanceNameEditTextLayout" />
-
-                <TextView
-                    android:id="@+id/tootCounterText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:clickable="false"
-                    android:text="500"
-                    android:textColor="@android:color/background_light"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </LinearLayout>
-
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:text="500"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+        </FrameLayout>
     </LinearLayout>
 
 </FrameLayout>

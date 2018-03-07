@@ -110,4 +110,8 @@ class LocalPublicTLFragment : Fragment() {
     suspend fun getTimeLine(range: Range = Range()): List<Status> {
         return timeLine.getLocalPublicTLAsync(range).await()
     }
+
+    fun listScroll2Top(){
+        homeTootList.smoothScrollToPosition(0)
+    }
 }

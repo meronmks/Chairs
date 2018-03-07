@@ -23,6 +23,8 @@ class NotificationAdapter(context: Context?) : ArrayAdapter<NotificationModel>(c
             view = layoutInflater.inflate(R.layout.notification_item, parent, false)!!
         }
         val item = getItem(position) as NotificationModel
+        view.lastItemMaginSpace.visibility = View.VISIBLE
+        if(count-1 != position)view.lastItemMaginSpace.visibility = View.GONE
         view.displayNameTextView.text = "${item.actionDisplayName} is ${item.type}"
         view.userNameTextView.text = "@${item.actionUserName}"
         view.tootTextView.text = item.content().fromHtml(context, view.tootTextView)

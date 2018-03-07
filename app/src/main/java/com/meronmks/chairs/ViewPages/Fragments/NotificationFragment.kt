@@ -13,6 +13,7 @@ import com.meronmks.chairs.ViewPages.Adapter.List.NotificationAdapter
 import com.meronmks.chairs.data.model.NotificationModel
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
+import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -75,5 +76,9 @@ class NotificationFragment : Fragment() {
 
     suspend fun getNotification(range: Range = Range()): List<Notification> {
         return notification.getNotificationAsync(range).await()
+    }
+
+    fun listScroll2Top(){
+        notificationList.smoothScrollToPosition(0)
     }
 }

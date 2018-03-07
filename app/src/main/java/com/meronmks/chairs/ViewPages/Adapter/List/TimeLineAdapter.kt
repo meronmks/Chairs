@@ -25,6 +25,7 @@ class TimeLineAdapter(context: Context?) : ArrayAdapter<TimeLineStatus>(context,
             view = layoutInflater.inflate(R.layout.toot_item, parent, false)!!
         }
         var item = getItem(position) as TimeLineStatus
+        view.lastItemMaginSpace.visibility = View.VISIBLE
         if(count-1 != position)view.lastItemMaginSpace.visibility = View.GONE
         view.rb2Name.visibility = View.GONE
         if (item.reblog != null){

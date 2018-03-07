@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
+import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
+import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
+import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
+import com.meronmks.chairs.ViewPages.Fragments.PublicTLFragment
 import com.meronmks.chairs.extensions.showToastLogD
 
 
@@ -25,12 +29,14 @@ class HomeViewPage : AppCompatActivity() {
 
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var tootTool : MastodonTootTool
+    lateinit var adapter: HomeFragmentPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
         accountDataBase = AccountDataBaseTool(baseContext)
         tootTool = MastodonTootTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
-        homeViewPager.adapter = HomeFragmentPagerAdapter(supportFragmentManager)
+        adapter = HomeFragmentPagerAdapter(supportFragmentManager)
+        homeViewPager.adapter = adapter
         homeViewPager.offscreenPageLimit = (homeViewPager.adapter as HomeFragmentPagerAdapter).count - 1  //保持するページを全ページに
         homeTabs.setupWithViewPager(homeViewPager)
         homeTabs.getTabAt(0)?.setIcon(R.drawable.ic_home_black_24dp)
@@ -40,7 +46,12 @@ class HomeViewPage : AppCompatActivity() {
         homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
         homeTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                tab?.position.toString().showToastLogD(baseContext)
+                when(tab?.position){
+                    0-> (adapter.getCurrentFrangemt() as HomeFragment).listScroll2Top()
+                    1-> (adapter.getCurrentFrangemt() as NotificationFragment).listScroll2Top()
+                    3-> (adapter.getCurrentFrangemt() as LocalPublicTLFragment).listScroll2Top()
+                    4-> (adapter.getCurrentFrangemt() as PublicTLFragment).listScroll2Top()
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
