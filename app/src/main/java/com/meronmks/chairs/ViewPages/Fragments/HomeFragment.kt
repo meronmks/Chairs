@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
         homeTootList.setOnScrollListener(object : AbsListView.OnScrollListener {
             override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
                 if(homeTootList.lastVisiblePosition == adapter.count - 1){
-                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
+//                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
                 }
             }
 

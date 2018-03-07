@@ -2,6 +2,7 @@ package com.meronmks.chairs.ViewPages
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
+import com.meronmks.chairs.extensions.showToastLogD
 
 
 class HomeViewPage : AppCompatActivity() {
@@ -29,13 +31,27 @@ class HomeViewPage : AppCompatActivity() {
         accountDataBase = AccountDataBaseTool(baseContext)
         tootTool = MastodonTootTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         homeViewPager.adapter = HomeFragmentPagerAdapter(supportFragmentManager)
-        homeViewPager.offscreenPageLimit = homeViewPager.adapter.count - 1  //保持するページを全ページに
+        homeViewPager.offscreenPageLimit = (homeViewPager.adapter as HomeFragmentPagerAdapter).count - 1  //保持するページを全ページに
         homeTabs.setupWithViewPager(homeViewPager)
         homeTabs.getTabAt(0)?.setIcon(R.drawable.ic_home_black_24dp)
         homeTabs.getTabAt(1)?.setIcon(R.drawable.ic_notifications_black_24dp)
         homeTabs.getTabAt(2)?.setIcon(R.drawable.ic_format_list_bulleted_black_24dp)
         homeTabs.getTabAt(3)?.setIcon(R.drawable.ic_people_black_24dp)
         homeTabs.getTabAt(4)?.setIcon(R.drawable.ic_public_black_24dp)
+        homeTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.position.toString().showToastLogD(baseContext)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
         sendTootImageButton.setOnClickListener {
             postToot()
         }

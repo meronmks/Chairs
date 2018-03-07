@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.toot_item.view.*
 /**
  * Created by meron on 2018/02/22.
  */
-class NotificationAdapter(context: Context) : ArrayAdapter<NotificationModel>(context, 0) {
-    val layoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+class NotificationAdapter(context: Context?) : ArrayAdapter<NotificationModel>(context, 0) {
+    val layoutInflater: LayoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView

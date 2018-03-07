@@ -14,14 +14,14 @@ import com.meronmks.chairs.BuildConfig
 /**
  * 普通に表示させるだけ
  */
-fun String.showToast(context: Context, duration: Int){
+fun String.showToast(context: Context?, duration: Int){
     Toast.makeText(context, this, duration).show()
 }
 
 /**
  * デバッグ表示
  */
-fun String.showToastLogD(context: Context, tag: String = "Debug"){
+fun String.showToastLogD(context: Context?, tag: String = "Debug"){
     if (BuildConfig.DEBUG){
         Log.d(tag, this)
     }
@@ -32,7 +32,7 @@ fun String.showToastLogD(context: Context, tag: String = "Debug"){
 /**
  * エラー表示
  */
-fun String.showToastLogE(context: Context, tag: String = "Error"){
+fun String.showToastLogE(context: Context?, tag: String = "Error"){
     if (BuildConfig.DEBUG){
         Log.e(tag, this)
     }

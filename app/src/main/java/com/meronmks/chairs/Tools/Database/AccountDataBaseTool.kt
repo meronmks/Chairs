@@ -12,7 +12,7 @@ import java.util.*
  * Realmデータベースに対する操作全般
  * かならず最後にClose()メソッドを呼ぶようにすること
  */
-class AccountDataBaseTool(context: Context){
+class AccountDataBaseTool(context: Context?){
     var mRealm : Realm
 
     init {
