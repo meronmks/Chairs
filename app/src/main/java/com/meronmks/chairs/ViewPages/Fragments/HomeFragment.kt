@@ -2,13 +2,14 @@ package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonTimeLineTool
-import com.meronmks.chairs.ViewPages.Adapter.List.TimeLineAdapter
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -16,7 +17,11 @@ import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.widget.AbsListView
+import android.widget.ArrayAdapter
 import com.meronmks.chairs.Tools.MastodonStreamingTool
+import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
+import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
+import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
@@ -28,35 +33,32 @@ import com.sys1yagi.mastodon4j.api.entity.Notification
  * Created by meron on 2018/01/04.
  * ホームタイムラインを表示する奴
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
+    override fun onItemClick(view: View, position: Int) {
+
+    }
 
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
-    lateinit var adapter : TimeLineAdapter
     var loadLock : Boolean = false
     lateinit var shutdownable : Shutdownable
+    lateinit var itemList: ArrayAdapter<TimeLineStatus>
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
-        adapter = TimeLineAdapter(context)
-        homeTootList.adapter = adapter
+        itemList = ArrayAdapter<TimeLineStatus>(context,0)
+        homeTootList.adapter = TimeLineAdapter(context!!, this, itemList)
+        homeTootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refreshHomeTimeLine()
         homeTootListRefresh.setOnRefreshListener {
-            refreshHomeTimeLine(Range(sinceId = adapter.getItem(0).tootID))
+            refreshHomeTimeLine(Range(sinceId = itemList.getItem(0).tootID))
         }
-        homeTootList.setOnScrollListener(object : AbsListView.OnScrollListener {
-            override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
-                if(homeTootList.lastVisiblePosition == adapter.count - 1){
-                    refreshHomeTimeLine(Range(maxId = adapter.getItem(adapter.count - 1).tootID))
-                }
-            }
 
-            override fun onScroll(p0: AbsListView?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
+        homeTootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
+            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
+
         CreateHandler()
     }
 
@@ -66,9 +68,11 @@ class HomeFragment : Fragment() {
         homeTootListRefresh.isRefreshing = true
         val list = getTimeLine(range)
         list.forEach {
-            adapter.add(TimeLineStatus(it))
+            homeTootList.adapter.notifyDataSetChanged()
+            itemList.add(TimeLineStatus(it))
         }
-        adapter.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -77,7 +81,7 @@ class HomeFragment : Fragment() {
         val handler = object : com.sys1yagi.mastodon4j.api.Handler{
             override fun onStatus(status: Status) {
                 launch(UI){
-                    adapter.insert(TimeLineStatus(status), 0)
+                    itemList.insert(TimeLineStatus(status), 0)
                 }
             }
 
