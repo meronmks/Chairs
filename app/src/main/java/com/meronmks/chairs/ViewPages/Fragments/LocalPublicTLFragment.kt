@@ -62,9 +62,9 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         val list = getTimeLine(range)
         list.forEach {
             itemList.add(TimeLineStatus(it))
-            homeTootList.adapter.notifyDataSetChanged()
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        homeTootList.adapter.notifyDataSetChanged()
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }

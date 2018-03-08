@@ -68,11 +68,10 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         homeTootListRefresh.isRefreshing = true
         val list = getTimeLine(range)
         list.forEach {
-            homeTootList.adapter.notifyDataSetChanged()
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-
+        homeTootList.adapter.notifyDataSetChanged()
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -82,6 +81,7 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
+                    homeTootList.adapter.notifyItemInserted(0)
                 }
             }
 
