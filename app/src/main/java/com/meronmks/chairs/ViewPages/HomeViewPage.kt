@@ -33,6 +33,7 @@ class HomeViewPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
+        supportActionBar?.hide()
         accountDataBase = AccountDataBaseTool(baseContext)
         tootTool = MastodonTootTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         adapter = HomeFragmentPagerAdapter(supportFragmentManager)
