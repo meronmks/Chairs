@@ -85,6 +85,9 @@ deploygate {
             def hash = "git log -1 --oneline".execute([], project.rootDir).in.text.trim()
             // ビルドのメッセージとして設定します
             message = "debug build ${hash}"
+            // 配布ページを利用している場合、以下の設定で同時に更新することができます
+            distributionKey = "7d46401a201cc0b7a61847855370f8884b761a6a"
+            releaseNote = "debug build ${hash}"
         }
     }
 }
