@@ -2,15 +2,21 @@ package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.ArrayAdapter
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonNotificationTool
-import com.meronmks.chairs.ViewPages.Adapter.List.NotificationAdapter
+import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
+import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
+import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
+import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
+import com.meronmks.chairs.data.model.TimeLineStatus
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
@@ -22,33 +28,28 @@ import kotlinx.coroutines.experimental.launch
  * Created by meron on 2018/01/04.
  * 通知一覧を表示する奴
  */
-class NotificationFragment : Fragment() {
+class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
+    override fun onItemClick(view: View, position: Int) {
 
+    }
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
+    lateinit var itemList: ArrayAdapter<NotificationModel>
     var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         notification = MastodonNotificationTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
-        adapter = NotificationAdapter(context)
-        notificationList.adapter = adapter
+        itemList = ArrayAdapter<NotificationModel>(context,0)
+        notificationList.adapter = NotificationAdapter(context!!, this, itemList)
+        notificationList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refresNotification()
         notificationListRefresh.setOnRefreshListener {
-            refresNotification(Range(sinceId = adapter.getItem(0).id))
+            refresNotification(Range(sinceId = itemList.getItem(0).id))
         }
-        notificationList.setOnScrollListener(object : AbsListView.OnScrollListener {
-            override fun onScrollStateChanged(p0: AbsListView?, p1: Int) {
-                if(notificationList.lastVisiblePosition == adapter.count - 1){
-                    refresNotification(Range(maxId = adapter.getItem(adapter.count - 1).id))
-                }
-            }
-
-            override fun onScroll(p0: AbsListView?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
+        notificationList.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
+            refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
     }
 
@@ -58,9 +59,10 @@ class NotificationFragment : Fragment() {
         notificationListRefresh.isRefreshing = true
         val list = getNotification(range)
         list.forEach {
-           adapter.add(NotificationModel(it))
+            itemList.add(NotificationModel(it))
         }
-        adapter.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        notificationList.adapter.notifyDataSetChanged()
         notificationListRefresh.isRefreshing = false
         loadLock = false
     }
