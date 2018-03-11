@@ -74,6 +74,7 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI) {
                     itemList.insert(TimeLineStatus(status), 0)
+                    homeTootList.adapter.notifyItemInserted(0)
                 }
             }
 
@@ -88,7 +89,7 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         try{
             object : StreamingAsyncTask(){
                 override fun doInBackground(vararg p0: Void?): String? {
-                    shutdownable = streaming.user(handler)
+                    shutdownable = streaming.localPublic(handler)
                     return null
                 }
             }.execute()
@@ -103,8 +104,8 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        accountDataBase.close()
-        shutdownable.shutdown()
+        accountDataBase?.close()
+        shutdownable?.shutdown()
     }
 
     suspend fun getTimeLine(range: Range = Range()): List<Status> {

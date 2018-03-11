@@ -11,14 +11,19 @@ import android.widget.ArrayAdapter
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonNotificationTool
+import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
 import com.meronmks.chairs.data.model.TimeLineStatus
+import com.meronmks.chairs.extensions.StreamingAsyncTask
+import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
+import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
+import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
@@ -36,6 +41,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
     lateinit var itemList: ArrayAdapter<NotificationModel>
+    lateinit var shutdownable : Shutdownable
     var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -73,11 +79,41 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
 
     override fun onDestroy() {
         super.onDestroy()
-        accountDataBase.close()
+        accountDataBase?.close()
+        shutdownable?.shutdown()
     }
 
     suspend fun getNotification(range: Range = Range()): List<Notification> {
         return notification.getNotificationAsync(range).await()
+    }
+
+    fun CreateHandler(){
+        val handler = object : com.sys1yagi.mastodon4j.api.Handler{
+            override fun onStatus(status: Status) {
+            }
+
+            override fun onNotification(notification: Notification) {
+                launch(UI){
+                    itemList.insert(NotificationModel(notification), 0)
+                    notificationList.adapter.notifyItemInserted(0)
+                }
+            }
+
+            override fun onDelete(id: Long) {
+            }
+
+        }
+        val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
+        try{
+            object : StreamingAsyncTask(){
+                override fun doInBackground(vararg p0: Void?): String? {
+                    shutdownable = streaming.user(handler)
+                    return null
+                }
+            }.execute()
+        }catch (e : Exception){
+            e.message?.showToastLogE(context)
+        }
     }
 
     fun listScroll2Top(){

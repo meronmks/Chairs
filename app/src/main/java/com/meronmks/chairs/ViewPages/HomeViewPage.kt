@@ -18,11 +18,17 @@ import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
+import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
 import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
 import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
 import com.meronmks.chairs.ViewPages.Fragments.PublicTLFragment
+import com.meronmks.chairs.data.model.TimeLineStatus
+import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogD
+import com.sys1yagi.mastodon4j.api.Shutdownable
+import com.sys1yagi.mastodon4j.api.entity.Notification
+import kotlinx.android.synthetic.main.fragment_home_time_line.*
 
 
 class HomeViewPage : AppCompatActivity() {
@@ -78,7 +84,7 @@ class HomeViewPage : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        accountDataBase.close()
+        accountDataBase?.close()
     }
 
     private fun postToot() = launch(UI){

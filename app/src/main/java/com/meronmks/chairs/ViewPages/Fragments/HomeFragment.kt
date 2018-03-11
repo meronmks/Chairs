@@ -111,8 +111,8 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        accountDataBase.close()
-        shutdownable.shutdown()
+        accountDataBase?.close()
+        shutdownable?.shutdown()
     }
 
     suspend fun getTimeLine(range: Range = Range()): List<Status> {
