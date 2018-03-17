@@ -96,7 +96,7 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         try{
             object : StreamingAsyncTask(){
                 override fun doInBackground(vararg p0: Void?): String? {
-                    shutdownable = streaming.user(handler)
+                    shutdownable = streaming?.user(handler)
                     return null
                 }
             }.execute()

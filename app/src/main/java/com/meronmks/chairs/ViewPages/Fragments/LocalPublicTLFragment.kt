@@ -89,7 +89,7 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         try{
             object : StreamingAsyncTask(){
                 override fun doInBackground(vararg p0: Void?): String? {
-                    shutdownable = streaming.localPublic(handler)
+                    shutdownable = streaming?.localPublic(handler)
                     return null
                 }
             }.execute()
