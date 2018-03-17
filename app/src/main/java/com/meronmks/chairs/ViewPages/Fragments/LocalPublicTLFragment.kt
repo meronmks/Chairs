@@ -36,7 +36,7 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
     var loadLock : Boolean = false
-    lateinit var shutdownable : Shutdownable
+    var shutdownable : Shutdownable? = null
     lateinit var itemList: ArrayAdapter<TimeLineStatus>
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

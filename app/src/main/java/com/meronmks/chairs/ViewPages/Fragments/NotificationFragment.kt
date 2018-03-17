@@ -41,7 +41,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
     lateinit var itemList: ArrayAdapter<NotificationModel>
-    lateinit var shutdownable : Shutdownable
+    var shutdownable : Shutdownable? = null
     var loadLock : Boolean = false
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
