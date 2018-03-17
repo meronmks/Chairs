@@ -12,6 +12,7 @@ apply plugin: 'deploygate'
 
 apply from: "$rootDir/jacoco.gradle"
 
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -67,10 +68,11 @@ dependencies {
     compile 'com.deploygate:sdk:4.0.0'
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.18"
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.18"
-    compile 'com.github.bumptech.glide:glide:4.4.0'
+    compile 'com.github.bumptech.glide:glide:4.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton.threetenabp:threetenabp:1.0.5'
     compile 'com.deploygate:sdk:4.0.0'
+    kapt 'com.github.bumptech.glide:compiler:4.6.1'
 }
 
 deploygate {
