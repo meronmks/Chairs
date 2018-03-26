@@ -43,18 +43,19 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     lateinit var itemList: ArrayAdapter<NotificationModel>
     var shutdownable : Shutdownable? = null
     var loadLock : Boolean = false
+    private val tootlist by lazy { notificationList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         notification = MastodonNotificationTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<NotificationModel>(context,0)
-        notificationList.adapter = NotificationAdapter(context!!, this, itemList)
-        notificationList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootlist.adapter = NotificationAdapter(context!!, this, itemList)
+        tootlist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refresNotification()
         notificationListRefresh.setOnRefreshListener {
             refresNotification(Range(sinceId = itemList.getItem(0).id))
         }
-        notificationList.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
+        tootlist.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
             refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
     }
@@ -68,7 +69,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             itemList.add(NotificationModel(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        notificationList.adapter.notifyDataSetChanged()
+        tootlist.adapter.notifyDataSetChanged()
         notificationListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -95,7 +96,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             override fun onNotification(notification: Notification) {
                 launch(UI){
                     itemList.insert(NotificationModel(notification), 0)
-                    notificationList.adapter.notifyItemInserted(0)
+                    tootlist.adapter.notifyItemInserted(0)
                 }
             }
 
@@ -117,6 +118,6 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     }
 
     fun listScroll2Top(){
-        notificationList.smoothScrollToPosition(0)
+        tootlist.smoothScrollToPosition(0)
     }
 }

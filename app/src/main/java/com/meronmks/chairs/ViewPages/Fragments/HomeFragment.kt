@@ -43,19 +43,20 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     var loadLock : Boolean = false
     var shutdownable : Shutdownable? = null
     lateinit var itemList: ArrayAdapter<TimeLineStatus>
+    private val tootList by lazy { homeTootList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<TimeLineStatus>(context,0)
-        homeTootList.adapter = TimeLineAdapter(context!!, this, itemList)
-        homeTootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.adapter = TimeLineAdapter(context!!, this, itemList)
+        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refreshHomeTimeLine()
         homeTootListRefresh.setOnRefreshListener {
             refreshHomeTimeLine(Range(sinceId = itemList.getItem(0).tootID))
         }
 
-        homeTootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
             refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
 
@@ -71,7 +72,7 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        homeTootList.adapter.notifyDataSetChanged()
+        tootList.adapter.notifyDataSetChanged()
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -81,7 +82,7 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
-                    homeTootList.adapter.notifyItemInserted(0)
+                    tootList.adapter.notifyItemInserted(0)
                 }
             }
 
@@ -120,6 +121,6 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     }
 
     fun listScroll2Top(){
-        homeTootList.smoothScrollToPosition(0)
+        tootList.smoothScrollToPosition(0)
     }
 }
