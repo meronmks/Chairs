@@ -82,7 +82,7 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
-                    tootList.adapter.notifyItemInserted(0)
+                    tootList.adapter?.notifyItemInserted(0)
                 }
             }
 

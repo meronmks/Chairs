@@ -75,7 +75,7 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
-                    tootlist.adapter.notifyItemInserted(0)
+                    tootlist.adapter?.notifyItemInserted(0)
                 }
             }
 
