@@ -2,16 +2,20 @@ package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.R
 import com.meronmks.chairs.ViewPages.ViewHolder.NotificationViewHolder
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
 import com.meronmks.chairs.data.model.TimeLineStatus
+import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
 
 /**
@@ -43,6 +47,16 @@ class NotificationAdapter(private val context: Context, private val itemClickLis
             it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
             it.timeTextView.text = item.createAt(context, java.lang.System.currentTimeMillis())
             Glide.with(context).load(item.actionAvater).into(it.avatarImageButton)
+            //タッチイベントの処理
+            it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
+                val textView : TextView = v as TextView
+                val m = MutableLinkMovementMethod()
+                textView.movementMethod = m
+                val mt = m.onTouchEvent(textView, textView.text as Spannable, event)
+                textView.movementMethod = null
+                textView.isFocusable = false
+                return@setOnTouchListener mt
+            }
         }
     }
 

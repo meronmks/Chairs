@@ -2,17 +2,21 @@ package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.Annotation.GlideApp
 import com.meronmks.chairs.Annotation.MyAppGlideModule
 import com.meronmks.chairs.R
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.TimeLineStatus
+import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
 import kotlinx.android.synthetic.main.toot_item.view.*
 
@@ -54,6 +58,16 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
            GlideApp.with(context).load(item.avater).into(it.avatarImageButton)
+           //タッチイベントの処理
+           it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
+               val textView : TextView = v as TextView
+               val m = MutableLinkMovementMethod()
+               textView.movementMethod = m
+               val mt = m.onTouchEvent(textView, textView.text as Spannable, event)
+               textView.movementMethod = null
+               textView.isFocusable = false
+               return@setOnTouchListener mt
+           }
        }
     }
 
