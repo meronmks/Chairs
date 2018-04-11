@@ -11,6 +11,7 @@ kotlin Ver1.2.30\
 [realm](https://realm.io/jp/)\
 [glide](https://github.com/bumptech/glide)\
 [picasso](http://square.github.io/picasso/)
+[Hyperion](https://github.com/willowtreeapps/Hyperion-Android)
 # 注意事項
 本アプリケーションはベータ版配布及びログ解析に[deploygate](https://deploygate.com/)を使用しています。
 また開発中のため急な仕様変更等が出て来る可能性が大きくあります。
