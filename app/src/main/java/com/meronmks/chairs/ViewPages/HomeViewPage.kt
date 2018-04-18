@@ -36,6 +36,7 @@ class HomeViewPage : AppCompatActivity() {
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var tootTool : MastodonTootTool
     lateinit var adapter: HomeFragmentPagerAdapter
+    var lock: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
@@ -89,6 +90,8 @@ class HomeViewPage : AppCompatActivity() {
 
     private fun postToot() = launch(UI){
         try {
+            if(lock) return@launch
+            lock = true
             tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
             tootEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
@@ -96,6 +99,8 @@ class HomeViewPage : AppCompatActivity() {
             "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
         }catch (e: Exception){
             e.message?.showToastLogE(baseContext)
+        }finally {
+            lock = false
         }
     }
 
