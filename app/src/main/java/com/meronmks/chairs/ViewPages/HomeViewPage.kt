@@ -19,18 +19,12 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
-import com.meronmks.chairs.Tools.MastodonStreamingTool
+import com.meronmks.chairs.Annotation.GlideApp
 import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
 import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
 import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
 import com.meronmks.chairs.ViewPages.Fragments.PublicTLFragment
-import com.meronmks.chairs.data.model.TimeLineStatus
-import com.meronmks.chairs.extensions.StreamingAsyncTask
-import com.meronmks.chairs.extensions.showToastLogD
-import com.sys1yagi.mastodon4j.api.Shutdownable
-import com.sys1yagi.mastodon4j.api.entity.Notification
-import kotlinx.android.synthetic.main.fragment_home_time_line.*
+import com.meronmks.chairs.extensions.fromHtml
 
 
 class HomeViewPage : AppCompatActivity() {
@@ -103,8 +97,10 @@ class HomeViewPage : AppCompatActivity() {
         accountDataBase?.close()
     }
 
-    fun showTootDtail(avater : String, content : String){
+    fun showTootDtail(avater : String, content : String?){
         tootDetail.visibility = View.VISIBLE
+        GlideApp.with(applicationContext).load(avater).into(detailAvatarImageButton)
+        detailTootTextView.text = content?.fromHtml(baseContext, detailTootTextView)
     }
 
     /**

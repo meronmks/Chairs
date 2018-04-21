@@ -15,6 +15,7 @@ import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
+import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
 import com.meronmks.chairs.data.model.TimeLineStatus
@@ -35,7 +36,8 @@ import kotlinx.coroutines.experimental.launch
  */
 class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     override fun onItemClick(view: View, position: Int) {
-
+        val item =  itemList.getItem(position)
+        (activity as HomeViewPage).showTootDtail(item.actionAvater!!, item.content())
     }
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var notification : MastodonNotificationTool

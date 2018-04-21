@@ -13,6 +13,7 @@ import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.Tools.MastodonTimeLineTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
+import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.StreamingAsyncTask
@@ -31,7 +32,8 @@ import kotlinx.coroutines.experimental.launch
  */
 class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
-
+        val item =  itemList.getItem(position)
+        (activity as HomeViewPage).showTootDtail(item.avater, item.content())
     }
 
     lateinit var accountDataBase: AccountDataBaseTool
