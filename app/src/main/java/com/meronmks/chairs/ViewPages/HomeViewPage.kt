@@ -119,7 +119,7 @@ class HomeViewPage : AppCompatActivity() {
 
     /**
      * Shift＋Enterの読み取り
-     * エミュでは動作しない模様（別のショトカに取られてる？）
+     * エミュでは動作しない模様
      */
     private fun textEditorKeyDown(){
         tootEditText.setOnKeyListener { view, keyCode, event ->
