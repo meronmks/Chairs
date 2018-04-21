@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,6 +21,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
             app:tabMode="fixed" />
 
         <android.support.v4.view.ViewPager
@@ -37,29 +40,84 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearMenu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_send_black_24dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_person_black_24dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_send_black_24dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_send_black_24dp" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_send_black_24dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="#616161"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:background="@color/gray"
         android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/menuButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="@drawable/image_button_feedback"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_arrow_drop_up_black_24dp" />
+            android:src="@drawable/menu_open_black_24dp" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/instanceNameEditTextLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
@@ -70,7 +128,7 @@
             <EditText
                 android:id="@+id/tootEditText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:ems="11"
                 android:hint="@string/tootEditTextHint" />
 
@@ -85,7 +143,7 @@
                 android:id="@+id/sendTootImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
+                android:background="@drawable/image_button_feedback"
                 android:src="@drawable/ic_send_black_24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/instanceNameEditTextLayout"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,4 +161,4 @@
         </FrameLayout>
     </LinearLayout>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

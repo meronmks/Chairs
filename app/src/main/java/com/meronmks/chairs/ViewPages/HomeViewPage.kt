@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_home_view_page.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
+import android.view.View
+import android.view.ViewGroup
 import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
 import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
@@ -71,8 +73,19 @@ class HomeViewPage : AppCompatActivity() {
             }
 
         })
+
+        linearMenu.visibility = View.GONE
+
         sendTootImageButton.setOnClickListener {
             postToot()
+        }
+        menuButton.setOnClickListener {
+            if(linearMenu.visibility == View.VISIBLE){
+                linearMenu.visibility = View.GONE
+            }else if (linearMenu.visibility == View.GONE){
+                linearMenu.visibility = View.VISIBLE
+            }
+
         }
         textEditorKeyDown()
         textCounter()
