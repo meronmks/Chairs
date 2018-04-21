@@ -105,16 +105,17 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
 
         }
         val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
-        try{
-            object : StreamingAsyncTask(){
-                override fun doInBackground(vararg p0: Void?): String? {
+        object : StreamingAsyncTask(){
+            override fun doInBackground(vararg p0: Void?): String? {
+                try{
                     shutdownable = streaming?.user(handler)
-                    return null
+                }catch (e : Exception){
+                    e.message?.showToastLogE(context)
                 }
-            }.execute()
-        }catch (e : Exception){
-            e.message?.showToastLogE(context)
-        }
+                return null
+            }
+        }.execute()
+
     }
 
     fun listScroll2Top(){

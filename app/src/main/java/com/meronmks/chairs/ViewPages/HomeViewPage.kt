@@ -75,6 +75,7 @@ class HomeViewPage : AppCompatActivity() {
         })
 
         linearMenu.visibility = View.GONE
+        tootDetail.visibility = View.GONE
 
         sendTootImageButton.setOnClickListener {
             postToot()
@@ -89,6 +90,7 @@ class HomeViewPage : AppCompatActivity() {
         }
         textEditorKeyDown()
         textCounter()
+        tootDtailButton()
     }
 
     override fun onPostResume() {
@@ -101,6 +103,22 @@ class HomeViewPage : AppCompatActivity() {
         accountDataBase?.close()
     }
 
+    fun showTootDtail(avater : String, content : String){
+        tootDetail.visibility = View.VISIBLE
+    }
+
+    /**
+     * トゥート詳細のボタン設定
+     **/
+    private fun tootDtailButton(){
+        detailCloseButton.setOnClickListener {
+            tootDetail.visibility = View.GONE
+        }
+    }
+
+    /**
+     * トゥートを送信する
+     **/
     private fun postToot() = launch(UI){
         try {
             if(lock) return@launch
