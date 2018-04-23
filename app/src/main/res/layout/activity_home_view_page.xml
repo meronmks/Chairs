@@ -99,6 +99,7 @@
                 android:src="@drawable/ic_reply_black_24dp" />
 
             <ImageButton
+                android:id="@+id/reblogButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

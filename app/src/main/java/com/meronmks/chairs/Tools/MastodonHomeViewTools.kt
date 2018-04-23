@@ -13,11 +13,26 @@ import okhttp3.OkHttpClient
  */
 
 class MastodonHomeViewTools(private val instanceName : String, private val accessToken : String){
+
+    var statuses: Statuses? = null
+
     fun tootAsync(tootText : String, inReplyToId : Long?, mediaIds: List<Long>?, sensitive : Boolean, spoilerText: String?, visibility: Status.Visibility) = async(CommonPool){
-        val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
-                .accessToken(accessToken)
-                .build()
-        val statuses = Statuses(client)
-        return@async statuses.postStatus(tootText, inReplyToId, mediaIds, sensitive, spoilerText, visibility).execute()
+        if(statuses == null) {
+            val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+                    .accessToken(accessToken)
+                    .build()
+            statuses = Statuses(client)
+        }
+        return@async statuses?.postStatus(tootText, inReplyToId, mediaIds, sensitive, spoilerText, visibility)?.execute()
+    }
+
+    fun postAsyncReblog(statusID : Long) = async(CommonPool){
+        if(statuses == null) {
+            val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+                    .accessToken(accessToken)
+                    .build()
+            statuses = Statuses(client)
+        }
+        return@async statuses?.postReblog(statusID)?.execute()
     }
 }

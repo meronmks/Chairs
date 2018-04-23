@@ -32,6 +32,7 @@ class HomeViewPage : AppCompatActivity() {
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var homeViewTools : MastodonHomeViewTools
     lateinit var adapter: HomeFragmentPagerAdapter
+    var statusID : Long = 0
     var lock: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,10 +98,11 @@ class HomeViewPage : AppCompatActivity() {
         accountDataBase?.close()
     }
 
-    fun showTootDtail(avater : String, content : String?){
+    fun showTootDtail(statusID : Long, avater : String, content : String?){
         tootDetail.visibility = View.VISIBLE
         GlideApp.with(applicationContext).load(avater).into(detailAvatarImageButton)
         detailTootTextView.text = content?.fromHtml(baseContext, detailTootTextView)
+        this.statusID = statusID
     }
 
     /**
@@ -109,6 +111,16 @@ class HomeViewPage : AppCompatActivity() {
     private fun tootDtailButton(){
         detailCloseButton.setOnClickListener {
             tootDetail.visibility = View.GONE
+        }
+        reblogButton.setOnClickListener {
+            launch(UI) {
+                try {
+                    homeViewTools.postAsyncReblog(statusID).await()
+                    getString(R.string.SuccessReblog).showToast(baseContext, Toast.LENGTH_SHORT)
+                }catch (e: Mastodon4jRequestException){
+                    "${getString(R.string.reblogFaild)} ${e.response?.code()}".showToastLogE(baseContext)
+                }
+            }
         }
     }
 

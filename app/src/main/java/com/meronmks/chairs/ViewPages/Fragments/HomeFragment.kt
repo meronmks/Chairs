@@ -37,7 +37,11 @@ import com.sys1yagi.mastodon4j.api.entity.Notification
 class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
-        (activity as HomeViewPage).showTootDtail(item.avater, item.content())
+        if(item.reblog == null) {
+            (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content())
+        }else{
+            (activity as HomeViewPage).showTootDtail(item.reblog.tootID, item.reblog.avater, item.reblog.content())
+        }
     }
 
     lateinit var accountDataBase: AccountDataBaseTool

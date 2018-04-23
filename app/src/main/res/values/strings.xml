@@ -12,4 +12,6 @@
     <string name="AuthenticationFaild">認証に失敗しました</string>
     <string name="SuccessPostToot">投稿しました</string>
     <string name="postFaild">投稿に失敗しました</string>
+    <string name="SuccessReblog">ブーストしました</string>
+    <string name="reblogFaild">ブーストに失敗しました</string>
 </resources>
