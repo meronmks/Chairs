@@ -8,7 +8,7 @@ import android.text.TextWatcher
 import android.widget.Toast
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
-import com.meronmks.chairs.Tools.MastodonTootTool
+import com.meronmks.chairs.Tools.MastodonHomeViewTools
 import com.meronmks.chairs.ViewPages.Adapter.HomeFragmentPagerAdapter
 import com.meronmks.chairs.extensions.showToast
 import com.meronmks.chairs.extensions.showToastLogE
@@ -30,7 +30,7 @@ import com.meronmks.chairs.extensions.fromHtml
 class HomeViewPage : AppCompatActivity() {
 
     lateinit var accountDataBase: AccountDataBaseTool
-    lateinit var tootTool : MastodonTootTool
+    lateinit var homeViewTools : MastodonHomeViewTools
     lateinit var adapter: HomeFragmentPagerAdapter
     var lock: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class HomeViewPage : AppCompatActivity() {
         setContentView(R.layout.activity_home_view_page)
         supportActionBar?.hide()
         accountDataBase = AccountDataBaseTool(baseContext)
-        tootTool = MastodonTootTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
+        homeViewTools = MastodonHomeViewTools(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         adapter = HomeFragmentPagerAdapter(supportFragmentManager)
         homeViewPager.adapter = adapter
         homeViewPager.offscreenPageLimit = (homeViewPager.adapter as HomeFragmentPagerAdapter).count - 1  //保持するページを全ページに
@@ -119,7 +119,7 @@ class HomeViewPage : AppCompatActivity() {
         try {
             if(lock) return@launch
             lock = true
-            tootTool.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
+            homeViewTools.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
             tootEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
         }catch (e: Mastodon4jRequestException){
