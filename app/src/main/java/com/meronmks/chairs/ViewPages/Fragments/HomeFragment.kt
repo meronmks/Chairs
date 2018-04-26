@@ -65,7 +65,6 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
             refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
-
         CreateHandler()
     }
 
