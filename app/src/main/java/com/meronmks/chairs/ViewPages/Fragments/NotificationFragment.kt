@@ -60,6 +60,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
         tootlist.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
             refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
+        CreateHandler()
     }
 
     fun refresNotification(range: Range = Range()) = launch(UI){
@@ -117,7 +118,6 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
                 return null
             }
         }.execute()
-
     }
 
     fun listScroll2Top(){
