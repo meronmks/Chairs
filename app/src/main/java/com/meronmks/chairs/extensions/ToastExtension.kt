@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import com.deploygate.sdk.DeployGate
 import com.meronmks.chairs.BuildConfig
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Created by meron on 2018/02/15.
@@ -15,27 +17,36 @@ import com.meronmks.chairs.BuildConfig
  * 普通に表示させるだけ
  */
 fun String.showToast(context: Context?, duration: Int){
-    Toast.makeText(context, this, duration).show()
+    val msg = this
+    launch(UI) {
+        Toast.makeText(context, msg, duration).show()
+    }
 }
 
 /**
  * デバッグ表示
  */
 fun String.showToastLogD(context: Context?, tag: String = "Debug"){
+    val msg = this
     if (BuildConfig.DEBUG){
-        Log.d(tag, this)
+        Log.d(tag, msg)
     }
-    DeployGate.logDebug(this)
-    Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
+    launch(UI) {
+        DeployGate.logDebug(msg)
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    }
 }
 
 /**
  * エラー表示
  */
 fun String.showToastLogE(context: Context?, tag: String = "Error"){
+    val msg = this
     if (BuildConfig.DEBUG){
-        Log.e(tag, this)
+        Log.e(tag, msg)
     }
-    DeployGate.logError(this)
-    Toast.makeText(context, this, Toast.LENGTH_LONG).show()
+    launch(UI) {
+        DeployGate.logError(msg)
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+    }
 }
