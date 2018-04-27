@@ -35,4 +35,14 @@ class MastodonHomeViewTools(private val instanceName : String, private val acces
         }
         return@async statuses?.postReblog(statusID)?.execute()
     }
+
+    fun postAsyncFavourite(statusID: Long) = async(CommonPool){
+        if(statuses == null) {
+            val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
+                    .accessToken(accessToken)
+                    .build()
+            statuses = Statuses(client)
+        }
+        return@async statuses?.postFavourite(statusID)?.execute()
+    }
 }

@@ -122,6 +122,16 @@ class HomeViewPage : AppCompatActivity() {
                 }
             }
         }
+        favButton.setOnClickListener {
+            launch(UI) {
+                try {
+                    homeViewTools.postAsyncFavourite(statusID).await()
+                    getString(R.string.fovouriteSuccess).showToast(baseContext, Toast.LENGTH_SHORT)
+                }catch (e: Mastodon4jRequestException){
+                    "${getString(R.string.favouriteFaild)} ${e.response?.code()}".showToastLogE(baseContext)
+                }
+            }
+        }
     }
 
     /**

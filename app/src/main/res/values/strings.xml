@@ -14,4 +14,6 @@
     <string name="postFaild">投稿に失敗しました</string>
     <string name="SuccessReblog">ブーストしました</string>
     <string name="reblogFaild">ブーストに失敗しました</string>
+    <string name="favouriteFaild">お気に入りに失敗しました</string>
+    <string name="fovouriteSuccess">お気に入りしました</string>
 </resources>
