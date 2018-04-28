@@ -33,7 +33,7 @@ import kotlinx.coroutines.experimental.launch
 class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
-        (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content())
+        (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content(), item.userName)
     }
 
     lateinit var accountDataBase: AccountDataBaseTool

@@ -38,9 +38,9 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
         if(item.reblog == null) {
-            (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content())
+            (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content(), item.userName)
         }else{
-            (activity as HomeViewPage).showTootDtail(item.reblog.tootID, item.reblog.avater, item.reblog.content())
+            (activity as HomeViewPage).showTootDtail(item.reblog.tootID, item.reblog.avater, item.reblog.content(), item.reblog.userName)
         }
     }
 

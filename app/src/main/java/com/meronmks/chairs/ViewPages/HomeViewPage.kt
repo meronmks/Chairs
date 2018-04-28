@@ -34,6 +34,7 @@ class HomeViewPage : AppCompatActivity() {
     lateinit var adapter: HomeFragmentPagerAdapter
     var statusID : Long = 0
     var lock: Boolean = false
+    var userName : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
@@ -98,11 +99,12 @@ class HomeViewPage : AppCompatActivity() {
         accountDataBase?.close()
     }
 
-    fun showTootDtail(statusID : Long, avater : String, content : String?){
+    fun showTootDtail(statusID : Long, avater : String, content : String?, userName : String?){
         tootDetail.visibility = View.VISIBLE
         GlideApp.with(applicationContext).load(avater).into(detailAvatarImageButton)
         detailTootTextView.text = content?.fromHtml(baseContext, detailTootTextView)
         this.statusID = statusID
+        this.userName = userName
     }
 
     /**
@@ -111,6 +113,12 @@ class HomeViewPage : AppCompatActivity() {
     private fun tootDtailButton(){
         detailCloseButton.setOnClickListener {
             tootDetail.visibility = View.GONE
+            userName = null
+        }
+        replayButton.setOnClickListener {
+            tootEditText.requestFocus()
+            tootEditText.setText("@$userName ${tootEditText.text}")
+            tootEditText.setSelection(tootEditText.text.length)
         }
         reblogButton.setOnClickListener {
             launch(UI) {
@@ -141,7 +149,9 @@ class HomeViewPage : AppCompatActivity() {
         try {
             if(lock) return@launch
             lock = true
-            homeViewTools.tootAsync(tootEditText.text.toString(), null, null, false, null, Status.Visibility.Public).await()
+            var replayID : Long? = statusID
+            if (userName == null) replayID = null
+            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, null, false, null, Status.Visibility.Public).await()
             tootEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
         }catch (e: Mastodon4jRequestException){

@@ -37,7 +37,7 @@ import kotlinx.coroutines.experimental.launch
 class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
-        (activity as HomeViewPage).showTootDtail(item.id, item.actionAvater!!, item.content())
+        (activity as HomeViewPage).showTootDtail(item.id, item.actionAvater!!, item.content(), item.actionUserName)
     }
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var notification : MastodonNotificationTool
