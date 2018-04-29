@@ -25,6 +25,7 @@ import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
@@ -112,6 +113,8 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             override fun doInBackground(vararg p0: Void?): String? {
                 try{
                     shutdownable = streaming?.user(handler)
+                }catch (e : Mastodon4jRequestException){
+                    e.message?.showToastLogE(context)
                 }catch (e : Exception){
                     e.message?.showToastLogE(context)
                 }

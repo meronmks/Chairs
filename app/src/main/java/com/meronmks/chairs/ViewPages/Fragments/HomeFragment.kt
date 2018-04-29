@@ -28,6 +28,7 @@ import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 
 
 /**
@@ -103,6 +104,8 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun doInBackground(vararg p0: Void?): String? {
                 try{
                     shutdownable = streaming?.user(handler)
+                }catch (e : Mastodon4jRequestException){
+                    e.message?.showToastLogE(context)
                 }catch (e : Exception) {
                     e.message?.showToastLogE(context)
                 }
