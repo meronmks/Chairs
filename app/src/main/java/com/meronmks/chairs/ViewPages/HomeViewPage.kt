@@ -76,14 +76,8 @@ class HomeViewPage : AppCompatActivity() {
         sendTootImageButton.setOnClickListener {
             postToot()
         }
-        menuButton.setOnClickListener {
-            if(linearMenu.visibility == View.VISIBLE){
-                linearMenu.visibility = View.GONE
-            }else if (linearMenu.visibility == View.GONE){
-                linearMenu.visibility = View.VISIBLE
-            }
 
-        }
+        mainMenuButtons()
         textEditorKeyDown()
         textCounter()
         tootDtailButton()
@@ -105,6 +99,21 @@ class HomeViewPage : AppCompatActivity() {
         detailTootTextView.text = content?.fromHtml(baseContext, detailTootTextView)
         this.statusID = statusID
         this.userName = userName
+    }
+
+    /**
+     * メニューに関するボタン類の処理
+     */
+    private fun mainMenuButtons(){
+        menuButton.setOnClickListener {
+            if(linearMenu.visibility == View.VISIBLE){
+                linearMenu.visibility = View.GONE
+                menuButton.setImageResource(R.drawable.menu_open_black_24dp)
+            }else if (linearMenu.visibility == View.GONE){
+                linearMenu.visibility = View.VISIBLE
+                menuButton.setImageResource(R.drawable.menu_close_black_24dp)
+            }
+        }
     }
 
     /**
