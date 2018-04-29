@@ -1,5 +1,6 @@
 package com.meronmks.chairs.ViewPages
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -20,6 +21,7 @@ import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
 import com.meronmks.chairs.Annotation.GlideApp
+import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
 import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
 import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
@@ -113,6 +115,11 @@ class HomeViewPage : AppCompatActivity() {
                 linearMenu.visibility = View.VISIBLE
                 menuButton.setImageResource(R.drawable.menu_close_black_24dp)
             }
+        }
+
+        settingsButton.setOnClickListener {
+            val intent = Intent(baseContext, SettingsActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -22,6 +22,8 @@
         <activity android:name=".OAuth.LoginActivity" />
         <activity android:name=".ViewPages.HomeViewPage"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".Settings.SettingsActivity"
+            android:label="@string/settingText"/>
     </application>
 
 </manifest>
