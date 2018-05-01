@@ -72,7 +72,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
-    implementation 'com.deploygate:sdk:4.0.0'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-core:0.9.21'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-attr:0.9.21'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-measurement:0.9.21'
