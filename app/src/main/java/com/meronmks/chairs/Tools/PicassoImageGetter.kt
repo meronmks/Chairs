@@ -17,8 +17,8 @@ import com.squareup.picasso.Target
 
 open class PicassoImageGetter(context: Context, textView: TextView) : Html.ImageGetter {
 
-    private lateinit var textView : TextView
-    private lateinit var context : Context
+    private var textView : TextView? = null
+    private var context : Context? = null
 
     fun PicassoImageGetter(c : Context, target : TextView){
         textView = target
@@ -35,7 +35,7 @@ open class PicassoImageGetter(context: Context, textView: TextView) : Html.Image
 
     private inner class BitmapDrawablePlaceHolder : BitmapDrawable(), Target {
 
-        private lateinit var drawable: Drawable
+        private var drawable: Drawable? = null
 
         override fun draw(canvas: Canvas) {
             if (drawable != null) {
@@ -46,15 +46,15 @@ open class PicassoImageGetter(context: Context, textView: TextView) : Html.Image
         fun setDrawable(drawable: Drawable) {
             this.drawable = drawable
             if (textView != null) {
-                val size = textView.getLineHeight()
+                val size = textView!!.getLineHeight()
                 drawable.setBounds(0, 0, size, size)
                 setBounds(0, 0, size, size)
-                textView.setText(textView.getText())
+                textView!!.setText(textView!!.getText())
             }
         }
 
         override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-            setDrawable(BitmapDrawable(context.getResources(), bitmap))
+            setDrawable(BitmapDrawable(context?.getResources(), bitmap))
         }
 
         override fun onBitmapFailed(errorDrawable: Drawable) {}
