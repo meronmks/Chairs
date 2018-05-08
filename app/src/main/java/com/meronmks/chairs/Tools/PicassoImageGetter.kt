@@ -27,6 +27,7 @@ open class PicassoImageGetter(context: Context, textView: TextView) : Html.Image
 
     override fun getDrawable(source: String?): Drawable {
         val drawable = BitmapDrawablePlaceHolder()
+        if(context == null) return drawable
         Picasso.with(context)
                 .load(source)
                 .into(drawable)
