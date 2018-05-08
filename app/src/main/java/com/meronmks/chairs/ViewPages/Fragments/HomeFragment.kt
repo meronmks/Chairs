@@ -106,8 +106,6 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
                     shutdownable = streaming?.user(handler)
                 }catch (e : Mastodon4jRequestException){
                     e.message?.showToastLogE(context)
-                }catch (e : Exception) {
-                    e.message?.showToastLogE(context)
                 }
                 return null
             }

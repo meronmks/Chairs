@@ -97,8 +97,6 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
                     shutdownable = streaming?.federatedPublic(handler)
                 }catch (e : Mastodon4jRequestException){
                     e.message?.showToastLogE(context)
-                }catch (e : Exception){
-                    e.message?.showToastLogE(context)
                 }
                 return null
             }
