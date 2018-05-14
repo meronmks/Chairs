@@ -58,6 +58,18 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
            GlideApp.with(context).load(item.avater).into(it.avatarImageButton)
+           //インライン表示関連の処理（こういうの関数にした方がいいか？）
+           it.imageView[0].visibility = View.GONE
+           it.imageView[1].visibility = View.GONE
+           it.imageView[2].visibility = View.GONE
+           it.imageView[3].visibility = View.GONE
+           if(item.isMediaAttach){
+               var i = 0
+               for(media in item.mediaAttachments){
+                   it.imageView[i].visibility = View.VISIBLE
+                   GlideApp.with(context).load(media.url).into(it.imageView[i])
+               }
+           }
            //タッチイベントの処理
            it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
                val textView : TextView = v as TextView
@@ -87,4 +99,6 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
     override fun getItemCount(): Int {
         return itemList.count
     }
+
+
 }

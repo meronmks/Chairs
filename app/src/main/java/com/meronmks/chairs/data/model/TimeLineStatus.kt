@@ -8,6 +8,7 @@ import com.meronmks.chairs.R
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.meronmks.chairs.extensions.fromHtml
 import com.meronmks.chairs.extensions.toIsoZonedDateTime
+import com.sys1yagi.mastodon4j.api.entity.Attachment
 
 /**
  * Created by meron on 2018/01/04.
@@ -91,4 +92,10 @@ class TimeLineStatus(private val status : Status){
 
     //投稿したクライアント名
     val via : String = if(status.application != null) status.application!!.name else "Web"
+
+    //メディアが添付されているか
+    val isMediaAttach : Boolean = !status.mediaAttachments.isEmpty()
+
+    //メディアのリスト
+    val mediaAttachments :  List<Attachment> = status.mediaAttachments
 }

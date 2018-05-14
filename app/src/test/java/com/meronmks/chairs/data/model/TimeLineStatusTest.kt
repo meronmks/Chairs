@@ -3,25 +3,18 @@ package com.meronmks.chairs.data.model
 import com.google.gson.Gson
 import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
-import com.meronmks.chairs.extensions.fromHtml
 import com.meronmks.chairs.extensions.toIsoZonedDateTime
 import com.sys1yagi.mastodon4j.api.entity.Status
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.Before
 
 import org.junit.Assert.*
-import org.json.JSONObject
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
-import java.io.InputStreamReader
-import java.nio.charset.Charset
 
 
 /**
@@ -98,5 +91,10 @@ class TimeLineStatusTest {
         val expected = timeLineStatus.rebloggedCount() + 1
         timeLineStatus.isReblogged = true
         assertEquals(expected, timeLineStatus.rebloggedCount())
+    }
+
+    @Test
+    fun 画像が存在するか正しく判定できるか(){
+        assertEquals(false, timeLineStatus.isMediaAttach)
     }
 }
