@@ -54,11 +54,7 @@ dependencies {
     testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    testImplementation 'com.android.support.test:runner:1.0.2'
-    testImplementation 'com.android.support.test:rules:1.0.2'
-    testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    //noinspection GradleDependency
-    testImplementation "org.robolectric:robolectric:3.4.2"
+    testImplementation "org.robolectric:robolectric:3.8"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
