@@ -9,6 +9,9 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
   - ${ANDROID_HOME}/licenses/
+branches:
+  only:
+    - develop
 env:
   global:
   - DEFAULT_JVM_OPTS="-Dfile.encoding=UTF-8"
