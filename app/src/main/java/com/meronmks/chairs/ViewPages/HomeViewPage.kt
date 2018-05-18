@@ -20,7 +20,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
-import com.meronmks.chairs.Annotation.GlideApp
+import com.bumptech.glide.Glide
 import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
 import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
@@ -97,7 +97,7 @@ class HomeViewPage : AppCompatActivity() {
 
     fun showTootDtail(statusID : Long, avater : String, content : String?, userName : String?){
         tootDetail.visibility = View.VISIBLE
-        GlideApp.with(applicationContext).load(avater).into(detailAvatarImageButton)
+        Glide.with(applicationContext).load(avater).into(detailAvatarImageButton)
         detailTootTextView.text = content?.fromHtml(baseContext, detailTootTextView)
         this.statusID = statusID
         this.userName = userName

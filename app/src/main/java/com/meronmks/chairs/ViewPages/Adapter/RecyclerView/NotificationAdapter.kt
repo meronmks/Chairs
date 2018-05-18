@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.meronmks.chairs.Annotation.GlideApp
 import com.meronmks.chairs.R
 import com.meronmks.chairs.ViewPages.ViewHolder.NotificationViewHolder
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
@@ -47,7 +46,7 @@ class NotificationAdapter(private val context: Context, private val itemClickLis
             it.userNameTextView.text = "@${item.actionUserName}"
             it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
             it.timeTextView.text = item.createAt(context, java.lang.System.currentTimeMillis())
-            GlideApp.with(context).load(item.actionAvater).into(it.avatarImageButton)
+            Glide.with(context).load(item.actionAvater).into(it.avatarImageButton)
             //タッチイベントの処理
             it.displayNameTextView.setOnTouchListener { v:View, event: MotionEvent ->
                 val textView : TextView = v as TextView

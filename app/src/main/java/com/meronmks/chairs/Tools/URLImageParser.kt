@@ -13,7 +13,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.Html.ImageGetter
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 
 /***
  * https://gist.github.com/extralam/017900f6eb616e9ae97eec9904dd90a6
