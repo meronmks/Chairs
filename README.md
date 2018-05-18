@@ -9,7 +9,8 @@ kotlin Ver1.2.40\
 # 使用ライブラリ
 [mastodon4j](https://github.com/sys1yagi/mastodon4j)\
 [realm](https://realm.io/jp/)\
-[glide](https://github.com/bumptech/glide) ※Ver 3.8.0を意図的に使用してます\
+[glide](https://github.com/bumptech/glide)\
+[picasso](http://square.github.io/picasso/)\
 [Hyperion](https://github.com/willowtreeapps/Hyperion-Android)
 # 注意事項
 本アプリケーションはベータ版配布及びログ解析に[deploygate](https://deploygate.com/)を使用しています。

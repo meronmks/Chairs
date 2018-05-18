@@ -11,6 +11,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.meronmks.chairs.Annotation.GlideApp
+import com.meronmks.chairs.Annotation.MyAppGlideModule
 import com.meronmks.chairs.R
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.TimeLineStatus
@@ -55,7 +57,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
-           Glide.with(context).load(item.avater).into(it.avatarImageButton)
+           GlideApp.with(context).load(item.avater).into(it.avatarImageButton)
            //インライン表示関連の処理（こういうの関数にした方がいいか？）
            it.imageView[0].visibility = View.GONE
            it.imageView[1].visibility = View.GONE
@@ -65,7 +67,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                var i = 0
                for(media in item.mediaAttachments){
                    it.imageView[i].visibility = View.VISIBLE
-                   Glide.with(context).load(media.url).into(it.imageView[i])
+                   GlideApp.with(context).load(media.url).into(it.imageView[i])
                }
            }
            //タッチイベントの処理
