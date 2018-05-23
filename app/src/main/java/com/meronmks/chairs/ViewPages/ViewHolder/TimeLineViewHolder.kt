@@ -21,4 +21,6 @@ class TimeLineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val lastItemMaginSpace = itemView.lastItemMaginSpace
     val rb2Name = itemView.rb2Name
     val imageView = arrayOf(itemView.imageView1, itemView.imageView2, itemView.imageView3, itemView.imageView4)
+    val cwVisibleButton = itemView.cwVisibleButton
+    val cwTootTextView = itemView.cwTootTextView
 }

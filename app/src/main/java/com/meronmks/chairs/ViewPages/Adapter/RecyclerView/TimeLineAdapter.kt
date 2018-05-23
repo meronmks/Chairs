@@ -52,9 +52,12 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            }
            it.displayNameTextView.text = item.displayName
            it.userNameTextView.text = "@${item.userName}"
+           it.cwTootTextView.text = item.spoilerText.fromHtml(context, it.cwTootTextView)
            it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
+           it.cwVisibleButton.visibility = View.GONE
+           it.cwTootTextView.visibility = View.GONE
            Glide.with(context).load(item.avater).into(it.avatarImageButton)
            //インライン表示関連の処理（こういうの関数にした方がいいか？）
            it.imageView[0].visibility = View.GONE
@@ -68,6 +71,10 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                    Glide.with(context).load(media.url).into(it.imageView[i])
                }
            }
+           changeVisivleCWText(it, item.isCW)
+           it.cwVisibleButton.setOnClickListener {
+               changeVisivleCWText(holder, holder.tootTextView.visibility == View.VISIBLE)
+           }
            //タッチイベントの処理
            it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
                val textView : TextView = v as TextView
@@ -78,7 +85,20 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                textView.isFocusable = false
                return@setOnTouchListener mt
            }
+
        }
+    }
+
+    fun changeVisivleCWText(it : TimeLineViewHolder, isCW : Boolean){
+        if(isCW){
+            it.cwTootTextView.visibility = View.VISIBLE
+            it.cwVisibleButton.visibility = View.VISIBLE
+            it.tootTextView.visibility = View.GONE
+            it.cwVisibleButton.text = "もっと見る"
+        }else{
+            it.tootTextView.visibility = View.VISIBLE
+            it.cwVisibleButton.text = "隠す"
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeLineViewHolder {
