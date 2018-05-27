@@ -1,7 +1,6 @@
 package com.meronmks.chairs.Tools
 
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 
@@ -13,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.Html.ImageGetter
 import android.widget.TextView
+import com.bumptech.glide.request.transition.Transition
 
 /***
  * https://gist.github.com/extralam/017900f6eb616e9ae97eec9904dd90a6
@@ -28,7 +28,7 @@ class URLImageParser(internal var mContext: Context, internal val mTextView: Tex
 
     override fun getDrawable(url: String): Drawable {
         val urlDrawable = UrlDrawable()
-        val load = Glide.with(mContext).load(url).asBitmap()
+        val load = Glide.with(mContext).asBitmap().load(url)
         val target = BitmapTarget(urlDrawable)
         targets.add(target)
         load.into(target)
@@ -36,9 +36,8 @@ class URLImageParser(internal var mContext: Context, internal val mTextView: Tex
     }
 
     private inner class BitmapTarget(private val urlDrawable: UrlDrawable) : SimpleTarget<Bitmap>() {
-
         internal lateinit var drawable: Drawable
-        override fun onResourceReady(resource: Bitmap, glideAnimation: GlideAnimation<in Bitmap>) {
+        override fun onResourceReady(resource: Bitmap, glideAnimation: Transition<in Bitmap>?) {
 
             drawable = BitmapDrawable(mContext.getResources(), resource)
 
