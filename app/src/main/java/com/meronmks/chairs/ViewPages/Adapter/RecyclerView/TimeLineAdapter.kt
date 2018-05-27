@@ -17,6 +17,9 @@ import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
 import kotlinx.android.synthetic.main.toot_item.view.*
+import com.bumptech.glide.request.RequestOptions
+
+
 
 /**
  * Created by meron on 2018/03/08.
@@ -40,9 +43,12 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
     override fun onBindViewHolder(holder: TimeLineViewHolder, position: Int) {
        holder?.let {
            var item = itemList.getItem(position)
-           //最下段のスペーサー
-           it.lastItemMaginSpace.visibility = View.VISIBLE
-           if(itemList.count-1 != position) it.lastItemMaginSpace.visibility = View.GONE
+           initializeView(it, position)
+
+           val options = RequestOptions()
+                   .placeholder(R.drawable.ic_autorenew_black_24dp)
+                   .error(R.drawable.ic_error_24dp)
+
            //ブースト関連の処理
            it.rb2Name.visibility = View.GONE
            if (item.reblog != null){
@@ -58,17 +64,19 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.clientViaTextView.text = "via : ${item.via}"
            it.cwVisibleButton.visibility = View.GONE
            it.cwTootTextView.visibility = View.GONE
-           Glide.with(context).load(item.avater).into(it.avatarImageButton)
-           //インライン表示関連の処理（こういうの関数にした方がいいか？）
-           it.imageView[0].visibility = View.GONE
-           it.imageView[1].visibility = View.GONE
-           it.imageView[2].visibility = View.GONE
-           it.imageView[3].visibility = View.GONE
+           Glide.with(context)
+                   .load(item.avater)
+                   .apply(options)
+                   .into(it.avatarImageButton)
+
            if(item.isMediaAttach){
                var i = 0
                for(media in item.mediaAttachments){
                    it.imageView[i].visibility = View.VISIBLE
-                   Glide.with(context).load(media.url).into(it.imageView[i])
+                   Glide.with(context)
+                           .load(media.url)
+                           .apply(options)
+                           .into(it.imageView[i])
                }
            }
            changeVisivleCWText(it, item.isCW)
@@ -87,6 +95,17 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            }
 
        }
+    }
+
+    fun initializeView(it: TimeLineViewHolder, position: Int){
+        //最下段のスペーサー
+        it.lastItemMaginSpace.visibility = View.VISIBLE
+        if(itemList.count-1 != position) it.lastItemMaginSpace.visibility = View.GONE
+        //インライン表示関連の処理
+        it.imageView[0].visibility = View.GONE
+        it.imageView[1].visibility = View.GONE
+        it.imageView[2].visibility = View.GONE
+        it.imageView[3].visibility = View.GONE
     }
 
     fun changeVisivleCWText(it : TimeLineViewHolder, isCW : Boolean){
