@@ -1,8 +1,12 @@
 package com.meronmks.chairs.ViewPages
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.support.design.widget.TabLayout
 import android.text.Editable
 import android.text.TextWatcher
@@ -27,6 +31,10 @@ import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
 import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
 import com.meronmks.chairs.ViewPages.Fragments.PublicTLFragment
 import com.meronmks.chairs.extensions.fromHtml
+import com.sys1yagi.mastodon4j.api.entity.Attachment
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class HomeViewPage : AppCompatActivity() {
@@ -37,6 +45,9 @@ class HomeViewPage : AppCompatActivity() {
     var statusID : Long = 0
     var lock: Boolean = false
     var userName : String? = null
+    private val RESULT_PICK_IMAGEFILE: Int = 1000
+    private val medias = arrayListOf<Attachment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
@@ -121,6 +132,13 @@ class HomeViewPage : AppCompatActivity() {
             val intent = Intent(baseContext, SettingsActivity::class.java)
             startActivity(intent)
         }
+
+        uploadMediaButton.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(intent, RESULT_PICK_IMAGEFILE)
+        }
     }
 
     /**
@@ -158,6 +176,43 @@ class HomeViewPage : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        fun getMetaData(context: Context, uri: Uri): Pair<String, String> {
+            val cursor = context.contentResolver
+                    .query(uri, null, null, null, null, null)
+            try {
+                return cursor?.let {
+                    it.moveToFirst()
+                    val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    val name = it.getString(nameIndex)
+                    val mimeTypeIndex = cursor.getColumnIndex("mime_type")
+                    val mimeType = it.getString(mimeTypeIndex)
+
+                    Pair(name, mimeType)
+                } ?: throw IllegalStateException("cursor not found $uri")
+            } finally {
+                cursor?.close()
+            }
+        }
+        if(requestCode == RESULT_PICK_IMAGEFILE && resultCode == RESULT_OK){
+            val uri: Uri? = data?.data
+            if (uri != null){
+                val (name, mimeType) = getMetaData(baseContext, uri)
+                val bytes = baseContext.contentResolver.openInputStream(uri).readBytes()
+                val requestBody = RequestBody.create(MediaType.parse(mimeType), bytes)
+                val multipart: MultipartBody.Part = MultipartBody.Part.createFormData("file", "Chairs_$name", requestBody)
+                uploadMedia(multipart)
+            }
+        }
+    }
+
+    fun uploadMedia(multipart: MultipartBody.Part) = launch(UI) {
+        val attachment = homeViewTools.uploadMedia(multipart).await()
+        if(attachment != null){
+            medias.add(attachment)
+        }
+    }
+
     /**
      * トゥートを送信する
      **/
@@ -167,7 +222,11 @@ class HomeViewPage : AppCompatActivity() {
             lock = true
             var replayID : Long? = statusID
             if (userName == null) replayID = null
-            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, null, false, null, Status.Visibility.Public).await()
+            val mediaIDs:  ArrayList<Long> = ArrayList()
+            medias.forEach {
+                mediaIDs.add(it.id)
+            }
+            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, mediaIDs, false, null, Status.Visibility.Public).await()
             tootEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
         }catch (e: Mastodon4jRequestException){
