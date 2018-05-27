@@ -70,8 +70,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                    .into(it.avatarImageButton)
 
            if(item.isMediaAttach){
-               var i = 0
-               for(media in item.mediaAttachments){
+               for((i, media) in item.mediaAttachments.withIndex()){
                    it.imageView[i].visibility = View.VISIBLE
                    Glide.with(context)
                            .load(media.url)
