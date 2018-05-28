@@ -55,13 +55,12 @@ dependencies {
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     testImplementation "org.robolectric:robolectric:3.8"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.github.sys1yagi.mastodon4j:mastodon4j:1.6.0'
-    implementation 'com.github.sys1yagi.mastodon4j:mastodon4j-rx:1.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.4'
     implementation 'com.deploygate:sdk:4.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.18"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.18"
