@@ -189,7 +189,7 @@ class HomeViewPage : AppCompatActivity() {
                     val mimeType = it.getString(mimeTypeIndex)
 
                     Pair(name, mimeType)
-                } ?: throw IllegalStateException("cursor not found $uri")
+                } ?: throw IllegalStateException("cursor not found $uri") as Throwable
             } finally {
                 cursor?.close()
             }
