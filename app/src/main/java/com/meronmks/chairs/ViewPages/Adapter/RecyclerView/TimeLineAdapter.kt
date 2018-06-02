@@ -56,7 +56,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                it.rb2Name.text = "Reblog by @${item.userName}"
                item = item.reblog!!
            }
-           it.displayNameTextView.text = item.displayName
+           it.displayNameTextView.text = item.displayName().fromHtml(context, it.displayNameTextView)
            it.userNameTextView.text = "@${item.userName}"
            it.cwTootTextView.text = item.spoilerText.fromHtml(context, it.cwTootTextView)
            it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)

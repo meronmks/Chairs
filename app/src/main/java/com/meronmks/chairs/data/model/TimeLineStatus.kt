@@ -49,6 +49,16 @@ class TimeLineStatus(private val status : Status){
         return content
     }
 
+    //表示名のカスタム絵文字をコンバートして返す
+    fun displayName() : String {
+        var displayName = status.account!!.displayName
+        for (it in status.account!!.emojis) {
+            displayName = displayName.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
+        }
+        displayName = displayName.replace("</?p>".toRegex(), "")
+        return displayName
+    }
+
     //トゥートされた時刻
     fun createAt(context : Context, now : Long) : String{
         val tootCreateAt = status.createdAt.toIsoZonedDateTime().toInstant().toEpochMilli()
