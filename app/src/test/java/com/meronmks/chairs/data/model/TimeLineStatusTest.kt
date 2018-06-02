@@ -74,10 +74,10 @@ class TimeLineStatusTest {
         assertEquals(context.getString(R.string.status_day, 1), timeLineStatus.createAt(context, time))
     }
 
-    @Test
-    fun トゥート本文が意図したものか() {
-        assertEquals("やばい。トイレがお友達状態", timeLineStatus.content())
-    }
+//    @Test
+//    fun トゥート本文が意図したものか() {
+//        assertEquals("やばい。トイレがお友達状態", timeLineStatus.content())
+//    }
 
     @Test
     fun お気に入り済みにしたときに正しい数になっているか(){
