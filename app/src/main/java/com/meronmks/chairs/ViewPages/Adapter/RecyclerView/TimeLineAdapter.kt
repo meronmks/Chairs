@@ -1,6 +1,7 @@
 package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.view.LayoutInflater
@@ -18,7 +19,7 @@ import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
 import kotlinx.android.synthetic.main.toot_item.view.*
 import com.bumptech.glide.request.RequestOptions
-
+import com.meronmks.chairs.Images.PhotoViewActivity
 
 
 /**
@@ -83,6 +84,9 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                changeVisivleCWText(holder, holder.tootTextView.visibility == View.VISIBLE)
            }
            //タッチイベントの処理
+
+           clickImageViews(it, item)
+
            it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
                val textView : TextView = v as TextView
                val m = MutableLinkMovementMethod()
@@ -115,6 +119,18 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
         }else{
             it.tootTextView.visibility = View.VISIBLE
             it.cwVisibleButton.text = "隠す"
+        }
+    }
+
+    fun clickImageViews(it: TimeLineViewHolder, item: TimeLineStatus){
+        if(item.isMediaAttach){
+            for((i, media) in item.mediaAttachments.withIndex()){
+                it.imageView[i].setOnClickListener{
+                    val intent = Intent(context, PhotoViewActivity::class.java)
+                    intent.putExtra("url", media.url)
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 

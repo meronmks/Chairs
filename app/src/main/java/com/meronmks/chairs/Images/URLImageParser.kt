@@ -1,8 +1,7 @@
-package com.meronmks.chairs.Tools
+package com.meronmks.chairs.Images
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 
 import android.content.Context
 import android.graphics.Bitmap

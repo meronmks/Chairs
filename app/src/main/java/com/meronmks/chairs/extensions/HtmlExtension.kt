@@ -6,7 +6,7 @@ import android.text.Spanned
 import android.text.Spannable
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
-import com.meronmks.chairs.Tools.URLImageParser
+import com.meronmks.chairs.Images.URLImageParser
 
 
 /**

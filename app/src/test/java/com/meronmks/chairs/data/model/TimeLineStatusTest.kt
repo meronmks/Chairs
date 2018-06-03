@@ -6,7 +6,6 @@ import com.meronmks.chairs.R
 import com.meronmks.chairs.extensions.toIsoZonedDateTime
 import com.sys1yagi.mastodon4j.api.entity.Status
 import org.junit.Before
-
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
