@@ -100,11 +100,10 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
         //最下段のスペーサー
         it.lastItemMaginSpace.visibility = View.VISIBLE
         if(itemList.count-1 != position) it.lastItemMaginSpace.visibility = View.GONE
-        //インライン表示関連の処理
-        it.imageView[0].visibility = View.GONE
-        it.imageView[1].visibility = View.GONE
-        it.imageView[2].visibility = View.GONE
-        it.imageView[3].visibility = View.GONE
+        //インライン表示関連の処理]
+        it.imageView.forEach {
+            it.visibility = View.GONE
+        }
     }
 
     fun changeVisivleCWText(it : TimeLineViewHolder, isCW : Boolean){
