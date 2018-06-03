@@ -13,6 +13,7 @@ kotlin Ver1.2.40\
 [Hyperion](https://github.com/willowtreeapps/Hyperion-Android)
 [OkHttp](https://github.com/square/okhttp)
 [Gson](https://github.com/google/gson)
+[PhotoView](https://github.com/chrisbanes/PhotoView)
 # 注意事項
 本アプリケーションはベータ版配布及びログ解析に[deploygate](https://deploygate.com/)を使用しています。
 また開発中のため急な仕様変更等が出て来る可能性が大きくあります。
