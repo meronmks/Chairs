@@ -74,6 +74,7 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootlist.adapter.notifyDataSetChanged()
+        (tootlist.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         notificationListRefresh.isRefreshing = false
         loadLock = false
     }
