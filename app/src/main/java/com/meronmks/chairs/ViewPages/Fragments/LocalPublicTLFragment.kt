@@ -24,7 +24,6 @@ import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
-import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
@@ -42,19 +41,19 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     var loadLock : Boolean = false
     var shutdownable : Shutdownable? = null
     lateinit var itemList: ArrayAdapter<TimeLineStatus>
-    private val tootlist by lazy { homeTootList }
+    private val tootList by lazy { homeTootList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<TimeLineStatus>(context,0)
-        tootlist.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootlist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.adapter = TimeLineAdapter(context!!, this, itemList)
+        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refreshLocalPublicTimeLine()
         homeTootListRefresh.setOnRefreshListener {
             refreshLocalPublicTimeLine(Range(sinceId = itemList.getItem(0).tootID))
         }
-        tootlist.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
             refreshLocalPublicTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
         CreateHandler()
@@ -69,7 +68,8 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootlist.adapter.notifyDataSetChanged()
+        tootList.adapter.notifyDataSetChanged()
+        (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -79,7 +79,10 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI) {
                     itemList.insert(TimeLineStatus(status), 0)
-                    tootlist.adapter?.notifyItemInserted(0)
+                    tootList.adapter?.notifyItemInserted(0)
+                    if(chackListPosTop()) {
+                        tootList.scrollToPosition(0)
+                    }
                 }
             }
 
@@ -117,7 +120,11 @@ class LocalPublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
         return timeLine.getLocalPublicTLAsync(range).await()
     }
 
+    private fun chackListPosTop(): Boolean {
+        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
+    }
+
     fun listScroll2Top(){
-        tootlist.smoothScrollToPosition(0)
+        tootList.smoothScrollToPosition(0)
     }
 }
