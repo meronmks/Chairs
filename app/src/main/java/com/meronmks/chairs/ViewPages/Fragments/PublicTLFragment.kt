@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
@@ -42,19 +41,19 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     var loadLock : Boolean = false
     var shutdownable : Shutdownable? = null
     lateinit var itemList: ArrayAdapter<TimeLineStatus>
-    private val tootlist by lazy { homeTootList }
+    private val tootList by lazy { homeTootList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<TimeLineStatus>(context,0)
-        tootlist.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootlist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.adapter = TimeLineAdapter(context!!, this, itemList)
+        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refreshPublicTimeLine()
         homeTootListRefresh.setOnRefreshListener {
             refreshPublicTimeLine(Range(sinceId = itemList.getItem(0).tootID))
         }
-        tootlist.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
             refreshPublicTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
         CreateHandler()
@@ -69,8 +68,8 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootlist.adapter.notifyDataSetChanged()
-        (tootlist.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        tootList.adapter.notifyDataSetChanged()
+        (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -80,9 +79,9 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
             override fun onStatus(status: Status) {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
-                    tootlist.adapter?.notifyItemInserted(0)
+                    tootList.adapter?.notifyItemInserted(0)
                     if(chackListPosTop()) {
-                        tootlist.scrollToPosition(0)
+                        tootList.scrollToPosition(0)
                     }
                 }
             }
@@ -122,10 +121,10 @@ class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
     }
 
     private fun chackListPosTop(): Boolean {
-        return ((tootlist.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
+        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 
     fun listScroll2Top(){
-        tootlist.smoothScrollToPosition(0)
+        tootList.smoothScrollToPosition(0)
     }
 }

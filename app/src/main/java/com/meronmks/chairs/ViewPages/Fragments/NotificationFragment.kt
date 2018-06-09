@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
@@ -14,11 +13,9 @@ import com.meronmks.chairs.Tools.MastodonNotificationTool
 import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
-import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
-import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
@@ -26,7 +23,6 @@ import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -46,19 +42,19 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     lateinit var itemList: ArrayAdapter<NotificationModel>
     var shutdownable : Shutdownable? = null
     var loadLock : Boolean = false
-    private val tootlist by lazy { notificationList }
+    private val tootList by lazy { notificationList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
         notification = MastodonNotificationTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<NotificationModel>(context,0)
-        tootlist.adapter = NotificationAdapter(context!!, this, itemList)
-        tootlist.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.adapter = NotificationAdapter(context!!, this, itemList)
+        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refresNotification()
         notificationListRefresh.setOnRefreshListener {
             refresNotification(Range(sinceId = itemList.getItem(0).id))
         }
-        tootlist.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
             refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
         CreateHandler()
@@ -73,8 +69,8 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             itemList.add(NotificationModel(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootlist.adapter.notifyDataSetChanged()
-        (tootlist.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        tootList.adapter.notifyDataSetChanged()
+        (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         notificationListRefresh.isRefreshing = false
         loadLock = false
     }
@@ -101,9 +97,9 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             override fun onNotification(notification: Notification) {
                 launch(UI){
                     itemList.insert(NotificationModel(notification), 0)
-                    tootlist.adapter?.notifyItemInserted(0)
+                    tootList.adapter?.notifyItemInserted(0)
                     if(chackListPosTop()) {
-                        tootlist.scrollToPosition(0)
+                        tootList.scrollToPosition(0)
                     }
                 }
             }
@@ -126,10 +122,10 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
     }
 
     private fun chackListPosTop(): Boolean {
-        return ((tootlist.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
+        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 
     fun listScroll2Top(){
-        tootlist.smoothScrollToPosition(0)
+        tootList.smoothScrollToPosition(0)
     }
 }
