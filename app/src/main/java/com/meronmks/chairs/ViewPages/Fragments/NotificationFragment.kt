@@ -101,7 +101,6 @@ class NotificationFragment : Fragment(), TimeLineViewHolder.ItemClickListener  {
             override fun onNotification(notification: Notification) {
                 launch(UI){
                     itemList.insert(NotificationModel(notification), 0)
-                    tootlist.adapter.notifyItemInserted(0)
                 }
             }
 
