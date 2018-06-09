@@ -90,6 +90,9 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
                     tootList.adapter?.notifyItemInserted(0)
+                    if(chackListPosTop()) {
+                        tootList.scrollToPosition(0)
+                    }
                 }
             }
 
@@ -125,6 +128,10 @@ class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
 
     suspend fun getTimeLine(range: Range = Range()): List<Status> {
         return timeLine.getHomeAsync(range).await()
+    }
+
+    private fun chackListPosTop(): Boolean {
+        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 
     fun listScroll2Top(){
