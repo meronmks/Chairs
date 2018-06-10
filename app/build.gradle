@@ -13,6 +13,7 @@ apply plugin: 'deploygate'
 apply from: "$rootDir/jacoco.gradle"
 
 apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -53,10 +54,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation 'com.android.support.test:rules:1.0.2'
-    testImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     testImplementation "org.robolectric:robolectric:3.8"
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
@@ -88,9 +88,6 @@ deploygate {
             def hash = "git log -1 --oneline".execute([], project.rootDir).in.text.trim()
             // ビルドのメッセージとして設定します
             message = "debug build ${hash}"
-            // 配布ページを利用している場合、以下の設定で同時に更新することができます
-            distributionKey = "7d46401a201cc0b7a61847855370f8884b761a6a"
-            releaseNote = "debug build ${hash}"
         }
     }
 }
