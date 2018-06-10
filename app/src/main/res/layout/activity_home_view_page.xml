@@ -153,6 +153,7 @@
             android:src="@drawable/ic_add_a_photo_black_24dp" />
 
         <Button
+            android:id="@+id/nsfwButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

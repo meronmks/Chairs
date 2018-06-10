@@ -3,6 +3,7 @@ package com.meronmks.chairs.ViewPages
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -42,6 +43,7 @@ class HomeViewPage : AppCompatActivity() {
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var homeViewTools : MastodonHomeViewTools
     lateinit var adapter: HomeFragmentPagerAdapter
+    var isSensitive: Boolean = false
     var statusID : Long = 0
     var lock: Boolean = false
     var userName : String? = null
@@ -139,6 +141,15 @@ class HomeViewPage : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, RESULT_PICK_IMAGEFILE)
         }
+
+        nsfwButton.setOnClickListener {
+            isSensitive = !isSensitive
+            if(isSensitive){
+                nsfwButton.setTextColor(Color.CYAN)
+            }else{
+                nsfwButton.setTextColor(Color.WHITE)
+            }
+        }
     }
 
     /**
@@ -226,7 +237,7 @@ class HomeViewPage : AppCompatActivity() {
             medias.forEach {
                 mediaIDs.add(it.id)
             }
-            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, mediaIDs, false, null, Status.Visibility.Public).await()
+            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, mediaIDs, isSensitive, null, Status.Visibility.Public).await()
             tootEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
         }catch (e: Mastodon4jRequestException){
