@@ -26,7 +26,7 @@ import com.meronmks.chairs.Images.PhotoViewActivity
  * Created by meron on 2018/03/08.
  */
 
-class TimeLineAdapter(private val context: Context, private val itemClickListener: TimeLineViewHolder.ItemClickListener, private val itemList: ArrayAdapter<TimeLineStatus>): RecyclerView.Adapter<TimeLineViewHolder>() {
+class TimeLineAdapter(private val context: Context, private val itemClickListener: TimeLineViewHolder.ItemClickListener?, private val itemList: ArrayAdapter<TimeLineStatus>?): RecyclerView.Adapter<TimeLineViewHolder>() {
 
     private var mRecyclerView : RecyclerView? = null
 
@@ -43,7 +43,8 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
 
     override fun onBindViewHolder(holder: TimeLineViewHolder, position: Int) {
        holder?.let {
-           var item = itemList.getItem(position)
+           var item = itemList?.getItem(position)
+           if(item == null) return@let null
            initializeView(it, position)
 
            val options = RequestOptions()
@@ -104,6 +105,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
 
     fun initializeView(it: TimeLineViewHolder, position: Int){
         //最下段のスペーサー
+        if(itemList == null) return
         it.lastItemMaginSpace.visibility = View.VISIBLE
         if(itemList.count-1 != position) it.lastItemMaginSpace.visibility = View.GONE
         //インライン表示関連の処理
@@ -151,6 +153,8 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
         val layoutInflater = LayoutInflater.from(context)
         val mView = layoutInflater.inflate(R.layout.toot_item, parent, false)
 
+        if(itemClickListener == null) return TimeLineViewHolder(mView)
+
         mView.setOnClickListener { view ->
             mRecyclerView?.let {
                 itemClickListener.onItemClick(view, it.getChildAdapterPosition(view))
@@ -161,6 +165,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
     }
 
     override fun getItemCount(): Int {
+        if (itemList == null) return -1
         return itemList.count
     }
 
