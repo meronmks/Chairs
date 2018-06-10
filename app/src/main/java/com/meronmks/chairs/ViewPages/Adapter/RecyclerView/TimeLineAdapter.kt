@@ -63,8 +63,6 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
-           it.cwVisibleButton.visibility = View.GONE
-           it.cwTootTextView.visibility = View.GONE
            Glide.with(context)
                    .load(item.avater)
                    .apply(options)
@@ -83,10 +81,14 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            it.cwVisibleButton.setOnClickListener {
                changeVisivleCWText(holder, holder.tootTextView.visibility == View.VISIBLE)
            }
+
+           changeNSFWMedia(it, item.isSensitive)
+           it.sensitiveText.setOnClickListener{
+               changeNSFWMedia(holder, holder.sensitiveText.visibility == View.GONE)
+           }
+
            //タッチイベントの処理
-
            clickImageViews(it, item)
-
            it.tootTextView.setOnTouchListener { v:View, event: MotionEvent ->
                val textView : TextView = v as TextView
                val m = MutableLinkMovementMethod()
@@ -104,10 +106,13 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
         //最下段のスペーサー
         it.lastItemMaginSpace.visibility = View.VISIBLE
         if(itemList.count-1 != position) it.lastItemMaginSpace.visibility = View.GONE
-        //インライン表示関連の処理]
+        //インライン表示関連の処理
         it.imageView.forEach {
             it.visibility = View.GONE
         }
+        it.cwVisibleButton.visibility = View.GONE
+        it.cwTootTextView.visibility = View.GONE
+        it.sensitiveText.visibility = View.GONE
     }
 
     fun changeVisivleCWText(it : TimeLineViewHolder, isCW : Boolean){
@@ -119,6 +124,14 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
         }else{
             it.tootTextView.visibility = View.VISIBLE
             it.cwVisibleButton.text = "隠す"
+        }
+    }
+
+    fun changeNSFWMedia(it: TimeLineViewHolder, isSensitive : Boolean){
+        if(isSensitive){
+            it.sensitiveText.visibility = View.VISIBLE
+        }else{
+            it.sensitiveText.visibility = View.GONE
         }
     }
 

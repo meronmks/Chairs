@@ -120,6 +120,7 @@
         android:id="@+id/imageView1"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
@@ -134,6 +135,7 @@
         android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
@@ -148,6 +150,7 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/border"
@@ -181,5 +184,18 @@
         android:text="showCWButton"
         app:layout_constraintStart_toStartOf="@+id/cwTootTextView"
         app:layout_constraintTop_toBottomOf="@+id/cwTootTextView" />
+
+    <TextView
+        android:id="@+id/sensitiveText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:text="@string/sensitiveText"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView1"
+        app:layout_constraintTop_toBottomOf="@+id/rb2Name" />
 
 </android.support.constraint.ConstraintLayout>

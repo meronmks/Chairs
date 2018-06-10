@@ -17,4 +17,5 @@
     <string name="favouriteFaild">お気に入りに失敗しました</string>
     <string name="fovouriteSuccess">お気に入りしました</string>
     <string name="settingText">設定</string>
+    <string name="sensitiveText">閲覧注意\nタップで表示</string>
 </resources>
