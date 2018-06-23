@@ -59,6 +59,15 @@ class TimeLineStatus(private val status : Status){
         return displayName
     }
 
+    fun spoilerText() : String {
+        var spoilerText = status.spoilerText
+        for (it in status.emojis) {
+            spoilerText = spoilerText.replace(":" + it.shortcode + ":", "<img src=\"" + it.url + "\"/>")
+        }
+        spoilerText = spoilerText.replace("</?p>".toRegex(), "")
+        return spoilerText
+    }
+
     //トゥートされた時刻
     fun createAt(context : Context, now : Long) : String{
         val tootCreateAt = status.createdAt.toIsoZonedDateTime().toInstant().toEpochMilli()

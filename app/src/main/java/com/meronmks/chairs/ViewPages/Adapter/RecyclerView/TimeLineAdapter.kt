@@ -60,7 +60,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            }
            it.displayNameTextView.text = item.displayName().fromHtml(context, it.displayNameTextView)
            it.userNameTextView.text = "@${item.userName}"
-           it.cwTootTextView.text = item.spoilerText.fromHtml(context, it.cwTootTextView)
+           it.cwTootTextView.text = item.spoilerText().fromHtml(context, it.cwTootTextView)
            it.tootTextView.text = item.content().fromHtml(context, it.tootTextView)
            it.timeTextView.text = item.createAt(context, System.currentTimeMillis())
            it.clientViaTextView.text = "via : ${item.via}"
