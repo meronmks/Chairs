@@ -79,6 +79,11 @@ class TimeLineStatusTest {
     }
 
     @Test
+    fun 正しくCWテキストの状態が判定出来ているか(){
+        assertEquals(false, timeLineStatus.isCW)
+    }
+
+    @Test
     fun お気に入り済みにしたときに正しい数になっているか(){
         val expected = timeLineStatus.favouritedCount() + 1
         timeLineStatus.isFavourited = true
