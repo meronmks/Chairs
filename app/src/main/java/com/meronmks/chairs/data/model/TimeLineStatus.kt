@@ -17,7 +17,7 @@ import com.sys1yagi.mastodon4j.api.entity.Attachment
 
 class TimeLineStatus(private val status : Status){
 
-    var offsetMap = mapOf(
+    private var offsetMap = mapOf(
             false to 0,
             true to 1
     )
