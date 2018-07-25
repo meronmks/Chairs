@@ -11,17 +11,16 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.R
-import com.meronmks.chairs.ViewPages.ViewHolder.NotificationViewHolder
-import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
+import com.meronmks.chairs.ViewPages.ViewHolders.NotificationViewHolder
 import com.meronmks.chairs.data.model.NotificationModel
-import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
+import com.meronmks.chairs.Interfaces.ItemClickListener
 
 /**
  * Created by meron on 2018/03/10.
  */
-class NotificationAdapter(private val context: Context, private val itemClickListener: TimeLineViewHolder.ItemClickListener, private val itemList: ArrayAdapter<NotificationModel>): RecyclerView.Adapter<NotificationViewHolder>() {
+class NotificationAdapter(private val context: Context, private val itemClickListener: ItemClickListener, private val itemList: ArrayAdapter<NotificationModel>): RecyclerView.Adapter<NotificationViewHolder>() {
     private var mRecyclerView : RecyclerView? = null
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

@@ -8,25 +8,24 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.R
-import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
+import com.meronmks.chairs.ViewPages.ViewHolders.TimeLineViewHolder
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.MutableLinkMovementMethod
 import com.meronmks.chairs.extensions.fromHtml
-import kotlinx.android.synthetic.main.toot_item.view.*
 import com.bumptech.glide.request.RequestOptions
 import com.meronmks.chairs.Images.PhotoViewActivity
+import com.meronmks.chairs.Interfaces.ItemClickListener
 
 
 /**
  * Created by meron on 2018/03/08.
  */
 
-class TimeLineAdapter(private val context: Context, private val itemClickListener: TimeLineViewHolder.ItemClickListener?, private val itemList: ArrayAdapter<TimeLineStatus>?): RecyclerView.Adapter<TimeLineViewHolder>() {
+class TimeLineAdapter(private val context: Context, private val itemClickListener: ItemClickListener?, private val itemList: ArrayAdapter<TimeLineStatus>?): RecyclerView.Adapter<TimeLineViewHolder>() {
 
     private var mRecyclerView : RecyclerView? = null
 

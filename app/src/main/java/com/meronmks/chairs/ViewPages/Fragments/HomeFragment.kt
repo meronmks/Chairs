@@ -3,7 +3,6 @@ package com.meronmks.chairs.ViewPages.Fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,15 +15,13 @@ import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
-import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import com.meronmks.chairs.Tools.MastodonStreamingTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
-import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
+import com.meronmks.chairs.Interfaces.ItemClickListener
 import com.meronmks.chairs.extensions.StreamingAsyncTask
-import com.meronmks.chairs.extensions.showToastLogD
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
@@ -35,7 +32,7 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
  * Created by meron on 2018/01/04.
  * ホームタイムラインを表示する奴
  */
-class HomeFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
+class HomeFragment : Fragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
         if(item.reblog == null) {

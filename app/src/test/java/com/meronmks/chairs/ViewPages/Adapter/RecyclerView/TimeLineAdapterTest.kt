@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import com.google.gson.Gson
 import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
-import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
+import com.meronmks.chairs.ViewPages.ViewHolders.TimeLineViewHolder
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.data.model.TimeLineStatusTest
 import com.sys1yagi.mastodon4j.api.entity.Status

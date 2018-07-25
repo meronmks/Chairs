@@ -14,7 +14,7 @@ import com.meronmks.chairs.Tools.MastodonTimeLineTool
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
-import com.meronmks.chairs.ViewPages.ViewHolder.TimeLineViewHolder
+import com.meronmks.chairs.Interfaces.ItemClickListener
 import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogE
@@ -29,8 +29,9 @@ import kotlinx.coroutines.experimental.launch
 
 /**
  * Created by meron on 2018/01/04.
+ * 連合TLを表示するFragment
  */
-class PublicTLFragment : Fragment(), TimeLineViewHolder.ItemClickListener {
+class PublicTLFragment : Fragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
         (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content(), item.userName)

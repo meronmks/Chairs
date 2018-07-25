@@ -10,6 +10,7 @@ import android.text.Layout
 import android.text.Spannable
 import android.widget.TextView
 import android.text.method.LinkMovementMethod
+import com.meronmks.chairs.Interfaces.OnUrlClickListener
 
 /**
  * Htmlテキストのリンククリックアクションをオーバーライドするためのクラス。<br>
@@ -22,15 +23,7 @@ import android.text.method.LinkMovementMethod
 class MutableLinkMovementMethod : LinkMovementMethod() {
 
     /** Urlクリックリスナー  */
-    internal var listener: OnUrlClickListener? = null
-
-    /**
-     * Urlのリンクをタップした時のイベントを受け取るリスナー
-     *
-     */
-    interface OnUrlClickListener {
-        fun onUrlClick(widget: TextView, uri: Uri)
-    }
+    private var listener: OnUrlClickListener? = null
 
     /*
    * Urlクリックリスナーを登録
@@ -39,8 +32,7 @@ class MutableLinkMovementMethod : LinkMovementMethod() {
         listener = l
     }
 
-    override fun onTouchEvent(widget: TextView, buffer: Spannable,
-                              event: MotionEvent): Boolean {
+    override fun onTouchEvent(widget: TextView, buffer: Spannable, event: MotionEvent): Boolean {
 
         // LinkMovementMethod#onTouchEventそのまんま
 
@@ -62,7 +54,7 @@ class MutableLinkMovementMethod : LinkMovementMethod() {
 
             val link = buffer.getSpans(off, off, ClickableSpan::class.java)
 
-            if (link.size != 0) {
+            if (link.isNotEmpty()) {
                 if (action == MotionEvent.ACTION_UP) {
                     // リスナーがあればそちらを呼び出し
                     if (link[0] is URLSpan && listener != null) {

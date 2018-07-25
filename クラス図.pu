@@ -1,0 +1,205 @@
+@startuml
+package android{
+    package text{
+        interface ImageGetter
+        package method{
+            class LinkMovementMethod
+        }
+        package graphics{
+            package drawable{
+                class BitmapDrawable
+            }
+        }
+
+    }
+    package support{
+        package v4{
+            package app{
+                class Fragment
+            }
+        }
+        package v7{
+            package widget{
+                package RecyclerView{
+                    class ViewHolder
+                }
+            }
+            package app{
+                class AppCompatActivity
+            }
+        }
+    }
+}
+package com.bumptech.glide.request.target{
+    class SimpleTarget
+}
+package chairs{
+    package data{
+        package database{
+            class MastodonAccount{
+                + id : String
+                + instanceName : String
+                + userName : String
+                + accessToken : String
+                + lastLogin : Date
+            }
+        }
+
+        package model{
+            class NotificationModel{
+                + createAt(context : Context, now : Long) : String
+                + tootCreateAt : Long
+                + type : String?
+                + actionUserName : String?
+                + actionAcater : String?
+                + id : Long
+                + content() : String
+            }
+
+            class TimeLineStatus{
+                - offsetMap : Map
+                + isFavourited : Boolean
+                + favouritedCount() : Int
+                + isReblogged : Boolean
+                + rebloggedCount() : Int
+                + reblog : TimeLineStatus?
+                + content() : String
+                + displayName() : String
+                + spoilerText() : String
+                + createAt(context : Context, now : Long) : String
+                + isSensitive : Boolean
+                + isCW : Boolean
+                + spoilerText : String
+                + avater : String
+                + userName : String
+                + displayName : String
+                + tootID : Long
+                + tootCreateAt : Long
+                + via : String
+                + isMediaAttach : Boolean
+                + mediaAttachments List<Attachment>
+            }
+        }
+    }
+    package extensions{
+        class String{
+            + fromHtml(context: Context, textView : TextView) : Spanned
+            + toIsoZonedDateTime() : ZonedDateTime
+            + showToast(context: Context?, duration: Int)
+            + showToastLogD(context: Context?, tag: String = "Debug")
+            + showToastLogE(context: Context?, tag: String = "Error")
+        }
+        note left: 拡張メソッド
+        class MutableLinkMovementMethod{
+            - listener: OnUrlClickListener?
+            + setOnUrlClickListener(l: OnUrlClickListener)
+            + onTouchEvent(widget: TextView, buffer: Spannable, event: MotionEvent): Boolean
+        }
+        MutableLinkMovementMethod -up-> LinkMovementMethod
+    }
+    package Images{
+        class PhotoViewActivity{
+            # onCreate(savedInstanceState: Bundle?)
+        }
+        class URLImageParser{
+            - targets: ArrayList<Any>
+            + getDrawable(url: String): Drawable
+        }
+        URLImageParser .up-> ImageGetter
+        class BitmapTarget{
+            + onResourceReady(resource: Bitmap, glideAnimation: Transition<in Bitmap>?)
+        }
+        BitmapTarget -up-> SimpleTarget
+        class UrlDrawable{
+            + drawable: Drawable?
+            + draw(canvas: Canvas)
+        }
+        UrlDrawable -up-> BitmapDrawable
+    }
+    package Interfaces{
+        interface ItemClickListener{
+            + onItemClick(view: View, postion: Int)
+        }
+        interface OnUrlClickListener{
+            onUrlClick(widget: TextView, uri: Uri)
+        }
+    }
+    package initialize{
+        class MainActivity{
+            - accountDataBase: AccountDataBaseTool
+            # onCreate(savedInstanceState: Bundle?)
+            # onDestroy()
+        }
+        MainActivity -|> AppCompatActivity
+    }
+    package ViewPages{
+        package Fragments{
+            class DummyFragment{
+
+            }
+            class HomeFragment{
+
+            }
+            class LocalPublicTLFragment{
+
+            }
+            class NotificationFragment{
+                + accountDataBase: AccountDataBaseTool
+                + notification : MastodonNotificationTool
+                + adapter : NotificationAdapter
+                + shutdownable : Shutdownable? = null
+                + loadLock : Boolean = false
+                + itemList: ArrayAdapter<NotificationModel>
+                - tootList: RecyclerView!
+                - streaming: Streaming
+                + onItemClick(view: View, position: Int)
+                + onActivityCreated(savedInstanceState: Bundle?)
+                + refresNotification(range: Range = Range()) = launch(UI)
+                + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+                + onDestroy()
+                + getNotification(range: Range = Range()): List<Notification>
+                + CreateHandler()
+                - chackListPosTop(): Boolean
+                + listScroll2Top()
+            }
+            class PublicTLFragment{
+                + accountDataBase: AccountDataBaseTool
+                + timeLine : MastodonTimeLineTool
+                + loadLock : Boolean = false
+                + shutdownable : Shutdownable? = null
+                + itemList: ArrayAdapter<TimeLineStatus>
+                - tootList: RecyclerView!
+                - streaming: Streaming
+                + onItemClick(view: View, position: Int)
+                + onActivityCreated(savedInstanceState: Bundle?)
+                + refreshPublicTimeLine(range: Range = Range()) = launch(UI)
+                + CreateHandler()
+                + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+                + onDestroy()
+                + suspend getTimeLine(range: Range = Range()): List<Status>
+                - chackListPosTop(): Boolean
+                + listScroll2Top()
+            }
+            DummyFragment -up-|> Fragment
+            HomeFragment -up-|> Fragment
+            HomeFragment .> ItemClickListener
+            LocalPublicTLFragment -up-|> Fragment
+            LocalPublicTLFragment .> ItemClickListener
+            NotificationFragment -up-|> Fragment
+            NotificationFragment .> ItemClickListener
+            PublicTLFragment -up-|> Fragment
+            PublicTLFragment .> ItemClickListener
+        }
+        package ViewHolders{
+            class TimeLineViewHolder(itemView:View){
+
+            }
+            class NotificationViewHolder(itemView:View){
+
+            }
+            TimeLineViewHolder -up-|> ViewHolder
+            NotificationViewHolder -up-|> ViewHolder
+        }
+    }
+}
+@enduml

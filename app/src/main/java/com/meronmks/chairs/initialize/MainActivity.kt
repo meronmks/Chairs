@@ -9,7 +9,7 @@ import com.meronmks.chairs.ViewPages.HomeViewPage
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var accountDataBase: AccountDataBaseTool
+    private lateinit var accountDataBase: AccountDataBaseTool
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         accountDataBase = AccountDataBaseTool(this)

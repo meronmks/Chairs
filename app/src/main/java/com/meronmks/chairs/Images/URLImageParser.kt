@@ -19,11 +19,7 @@ import com.bumptech.glide.request.transition.Transition
  */
 class URLImageParser(internal var mContext: Context, internal val mTextView: TextView) : ImageGetter {
 
-    internal var targets: ArrayList<Any>
-
-    init {
-        this.targets = ArrayList()
-    }
+    private var targets: ArrayList<Any> = ArrayList()
 
     override fun getDrawable(url: String): Drawable {
         val urlDrawable = UrlDrawable()
