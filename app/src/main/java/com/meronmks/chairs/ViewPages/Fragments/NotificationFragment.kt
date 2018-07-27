@@ -15,6 +15,7 @@ import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.Interfaces.ItemClickListener
+import com.meronmks.chairs.R.id.homeTootList
 import com.meronmks.chairs.data.model.NotificationModel
 import com.meronmks.chairs.extensions.StreamingAsyncTask
 import com.meronmks.chairs.extensions.showToastLogE
@@ -23,7 +24,7 @@ import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
-import kotlinx.android.synthetic.main.fragment_notification.*
+import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
@@ -42,7 +43,7 @@ class NotificationFragment : Fragment(), ItemClickListener {
     lateinit var itemList: ArrayAdapter<NotificationModel>
     var shutdownable : Shutdownable? = null
     var loadLock : Boolean = false
-    private val tootList by lazy { notificationList }
+    private val tootList by lazy { homeTootList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
@@ -51,10 +52,10 @@ class NotificationFragment : Fragment(), ItemClickListener {
         tootList.adapter = NotificationAdapter(context!!, this, itemList)
         tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         refresNotification()
-        notificationListRefresh.setOnRefreshListener {
+        homeTootListRefresh.setOnRefreshListener {
             refresNotification(Range(sinceId = itemList.getItem(0).id))
         }
-        tootList.addOnScrollListener(InfiniteScrollListener(notificationList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
             refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
         CreateHandler()
@@ -63,7 +64,7 @@ class NotificationFragment : Fragment(), ItemClickListener {
     fun refresNotification(range: Range = Range()) = launch(UI){
         if(loadLock)return@launch
         loadLock = true
-        notificationListRefresh.isRefreshing = true
+        homeTootListRefresh.isRefreshing = true
         val list = getNotification(range)
         list.forEach {
             itemList.add(NotificationModel(it))
@@ -71,12 +72,12 @@ class NotificationFragment : Fragment(), ItemClickListener {
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootList.adapter.notifyDataSetChanged()
         (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
-        notificationListRefresh.isRefreshing = false
+        homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        return inflater.inflate(R.layout.fragment_home_time_line, container, false)
     }
 
     override fun onDestroy() {
