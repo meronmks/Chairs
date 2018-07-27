@@ -99,7 +99,7 @@ class NotificationFragment : Fragment(), ItemClickListener {
                 launch(UI){
                     itemList.insert(NotificationModel(notification), 0)
                     tootList.adapter?.notifyItemInserted(0)
-                    if(chackListPosTop()) {
+                    if(checkListPosTop()) {
                         tootList.scrollToPosition(0)
                     }
                 }
@@ -122,7 +122,7 @@ class NotificationFragment : Fragment(), ItemClickListener {
         }.execute()
     }
 
-    private fun chackListPosTop(): Boolean {
+    private fun checkListPosTop(): Boolean {
         return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 

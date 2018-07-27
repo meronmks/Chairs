@@ -81,7 +81,7 @@ class PublicTLFragment : Fragment(), ItemClickListener {
                 launch(UI){
                     itemList.insert(TimeLineStatus(status), 0)
                     tootList.adapter?.notifyItemInserted(0)
-                    if(chackListPosTop()) {
+                    if(checkListPosTop()) {
                         tootList.scrollToPosition(0)
                     }
                 }
@@ -121,7 +121,7 @@ class PublicTLFragment : Fragment(), ItemClickListener {
         return timeLine.getPublicTLAsync(range).await()
     }
 
-    private fun chackListPosTop(): Boolean {
+    private fun checkListPosTop(): Boolean {
         return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 
