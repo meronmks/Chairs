@@ -144,7 +144,6 @@ package chairs{
                 # shutdownable : Shutdownable? = null
                 # itemList: ArrayAdapter<BaseStatus>
                 # tootList: RecyclerView!
-                # streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 # refreshTimeLine(range: Range = Range()) = launch(UI)
@@ -161,7 +160,6 @@ package chairs{
                 + shutdownable : Shutdownable? = null
                 + itemList: ArrayAdapter<TimeLineStatus>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refreshHomeTimeLine(range: Range = Range()) = launch(UI)
@@ -179,7 +177,6 @@ package chairs{
                 + shutdownable : Shutdownable? = null
                 + itemList: ArrayAdapter<TimeLineStatus>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refreshLocalPublicTimeLine(range: Range = Range()) = launch(UI)
@@ -198,7 +195,6 @@ package chairs{
                 + loadLock : Boolean = false
                 + itemList: ArrayAdapter<NotificationModel>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refresNotification(range: Range = Range()) = launch(UI)
@@ -216,7 +212,6 @@ package chairs{
                 + shutdownable : Shutdownable? = null
                 + itemList: ArrayAdapter<TimeLineStatus>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refreshPublicTimeLine(range: Range = Range()) = launch(UI)
