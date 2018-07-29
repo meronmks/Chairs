@@ -32,7 +32,7 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
  * Created by meron on 2018/01/04.
  * ホームタイムラインを表示する奴
  */
-class HomeFragment : Fragment(), ItemClickListener {
+class HomeFragment : BaseFragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
         if(item.reblog == null) {
@@ -42,12 +42,9 @@ class HomeFragment : Fragment(), ItemClickListener {
         }
     }
 
-    lateinit var accountDataBase: AccountDataBaseTool
     lateinit var timeLine : MastodonTimeLineTool
-    var loadLock : Boolean = false
-    var shutdownable : Shutdownable? = null
     lateinit var itemList: ArrayAdapter<TimeLineStatus>
-    private val tootList by lazy { homeTootList }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
@@ -61,12 +58,12 @@ class HomeFragment : Fragment(), ItemClickListener {
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
-            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
+            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
         })
-        CreateHandler()
+        CreateStatusHandler(itemList, "Home")
     }
 
-    fun refreshHomeTimeLine(range: Range = Range()) = launch(UI){
+    private fun refreshHomeTimeLine(range: Range = Range(), nextFlag: Boolean = false) = launch(UI){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true
@@ -76,62 +73,12 @@ class HomeFragment : Fragment(), ItemClickListener {
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootList.adapter.notifyDataSetChanged()
-        (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        if(!nextFlag) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
 
-    fun CreateHandler(){
-        val handler = object : com.sys1yagi.mastodon4j.api.Handler{
-            override fun onStatus(status: Status) {
-                launch(UI){
-                    itemList.insert(TimeLineStatus(status), 0)
-                    tootList.adapter?.notifyItemInserted(0)
-                    if(checkListPosTop()) {
-                        tootList.scrollToPosition(0)
-                    }
-                }
-            }
-
-            override fun onNotification(notification: Notification) {
-            }
-
-            override fun onDelete(id: Long) {
-            }
-
-        }
-        val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
-        object : StreamingAsyncTask(){
-            override fun doInBackground(vararg p0: Void?): String? {
-                try{
-                    shutdownable = streaming?.user(handler)
-                }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
-                }
-                return null
-            }
-        }.execute()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home_time_line, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        accountDataBase?.close()
-        shutdownable?.shutdown()
-    }
-
-    suspend fun getTimeLine(range: Range = Range()): List<Status> {
+    private suspend fun getTimeLine(range: Range = Range()): List<Status> {
         return timeLine.getHomeAsync(range).await()
-    }
-
-    private fun checkListPosTop(): Boolean {
-        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
-    }
-
-    fun listScroll2Top(){
-        tootList.smoothScrollToPosition(0)
     }
 }

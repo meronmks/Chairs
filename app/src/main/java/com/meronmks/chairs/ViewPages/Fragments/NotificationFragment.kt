@@ -32,18 +32,14 @@ import kotlinx.coroutines.experimental.launch
  * Created by meron on 2018/01/04.
  * 通知一覧を表示する奴
  */
-class NotificationFragment : Fragment(), ItemClickListener {
+class NotificationFragment : BaseFragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
         (activity as HomeViewPage).showTootDtail(item.id, item.actionAvater!!, item.content(), item.actionUserName)
     }
-    lateinit var accountDataBase: AccountDataBaseTool
     lateinit var notification : MastodonNotificationTool
     lateinit var adapter : NotificationAdapter
     lateinit var itemList: ArrayAdapter<NotificationModel>
-    var shutdownable : Shutdownable? = null
-    var loadLock : Boolean = false
-    private val tootList by lazy { homeTootList }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         accountDataBase = AccountDataBaseTool(context)
@@ -58,10 +54,10 @@ class NotificationFragment : Fragment(), ItemClickListener {
         tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
             refresNotification(Range(maxId = itemList.getItem(itemList.count - 1).id))
         })
-        CreateHandler()
+        CreateNotificationHandler(itemList)
     }
 
-    fun refresNotification(range: Range = Range()) = launch(UI){
+    private fun refresNotification(range: Range = Range()) = launch(UI){
         if(loadLock)return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true
@@ -76,57 +72,7 @@ class NotificationFragment : Fragment(), ItemClickListener {
         loadLock = false
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home_time_line, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        accountDataBase?.close()
-        shutdownable?.shutdown()
-    }
-
-    suspend fun getNotification(range: Range = Range()): List<Notification> {
+    private suspend fun getNotification(range: Range = Range()): List<Notification> {
         return notification.getNotificationAsync(range).await()
-    }
-
-    fun CreateHandler(){
-        val handler = object : com.sys1yagi.mastodon4j.api.Handler{
-            override fun onStatus(status: Status) {
-            }
-
-            override fun onNotification(notification: Notification) {
-                launch(UI){
-                    itemList.insert(NotificationModel(notification), 0)
-                    tootList.adapter?.notifyItemInserted(0)
-                    if(checkListPosTop()) {
-                        tootList.scrollToPosition(0)
-                    }
-                }
-            }
-
-            override fun onDelete(id: Long) {
-            }
-
-        }
-        val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
-        object : StreamingAsyncTask(){
-            override fun doInBackground(vararg p0: Void?): String? {
-                try{
-                    shutdownable = streaming?.user(handler)
-                }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
-                }
-                return null
-            }
-        }.execute()
-    }
-
-    private fun checkListPosTop(): Boolean {
-        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
-    }
-
-    fun listScroll2Top(){
-        tootList.smoothScrollToPosition(0)
     }
 }
