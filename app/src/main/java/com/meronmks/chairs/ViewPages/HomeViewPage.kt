@@ -27,10 +27,7 @@ import android.view.KeyEvent
 import android.view.View
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.Settings.SettingsActivity
-import com.meronmks.chairs.ViewPages.Fragments.HomeFragment
-import com.meronmks.chairs.ViewPages.Fragments.LocalPublicTLFragment
-import com.meronmks.chairs.ViewPages.Fragments.NotificationFragment
-import com.meronmks.chairs.ViewPages.Fragments.PublicTLFragment
+import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Attachment
 import okhttp3.MediaType
@@ -70,6 +67,7 @@ class HomeViewPage : AppCompatActivity() {
                 when(tab?.position){
                     0-> (adapter.getCurrentFrangemt() as HomeFragment).listScroll2Top()
                     1-> (adapter.getCurrentFrangemt() as NotificationFragment).listScroll2Top()
+                    2-> (adapter.getCurrentFrangemt() as ListTLFragment).listScroll2Top()
                     3-> (adapter.getCurrentFrangemt() as LocalPublicTLFragment).listScroll2Top()
                     4-> (adapter.getCurrentFrangemt() as PublicTLFragment).listScroll2Top()
                 }

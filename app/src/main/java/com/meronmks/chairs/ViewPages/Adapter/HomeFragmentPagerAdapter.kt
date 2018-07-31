@@ -20,7 +20,7 @@ open class HomeFragmentPagerAdapter(fm : FragmentManager) : FragmentPagerAdapter
         when(position){
             0 -> return HomeFragment()
             1 -> return NotificationFragment()
-            2 -> return DummyFragment()
+            2 -> return ListTLFragment()
             3 -> return LocalPublicTLFragment()
             4 -> return PublicTLFragment()
         }

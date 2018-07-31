@@ -1,4 +1,4 @@
-@startuml
+@startuml Chairsクラス図
 package android{
     package text{
         interface ImageGetter
@@ -137,11 +137,55 @@ package chairs{
             class DummyFragment{
 
             }
+            class BaseFragment{
+                # accountDataBase: AccountDataBaseTool
+                # mastodonTool: MastodonTimeLineTool
+                # loadLock : Boolean = false
+                # shutdownable : Shutdownable? = null
+                # itemList: ArrayAdapter<BaseStatus>
+                # tootList: RecyclerView!
+                + onItemClick(view: View, position: Int)
+                + onActivityCreated(savedInstanceState: Bundle?)
+                # refreshTimeLine(range: Range = Range()) = launch(UI)
+                # CreateHandler()
+                + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+                + onDestroy()
+                # suspend getTimeLine(range: Range = Range()): List<Status>
+                # checkListPosTop(): Boolean
+            }
             class HomeFragment{
-
+                + accountDataBase: AccountDataBaseTool
+                + timeLine : MastodonTimeLineTool
+                + loadLock : Boolean = false
+                + shutdownable : Shutdownable? = null
+                + itemList: ArrayAdapter<TimeLineStatus>
+                - tootList: RecyclerView!
+                + onItemClick(view: View, position: Int)
+                + onActivityCreated(savedInstanceState: Bundle?)
+                + refreshHomeTimeLine(range: Range = Range()) = launch(UI)
+                + CreateHandler()
+                + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+                + onDestroy()
+                + suspend getTimeLine(range: Range = Range()): List<Status>
+                - checkListPosTop(): Boolean
+                + listScroll2Top()
             }
             class LocalPublicTLFragment{
-
+                + accountDataBase: AccountDataBaseTool
+                + timeLine : MastodonTimeLineTool
+                + loadLock : Boolean = false
+                + shutdownable : Shutdownable? = null
+                + itemList: ArrayAdapter<TimeLineStatus>
+                - tootList: RecyclerView!
+                + onItemClick(view: View, position: Int)
+                + onActivityCreated(savedInstanceState: Bundle?)
+                + refreshLocalPublicTimeLine(range: Range = Range()) = launch(UI)
+                + CreateHandler()
+                + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+                + onDestroy()
+                + suspend getTimeLine(range: Range = Range()): List<Status>
+                - checkListPosTop(): Boolean
+                + listScroll2Top()
             }
             class NotificationFragment{
                 + accountDataBase: AccountDataBaseTool
@@ -151,7 +195,6 @@ package chairs{
                 + loadLock : Boolean = false
                 + itemList: ArrayAdapter<NotificationModel>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refresNotification(range: Range = Range()) = launch(UI)
@@ -159,7 +202,7 @@ package chairs{
                 + onDestroy()
                 + getNotification(range: Range = Range()): List<Notification>
                 + CreateHandler()
-                - chackListPosTop(): Boolean
+                - checkListPosTop(): Boolean
                 + listScroll2Top()
             }
             class PublicTLFragment{
@@ -169,7 +212,6 @@ package chairs{
                 + shutdownable : Shutdownable? = null
                 + itemList: ArrayAdapter<TimeLineStatus>
                 - tootList: RecyclerView!
-                - streaming: Streaming
                 + onItemClick(view: View, position: Int)
                 + onActivityCreated(savedInstanceState: Bundle?)
                 + refreshPublicTimeLine(range: Range = Range()) = launch(UI)
@@ -177,25 +219,23 @@ package chairs{
                 + onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
                 + onDestroy()
                 + suspend getTimeLine(range: Range = Range()): List<Status>
-                - chackListPosTop(): Boolean
+                - checkListPosTop(): Boolean
                 + listScroll2Top()
             }
             DummyFragment -up-|> Fragment
-            HomeFragment -up-|> Fragment
-            HomeFragment .> ItemClickListener
-            LocalPublicTLFragment -up-|> Fragment
-            LocalPublicTLFragment .> ItemClickListener
-            NotificationFragment -up-|> Fragment
-            NotificationFragment .> ItemClickListener
-            PublicTLFragment -up-|> Fragment
-            PublicTLFragment .> ItemClickListener
+            BaseFragment -up-|> Fragment
+            BaseFragment .> ItemClickListener
+            HomeFragment -left-|> BaseFragment
+            LocalPublicTLFragment -up-|> BaseFragment
+            NotificationFragment -right-|> BaseFragment
+            PublicTLFragment -up-|> BaseFragment
         }
         package ViewHolders{
-            class TimeLineViewHolder(itemView:View){
-
+            class TimeLineViewHolder{
+                + constructor(itemView:View)
             }
-            class NotificationViewHolder(itemView:View){
-
+            class NotificationViewHolder{
+                + constructor(itemView:View)
             }
             TimeLineViewHolder -up-|> ViewHolder
             NotificationViewHolder -up-|> ViewHolder
