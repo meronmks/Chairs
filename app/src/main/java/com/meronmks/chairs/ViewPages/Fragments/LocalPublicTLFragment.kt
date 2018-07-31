@@ -34,7 +34,11 @@ import kotlinx.coroutines.experimental.launch
 class LocalPublicTLFragment : BaseFragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val item =  itemList.getItem(position)
-        (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content(), item.userName)
+        if(item.reblog == null) {
+            (activity as HomeViewPage).showTootDtail(item.tootID, item.avater, item.content(), item.userName)
+        }else{
+            (activity as HomeViewPage).showTootDtail(item.reblog.tootID, item.reblog.avater, item.reblog.content(), item.reblog.userName)
+        }
     }
 
     lateinit var timeLine : MastodonTimeLineTool
