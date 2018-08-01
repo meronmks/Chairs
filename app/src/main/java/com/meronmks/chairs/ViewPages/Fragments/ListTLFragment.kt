@@ -49,23 +49,32 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
-            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
-//            refreshHomeTimeLine(Range(sinceId = itemList.getItem(0).tootID))
+            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
-//            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
+            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
         })
+
+        listListReloadImageView.setOnClickListener {
+            itemList.clear()
+            tootList.adapter.notifyDataSetChanged()
+            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
+        }
     }
 
     private fun getListTimeLine(listID: Long, range: Range = Range(), nextFlag: Boolean = false) = launch(UI) {
+        if(loadLock) return@launch
+        loadLock = true
         val toots = timeLine.getListTLAsync(listID, range).await()
         toots.forEach {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
+        tootList.adapter.notifyDataSetChanged()
         if(!nextFlag) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(toots.size, 0)
         homeTootListRefresh.isRefreshing = false
+        loadLock = false
     }
 
     private fun getLists() = launch(UI) {
