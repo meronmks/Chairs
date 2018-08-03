@@ -58,6 +58,7 @@ open class BaseFragment : Fragment(){
             "Home" -> createUserStreaming(handler)
             "LocalPublic" -> createLocalPublicStreaming(handler)
             "Public" -> createPublicStreaming(handler)
+            "List" -> createUserListStreaming(handler)
         }
     }
 
@@ -80,6 +81,20 @@ open class BaseFragment : Fragment(){
             }
         }
         createUserStreaming(handler)
+    }
+
+    private fun createUserListStreaming(handler: Handler){
+        val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
+        object : StreamingAsyncTask(){
+            override fun doInBackground(vararg p0: Void?): String? {
+                try{
+                    shutdownable = streaming?.userList(handler)
+                }catch (e : Mastodon4jRequestException){
+                    e.message?.showToastLogE(context)
+                }
+                return null
+            }
+        }.execute()
     }
 
     private fun createUserStreaming(handler: Handler){
