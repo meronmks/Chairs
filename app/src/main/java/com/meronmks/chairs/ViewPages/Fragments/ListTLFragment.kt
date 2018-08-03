@@ -49,7 +49,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
-            if(listsList.isEmpty){
+            if(itemList.isEmpty){
                 getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
             }else{
                 getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
