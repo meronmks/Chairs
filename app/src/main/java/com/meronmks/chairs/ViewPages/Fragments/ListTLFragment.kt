@@ -49,7 +49,12 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
-            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
+            if(listsList.isEmpty){
+                getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
+            }else{
+                getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
+            }
+
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
