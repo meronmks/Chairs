@@ -62,9 +62,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         })
 
         listListReloadImageView.setOnClickListener {
-            itemList.clear()
-            tootList.adapter.notifyDataSetChanged()
-            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
+            getLists()
         }
     }
 
