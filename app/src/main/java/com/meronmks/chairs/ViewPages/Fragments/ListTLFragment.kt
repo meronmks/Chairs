@@ -64,6 +64,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         listListReloadImageView.setOnClickListener {
             getLists()
         }
+        CreateStatusHandler(itemList, "List")
     }
 
     private fun getListTimeLine(listID: Long, range: Range = Range(), nextFlag: Boolean = false) = launch(UI) {
