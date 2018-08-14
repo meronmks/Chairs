@@ -72,6 +72,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
     private fun getListTimeLine(listID: Long, range: Range = Range(), nextFlag: Boolean = false) = launch(UI) {
         if(loadLock) return@launch
         loadLock = true
+        homeTootListRefresh.isRefreshing = true
         val toots = timeLine.getListTLAsync(listID, range).await()
         toots.forEach {
             itemList.add(TimeLineStatus(it))
