@@ -49,6 +49,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
+            if(listsList.isEmpty) return@setOnRefreshListener
             if(itemList.isEmpty){
                 getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
             }else{
@@ -58,6 +59,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
+            if(listsList.isEmpty) return@InfiniteScrollListener
             getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
         })
 
