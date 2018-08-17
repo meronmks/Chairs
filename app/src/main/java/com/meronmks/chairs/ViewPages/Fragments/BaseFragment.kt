@@ -1,6 +1,7 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
+import android.os.Message
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -90,7 +91,7 @@ open class BaseFragment : Fragment(){
                 try{
                     shutdownable = streaming?.userList(handler)
                 }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -104,7 +105,7 @@ open class BaseFragment : Fragment(){
                 try{
                     shutdownable = streaming?.user(handler)
                 }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -118,7 +119,7 @@ open class BaseFragment : Fragment(){
                 try{
                     shutdownable = streaming?.localPublic(handler)
                 }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -132,11 +133,19 @@ open class BaseFragment : Fragment(){
                 try{
                     shutdownable = streaming?.federatedPublic(handler)
                 }catch (e : Mastodon4jRequestException){
-                    e.message?.showToastLogE(context)
+                    showErrorToast(e)
                 }
                 return null
             }
         }.execute()
+    }
+
+    private fun showErrorToast(e : Mastodon4jRequestException){
+        if(e.localizedMessage.isEmpty()){
+            e.response.toString().showToastLogE(context)
+        }else{
+            e.localizedMessage.showToastLogE(context)
+        }
     }
 
     override fun onDestroy() {

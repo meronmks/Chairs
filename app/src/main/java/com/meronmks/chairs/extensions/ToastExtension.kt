@@ -16,8 +16,12 @@ import kotlinx.coroutines.experimental.launch
 /**
  * 普通に表示させるだけ
  */
-fun String.showToast(context: Context?, duration: Int){
+fun String.showToast(context: Context?, duration: Int, tag: String = "Info"){
     val msg = this
+    if (BuildConfig.DEBUG){
+        DeployGate.logInfo(msg)
+        Log.i(tag, msg)
+    }
     launch(UI) {
         Toast.makeText(context, msg, duration).show()
     }
@@ -29,10 +33,10 @@ fun String.showToast(context: Context?, duration: Int){
 fun String.showToastLogD(context: Context?, tag: String = "Debug"){
     val msg = this
     if (BuildConfig.DEBUG){
+        DeployGate.logDebug(msg)
         Log.d(tag, msg)
     }
     launch(UI) {
-        DeployGate.logDebug(msg)
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 }
@@ -43,10 +47,10 @@ fun String.showToastLogD(context: Context?, tag: String = "Debug"){
 fun String.showToastLogE(context: Context?, tag: String = "Error"){
     val msg = this
     if (BuildConfig.DEBUG){
+        DeployGate.logError(msg)
         Log.e(tag, msg)
     }
     launch(UI) {
-        DeployGate.logError(msg)
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 }
