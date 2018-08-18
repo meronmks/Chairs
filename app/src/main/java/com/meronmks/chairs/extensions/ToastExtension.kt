@@ -19,6 +19,19 @@ import kotlinx.coroutines.experimental.launch
 fun String.showToast(context: Context?, duration: Int, tag: String = "Info"){
     val msg = this
     if (BuildConfig.DEBUG){
+        Log.i(tag, msg)
+    }
+    launch(UI) {
+        Toast.makeText(context, msg, duration).show()
+    }
+}
+
+/**
+ * Info表示（DeployGateに投げ込む用）
+ */
+fun String.showToastLogI(context: Context?, duration: Int, tag: String = "Info"){
+    val msg = this
+    if (BuildConfig.DEBUG){
         DeployGate.logInfo(msg)
         Log.i(tag, msg)
     }
