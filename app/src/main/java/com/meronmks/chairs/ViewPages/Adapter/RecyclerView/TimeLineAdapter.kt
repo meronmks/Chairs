@@ -72,7 +72,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
                for((i, media) in item.mediaAttachments.withIndex()){
                    it.imageView[i].visibility = View.VISIBLE
                    Glide.with(context)
-                           .load(media.url)
+                           .load(media.url.replace("/original/", "/small/"))
                            .apply(options)
                            .into(it.imageView[i])
                }
