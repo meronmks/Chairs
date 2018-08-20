@@ -2,17 +2,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <PreferenceScreen
+    <Preference
         android:title="基本"
         android:key="preference_foo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <PreferenceScreen
+    <Preference
         android:title="テーマとデザイン"
         android:key="preferenceDesign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <PreferenceScreen
+    <Preference
+        android:title="このインスタンスについて"
+        android:key="preferenceInstanceAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Preference
         android:title="このアプリについて"
         android:key="preferenceAbout"
         android:layout_width="wrap_content"
