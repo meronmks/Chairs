@@ -54,10 +54,10 @@ open class BaseFragment : Fragment(){
 
             override fun onDelete(id: Long) {
                 launch(UI){
-                    for(i in itemList.count downTo 0){
+                    for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).tootID) continue
                         itemList.remove(itemList.getItem(i))
-                        tootList.adapter?.notifyItemInserted(0)
+                        tootList.adapter?.notifyItemRemoved(i)
                     }
                 }
             }
@@ -87,10 +87,10 @@ open class BaseFragment : Fragment(){
 
             override fun onDelete(id: Long) {
                 launch(UI){
-                    for(i in itemList.count downTo 0){
+                    for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).id) continue
                         itemList.remove(itemList.getItem(i))
-                        tootList.adapter?.notifyItemInserted(0)
+                        tootList.adapter?.notifyItemRemoved(i)
                     }
                 }
             }
