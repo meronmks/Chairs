@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import okhttp3.internal.http2.StreamResetException
 
 open class BaseFragment : Fragment(){
     protected lateinit var accountDataBase: AccountDataBaseTool
@@ -106,6 +107,8 @@ open class BaseFragment : Fragment(){
                     shutdownable = streaming?.userList(handler)
                 }catch (e : Mastodon4jRequestException){
                     showErrorToast(e)
+                }catch (e : StreamResetException){
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -119,6 +122,8 @@ open class BaseFragment : Fragment(){
                 try{
                     shutdownable = streaming?.user(handler)
                 }catch (e : Mastodon4jRequestException){
+                    showErrorToast(e)
+                }catch (e : StreamResetException){
                     showErrorToast(e)
                 }
                 return null
@@ -134,6 +139,8 @@ open class BaseFragment : Fragment(){
                     shutdownable = streaming?.localPublic(handler)
                 }catch (e : Mastodon4jRequestException){
                     showErrorToast(e)
+                }catch (e : StreamResetException){
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -148,6 +155,8 @@ open class BaseFragment : Fragment(){
                     shutdownable = streaming?.federatedPublic(handler)
                 }catch (e : Mastodon4jRequestException){
                     showErrorToast(e)
+                }catch (e : StreamResetException){
+                    showErrorToast(e)
                 }
                 return null
             }
@@ -160,6 +169,10 @@ open class BaseFragment : Fragment(){
         }else{
             e.localizedMessage.showToastLogE(context)
         }
+    }
+
+    private fun showErrorToast(e : StreamResetException){
+        e.localizedMessage.showToastLogE(context)
     }
 
     override fun onDestroy() {
