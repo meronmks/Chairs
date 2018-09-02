@@ -66,12 +66,12 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         listListReloadImageView.setOnClickListener {
             getLists()
         }
-        //CreateStatusHandler(itemList, "List")
     }
 
     private fun getListTimeLine(listID: Long, range: Range = Range(), nextFlag: Boolean = false) = launch(UI) {
         if(loadLock) return@launch
         loadLock = true
+        CreateStatusHandler(itemList, "List", listID.toString())
         homeTootListRefresh.isRefreshing = true
         val toots = timeLine.getListTLAsync(listID, range).await()
         toots.forEach {

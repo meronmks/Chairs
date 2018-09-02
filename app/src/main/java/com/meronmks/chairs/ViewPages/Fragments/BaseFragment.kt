@@ -38,7 +38,7 @@ open class BaseFragment : Fragment(){
         return inflater.inflate(R.layout.fragment_home_time_line, container, false)
     }
 
-    protected fun CreateStatusHandler(itemList: ArrayAdapter<TimeLineStatus>, timeLineType: String){
+    protected fun CreateStatusHandler(itemList: ArrayAdapter<TimeLineStatus>, timeLineType: String, listID: String = "None"){
         val handler = object : com.sys1yagi.mastodon4j.api.Handler{
             override fun onStatus(status: Status) {
                 launch(UI){
@@ -67,7 +67,7 @@ open class BaseFragment : Fragment(){
             "Home" -> createUserStreaming(handler)
             "LocalPublic" -> createLocalPublicStreaming(handler)
             "Public" -> createPublicStreaming(handler)
-            "List" -> createUserListStreaming(handler)
+            "List" -> createUserListStreaming(handler, listID)
         }
     }
 
@@ -99,12 +99,12 @@ open class BaseFragment : Fragment(){
         createUserStreaming(handler)
     }
 
-    private fun createUserListStreaming(handler: Handler){
+    private fun createUserListStreaming(handler: Handler, listID: String){
         val streaming = MastodonStreamingTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken()).getStreaming()
         object : StreamingAsyncTask(){
             override fun doInBackground(vararg p0: Void?): String? {
                 try{
-                    shutdownable = streaming?.userList(handler)
+                    shutdownable = streaming?.userList(handler, listID)
                 }catch (e : Mastodon4jRequestException){
                     showErrorToast(e)
                 }catch (e : StreamResetException){
