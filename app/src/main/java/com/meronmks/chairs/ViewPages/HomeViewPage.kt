@@ -2,7 +2,6 @@ package com.meronmks.chairs.ViewPages
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -25,6 +24,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
@@ -35,12 +35,13 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 
-class HomeViewPage : AppCompatActivity() {
+class HomeViewPage : AppCompatActivity(), TextWatcher {
 
     lateinit var accountDataBase: AccountDataBaseTool
     lateinit var homeViewTools : MastodonHomeViewTools
     lateinit var adapter: HomeFragmentPagerAdapter
     var isSensitive: Boolean = false
+    var isCW: Boolean = false
     var statusID : Long = 0
     var lock: Boolean = false
     var userName : String? = null
@@ -83,8 +84,7 @@ class HomeViewPage : AppCompatActivity() {
 
         })
 
-        linearMenu.visibility = View.GONE
-        tootDetail.visibility = View.GONE
+        iniLayout()
 
         sendTootImageButton.setOnClickListener {
             postToot()
@@ -142,10 +142,16 @@ class HomeViewPage : AppCompatActivity() {
 
         nsfwButton.setOnClickListener {
             isSensitive = !isSensitive
-            if(isSensitive){
-                nsfwButton.setTextColor(Color.CYAN)
-            }else{
-                nsfwButton.setTextColor(Color.WHITE)
+            buttonTextColorChange(nsfwButton, isSensitive)
+        }
+
+        cwButton.setOnClickListener {
+            isCW = !isCW
+            buttonTextColorChange(cwButton, isCW)
+            linearCWTextLayout.visibility = View.VISIBLE
+            if(!isCW){
+                linearCWTextLayout.visibility = View.GONE
+                cwEditText.text.clear()
             }
         }
     }
@@ -235,8 +241,9 @@ class HomeViewPage : AppCompatActivity() {
             medias.forEach {
                 mediaIDs.add(it.id)
             }
-            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, mediaIDs, isSensitive, null, Status.Visibility.Public).await()
+            homeViewTools.tootAsync(tootEditText.text.toString(), replayID, mediaIDs, isSensitive, cwEditText.text.toString(), Status.Visibility.Public).await()
             tootEditText.text.clear()
+            cwEditText.text.clear()
             getString(R.string.SuccessPostToot).showToast(baseContext, Toast.LENGTH_SHORT)
         }catch (e: Mastodon4jRequestException){
             "${getString(R.string.postFaild)} ${e.response?.code()}".showToastLogE(baseContext)
@@ -265,16 +272,37 @@ class HomeViewPage : AppCompatActivity() {
      * 入力された文字のカウント処理
      */
     private fun textCounter(){
-        tootEditText.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-                tootCounterText.text = "${500 - tootEditText.text.length}"
-            }
+        tootEditText.addTextChangedListener(this)
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+        cwEditText.addTextChangedListener(this)
+    }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-        })
+    /**
+     * Layoutの初期化
+     */
+    private fun iniLayout(){
+        linearMenu.visibility = View.GONE
+        tootDetail.visibility = View.GONE
+        linearCWTextLayout.visibility = View.GONE
+        buttonTextColorChange(nsfwButton, isSensitive)
+        buttonTextColorChange(cwButton, isCW)
+    }
+
+    private fun buttonTextColorChange(b: Button, flag: Boolean){
+        if(flag){
+            b.setTextColor(Color.CYAN)
+        }else{
+            b.setTextColor(Color.WHITE)
+        }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        tootCounterText.text = "${500 - (tootEditText.text.length + cwEditText.text.length)}"
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 }
