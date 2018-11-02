@@ -235,6 +235,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         try {
             if(lock) return@launch
             lock = true
+            sendTootProgressBar.visibility = View.VISIBLE
             var replayID : Long? = statusID
             if (userName == null) replayID = null
             val mediaIDs:  ArrayList<Long> = ArrayList()
@@ -251,6 +252,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
             e.message?.showToastLogE(baseContext)
         }finally {
             lock = false
+            sendTootProgressBar.visibility = View.GONE
         }
     }
 
@@ -286,6 +288,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         linearCWTextLayout.visibility = View.GONE
         buttonTextColorChange(nsfwButton, isSensitive)
         buttonTextColorChange(cwButton, isCW)
+        sendTootProgressBar.visibility = View.GONE
     }
 
     private fun buttonTextColorChange(b: Button, flag: Boolean){
