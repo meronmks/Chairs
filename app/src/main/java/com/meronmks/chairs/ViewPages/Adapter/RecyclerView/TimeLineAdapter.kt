@@ -42,7 +42,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
 
     override fun onBindViewHolder(holder: TimeLineViewHolder, position: Int) {
        holder?.let {
-           var item = itemList?.getItem(position)
+           var item = itemList!!.getItem(position)
            if(item == null) return@let null
            initializeView(it, position)
 
@@ -55,7 +55,7 @@ class TimeLineAdapter(private val context: Context, private val itemClickListene
            if (item.reblog != null){
                it.rb2Name.visibility = View.VISIBLE
                it.rb2Name.text = "Reblog by @${item.userName}"
-               item = item.reblog!!
+               item = item.reblog
            }
            it.displayNameTextView.text = item.displayName().fromHtml(context, it.displayNameTextView)
            it.userNameTextView.text = "@${item.userName}"
