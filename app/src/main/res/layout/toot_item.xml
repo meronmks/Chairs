@@ -104,7 +104,8 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         tools:layout_editor_absoluteX="188dp"
-        tools:layout_editor_absoluteY="165dp" />
+        tools:layout_editor_absoluteY="165dp"
+        tools:ignore="MissingConstraints" />
 
     <Space
         android:id="@+id/lastItemMaginSpace"

@@ -66,13 +66,15 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         app:layout_constraintTop_toBottomOf="@+id/tootTextView"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:ignore="MissingConstraints" />
 
     <Space
         android:id="@+id/lastItemMaginSpace"
         android:layout_width="8dp"
         android:layout_height="78dp"
         app:layout_constraintTop_toBottomOf="@+id/avatarImageButton"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
