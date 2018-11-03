@@ -72,7 +72,7 @@ class HomeFragment : BaseFragment(), ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootList.adapter.notifyDataSetChanged()
+        tootList.adapter?.notifyDataSetChanged()
         if(!nextFlag) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
