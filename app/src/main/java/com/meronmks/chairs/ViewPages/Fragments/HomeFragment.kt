@@ -58,12 +58,12 @@ class HomeFragment : BaseFragment(), ItemClickListener {
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
-            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
+            refreshHomeTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
         CreateStatusHandler(itemList, "Home")
     }
 
-    private fun refreshHomeTimeLine(range: Range = Range(), nextFlag: Boolean = false) = launch(UI){
+    private fun refreshHomeTimeLine(range: Range = Range()) = launch(UI){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true
@@ -73,7 +73,7 @@ class HomeFragment : BaseFragment(), ItemClickListener {
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootList.adapter?.notifyDataSetChanged()
-        if(!nextFlag) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        if(range.maxId == null) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
