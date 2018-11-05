@@ -48,7 +48,8 @@ install:
   - echo no | sdkmanager "platforms;android-$ANDROID_API" # Latest platform required by SDK tools
   - echo no | sdkmanager "extras;android;m2repository"
   - echo no | sdkmanager "extras;google;m2repository"
-  - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.3"
+  - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  - echo no | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
 script:
   - ./gradlew assembleDebug test
