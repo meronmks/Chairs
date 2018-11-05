@@ -69,8 +69,8 @@ class LocalPublicTLFragment : BaseFragment(), ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootList.adapter.notifyDataSetChanged()
-        (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        tootList.adapter?.notifyDataSetChanged()
+        if(range.maxId == null) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }

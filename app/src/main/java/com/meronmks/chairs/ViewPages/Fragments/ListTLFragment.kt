@@ -60,7 +60,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
             if(listsList.isEmpty) return@InfiniteScrollListener
-            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID), true)
+            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
 
         listListReloadImageView.setOnClickListener {
@@ -68,7 +68,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         }
     }
 
-    private fun getListTimeLine(listID: Long, range: Range = Range(), nextFlag: Boolean = false) = launch(UI) {
+    private fun getListTimeLine(listID: Long, range: Range = Range()) = launch(UI) {
         if(loadLock) return@launch
         loadLock = true
         CreateStatusHandler(itemList, "List", listID.toString())
@@ -78,8 +78,8 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
             itemList.add(TimeLineStatus(it))
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
-        tootList.adapter.notifyDataSetChanged()
-        if(!nextFlag) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(toots.size, 0)
+        tootList.adapter?.notifyDataSetChanged()
+        if(range.maxId == null) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(toots.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }
