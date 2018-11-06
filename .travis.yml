@@ -44,7 +44,8 @@ before_install:
   - chmod +x gradlew
   - eval `ssh-agent -s`
   - chmod 600 ~/.ssh/config
-  - openssl aes-256-cbc -K $encrypted_4c0fd786091d_key -iv $encrypted_4c0fd786091d_iv -in ./Chairs/app/google-services.json.enc -out ./Chairs/app/google-services.json -d
+  - ls $TRAVIS_BUILD_DIR
+  - openssl aes-256-cbc -K $encrypted_4c0fd786091d_key -iv $encrypted_4c0fd786091d_iv -in  $TRAVIS_BUILD_DIR/app/google-services.json.enc -out $TRAVIS_BUILD_DIR/app/google-services.json -d
 install:
   # Update sdk tools to latest version and install/update components
   - echo no | sdkmanager "tools"
