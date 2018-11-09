@@ -25,6 +25,8 @@
         <activity android:name=".Settings.SettingsActivity"
             android:label="@string/settingText"/>
         <activity android:name=".Images.PhotoViewActivity"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="chairs"/>
     </application>
-
 </manifest>
