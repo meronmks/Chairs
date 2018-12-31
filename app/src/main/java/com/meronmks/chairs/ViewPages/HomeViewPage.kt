@@ -25,6 +25,7 @@ import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import com.bumptech.glide.Glide
 import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
@@ -47,7 +48,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
     var userName : String? = null
     private val RESULT_PICK_IMAGEFILE: Int = 1000
     private val medias = arrayListOf<Attachment>()
-
+    private val postImages = arrayListOf<ImageButton>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_view_page)
@@ -226,6 +227,9 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         if(attachment != null){
             medias.add(attachment)
         }
+        medias.forEach {
+            postImage1.setImageURI(Uri.parse(it.previewUrl))
+        }
     }
 
     /**
@@ -289,6 +293,11 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         buttonTextColorChange(nsfwButton, isSensitive)
         buttonTextColorChange(cwButton, isCW)
         sendTootProgressBar.visibility = View.GONE
+        postImage1.visibility = View.GONE
+        postImage2.visibility = View.GONE
+        postImage3.visibility = View.GONE
+        postImage4.visibility = View.GONE
+        postImages
     }
 
     private fun buttonTextColorChange(b: Button, flag: Boolean){
