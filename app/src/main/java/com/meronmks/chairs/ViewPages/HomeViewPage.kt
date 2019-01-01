@@ -27,6 +27,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
@@ -227,8 +228,17 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         if(attachment != null){
             medias.add(attachment)
         }
+        var i = 0
+        val options = RequestOptions()
+                .placeholder(R.drawable.ic_autorenew_black_24dp)
+                .error(R.drawable.ic_error_24dp)
         medias.forEach {
-            postImage1.setImageURI(Uri.parse(it.previewUrl))
+            postImages[i].visibility = View.VISIBLE
+            Glide.with(baseContext)
+                    .load(it.previewUrl)
+                    .apply(options)
+                    .into(postImages[i])
+            i++
         }
     }
 
@@ -297,7 +307,10 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         postImage2.visibility = View.GONE
         postImage3.visibility = View.GONE
         postImage4.visibility = View.GONE
-        postImages
+        postImages.add(postImage1)
+        postImages.add(postImage2)
+        postImages.add(postImage3)
+        postImages.add(postImage4)
     }
 
     private fun buttonTextColorChange(b: Button, flag: Boolean){
