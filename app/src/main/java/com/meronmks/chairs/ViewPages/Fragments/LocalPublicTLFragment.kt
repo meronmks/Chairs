@@ -26,6 +26,7 @@ import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import java.net.SocketTimeoutException
 
 /**
  * Created by meron on 2018/01/04.\
@@ -76,6 +77,12 @@ class LocalPublicTLFragment : BaseFragment(), ItemClickListener {
     }
 
     private suspend fun getTimeLine(range: Range = Range()): List<Status> {
-        return timeLine.getLocalPublicTLAsync(range).await()
+        val list : ArrayList<Status> = arrayListOf()
+        try{
+            list.addAll(timeLine.getLocalPublicTLAsync(range).await())
+        }catch (timeoutE : SocketTimeoutException){
+            timeoutE.localizedMessage.showToastLogE(context)
+        }
+        return list
     }
 }

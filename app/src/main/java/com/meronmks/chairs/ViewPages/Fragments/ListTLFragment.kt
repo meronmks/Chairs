@@ -14,12 +14,14 @@ import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.InfiniteScrollListener
 import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.TimeLineAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.data.model.TimeLineStatus
+import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.MastodonList
 import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.fragment_list_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import java.net.SocketTimeoutException
 
 class ListTLFragment : BaseFragment(), ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
@@ -51,16 +53,16 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         homeTootListRefresh.setOnRefreshListener {
             if(listsList.isEmpty) return@setOnRefreshListener
             if(itemList.isEmpty){
-                getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
+                refreshListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id)
             }else{
-                getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
+                refreshListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(sinceId = itemList.getItem(0).tootID))
             }
 
         }
 
         tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
             if(listsList.isEmpty) return@InfiniteScrollListener
-            getListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID))
+            refreshListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
 
         listListReloadImageView.setOnClickListener {
@@ -68,12 +70,12 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         }
     }
 
-    private fun getListTimeLine(listID: Long, range: Range = Range()) = launch(UI) {
+    private fun refreshListTimeLine(listID: Long, range: Range = Range()) = launch(UI) {
         if(loadLock) return@launch
         loadLock = true
         CreateStatusHandler(itemList, "List", listID.toString())
         homeTootListRefresh.isRefreshing = true
-        val toots = timeLine.getListTLAsync(listID, range).await()
+        val toots = getListTimeLine(listID, range)
         toots.forEach {
             itemList.add(TimeLineStatus(it))
         }
@@ -84,8 +86,23 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         loadLock = false
     }
 
+    private suspend fun getListTimeLine(listID: Long, range: Range): List<Status> {
+        val list : ArrayList<Status> = arrayListOf()
+        try{
+            list.addAll(timeLine.getListTLAsync(listID, range).await())
+        }catch (timeoutE : SocketTimeoutException){
+            timeoutE.localizedMessage.showToastLogE(context)
+        }
+        return list
+    }
+
     private fun getLists() = launch(UI) {
-        val lists = timeLine.getListsAsync().await()
+        val lists : ArrayList<MastodonList> = arrayListOf()
+        try{
+            lists.addAll(timeLine.getListsAsync().await())
+        }catch (timeoutE : SocketTimeoutException){
+            timeoutE.localizedMessage.showToastLogE(context)
+        }
         val adapter = ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         listSpinner.adapter = adapter

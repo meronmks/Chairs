@@ -26,6 +26,7 @@ import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
+import java.net.SocketTimeoutException
 
 
 /**
@@ -79,6 +80,12 @@ class HomeFragment : BaseFragment(), ItemClickListener {
     }
 
     private suspend fun getTimeLine(range: Range = Range()): List<Status> {
-        return timeLine.getHomeAsync(range).await()
+        val list : ArrayList<Status> = arrayListOf()
+        try{
+            list.addAll(timeLine.getHomeAsync(range).await())
+        }catch (timeoutE : SocketTimeoutException){
+            timeoutE.localizedMessage.showToastLogE(context)
+        }
+        return list
     }
 }

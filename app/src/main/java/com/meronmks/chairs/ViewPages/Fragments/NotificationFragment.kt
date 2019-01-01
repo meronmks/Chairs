@@ -11,11 +11,14 @@ import com.meronmks.chairs.ViewPages.Adapter.RecyclerView.NotificationAdapter
 import com.meronmks.chairs.ViewPages.HomeViewPage
 import com.meronmks.chairs.Interfaces.ItemClickListener
 import com.meronmks.chairs.data.model.NotificationModel
+import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
+import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import java.net.SocketTimeoutException
 
 /**
  * Created by meron on 2018/01/04.
@@ -62,6 +65,12 @@ class NotificationFragment : BaseFragment(), ItemClickListener {
     }
 
     private suspend fun getNotification(range: Range = Range()): List<Notification> {
-        return notification.getNotificationAsync(range).await()
+        val list : ArrayList<Notification> = arrayListOf()
+        try{
+            list.addAll(notification.getNotificationAsync(range).await())
+        }catch (timeoutE : SocketTimeoutException){
+            timeoutE.localizedMessage.showToastLogE(context)
+        }
+        return list
     }
 }
