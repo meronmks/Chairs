@@ -43,7 +43,7 @@ open class BaseFragment : Fragment(){
     protected fun CreateStatusHandler(itemList: ArrayAdapter<TimeLineStatus>, timeLineType: String, listID: String = "None"){
         val handler = object : com.sys1yagi.mastodon4j.api.Handler{
             override fun onStatus(status: Status) {
-                GlobalScope.launch(Dispatchers.Unconfined){
+                GlobalScope.launch(Dispatchers.Main){
                     itemList.insert(TimeLineStatus(status), 0)
                     tootList.adapter?.notifyItemInserted(0)
                     if(checkListPosTop()) {
@@ -56,7 +56,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onDelete(id: Long) {
-                GlobalScope.launch(Dispatchers.Unconfined){
+                GlobalScope.launch(Dispatchers.Main){
                     for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).tootID) continue
                         itemList.remove(itemList.getItem(i))
@@ -79,7 +79,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onNotification(notification: Notification) {
-                GlobalScope.launch(Dispatchers.Unconfined){
+                GlobalScope.launch(Dispatchers.Main){
                     itemList.insert(NotificationModel(notification), 0)
                     tootList.adapter?.notifyItemInserted(0)
                     if(checkListPosTop()) {
@@ -89,7 +89,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onDelete(id: Long) {
-                GlobalScope.launch(Dispatchers.Unconfined){
+                GlobalScope.launch(Dispatchers.Main){
                     for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).id) continue
                         itemList.remove(itemList.getItem(i))

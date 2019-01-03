@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         step1TextView.text = "$instanceName${getString(R.string.step1Text)}"
     }
 
-    fun startOAuth(view: View) = GlobalScope.launch(Dispatchers.Unconfined){
+    fun startOAuth(view: View) = GlobalScope.launch(Dispatchers.Main){
         val document = getMInstanceLists() ?: return@launch
         if(document.exists()) {
             clientId = document.data?.get("clientId").toString()
@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun login(view: View) = GlobalScope.launch(Dispatchers.Unconfined){
+    fun login(view: View) = GlobalScope.launch(Dispatchers.Main){
         accountDataBase = AccountDataBaseTool(baseContext)
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val cd = cm.primaryClip

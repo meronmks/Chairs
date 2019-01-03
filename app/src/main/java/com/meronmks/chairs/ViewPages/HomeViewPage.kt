@@ -20,7 +20,6 @@ import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.activity_home_view_page.*
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import android.view.KeyEvent
 import android.view.View
@@ -28,7 +27,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.meronmks.chairs.Settings.SettingsActivity
+import com.meronmks.chairs.Settings.MainPreferenceFragment
 import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Attachment
@@ -133,7 +132,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         }
 
         settingsButton.setOnClickListener {
-            val intent = Intent(baseContext, SettingsActivity::class.java)
+            val intent = Intent(baseContext, MainPreferenceFragment::class.java)
             startActivity(intent)
         }
 
@@ -174,7 +173,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
             tootEditText.setSelection(tootEditText.text.length)
         }
         reblogButton.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Unconfined) {
+            GlobalScope.launch(Dispatchers.Main) {
                 try {
                     homeViewTools.postAsyncReblog(statusID).await()
                     getString(R.string.SuccessReblog).showToast(baseContext, Toast.LENGTH_SHORT)
@@ -184,7 +183,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
             }
         }
         favButton.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Unconfined) {
+            GlobalScope.launch(Dispatchers.Main) {
                 try {
                     homeViewTools.postAsyncFavourite(statusID).await()
                     getString(R.string.fovouriteSuccess).showToast(baseContext, Toast.LENGTH_SHORT)
@@ -225,7 +224,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         }
     }
 
-    fun uploadMedia(multipart: MultipartBody.Part) = GlobalScope.launch(Dispatchers.Unconfined) {
+    fun uploadMedia(multipart: MultipartBody.Part) = GlobalScope.launch(Dispatchers.Main) {
         val attachment = homeViewTools.uploadMedia(multipart).await()
         if(attachment != null){
             medias.add(attachment)
@@ -247,7 +246,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
     /**
      * トゥートを送信する
      **/
-    private fun postToot() = GlobalScope.launch(Dispatchers.Unconfined){
+    private fun postToot() = GlobalScope.launch(Dispatchers.Main){
         try {
             if(lock) return@launch
             lock = true

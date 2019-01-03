@@ -51,7 +51,7 @@ class NotificationFragment : BaseFragment(), ItemClickListener {
         CreateNotificationHandler(itemList)
     }
 
-    private fun refreshNotification(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
+    private fun refreshNotification(range: Range = Range()) = GlobalScope.launch(Dispatchers.Main){
         if(loadLock)return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true

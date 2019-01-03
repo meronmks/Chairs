@@ -72,7 +72,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         }
     }
 
-    private fun refreshListTimeLine(listID: Long, range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined) {
+    private fun refreshListTimeLine(listID: Long, range: Range = Range()) = GlobalScope.launch(Dispatchers.Main) {
         if(loadLock) return@launch
         loadLock = true
         CreateStatusHandler(itemList, "List", listID.toString())
@@ -98,7 +98,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         return list
     }
 
-    private fun getLists() = GlobalScope.launch(Dispatchers.Unconfined) {
+    private fun getLists() = GlobalScope.launch(Dispatchers.Main) {
         val lists : ArrayList<MastodonList> = arrayListOf()
         try{
             lists.addAll(timeLine.getListsAsync().await())

@@ -63,7 +63,7 @@ class PublicTLFragment : BaseFragment(), ItemClickListener {
         CreateStatusHandler(itemList, "Public")
     }
 
-    private fun refreshPublicTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
+    private fun refreshPublicTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Main){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true

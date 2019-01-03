@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment(), ItemClickListener {
         CreateStatusHandler(itemList, "Home")
     }
 
-    private fun refreshHomeTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
+    private fun refreshHomeTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Main){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true
