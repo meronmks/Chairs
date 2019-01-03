@@ -18,6 +18,8 @@ import com.meronmks.chairs.initialize.MainActivity
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.tasks.await
@@ -45,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         step1TextView.text = "$instanceName${getString(R.string.step1Text)}"
     }
 
-    fun startOAuth(view: View) = launch(UI){
+    fun startOAuth(view: View) = GlobalScope.launch(Dispatchers.Unconfined){
         val document = getMInstanceLists() ?: return@launch
         if(document.exists()) {
             clientId = document.data?.get("clientId").toString()
@@ -63,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun login(view: View) = launch(UI){
+    fun login(view: View) = GlobalScope.launch(Dispatchers.Unconfined){
         accountDataBase = AccountDataBaseTool(baseContext)
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val cd = cm.primaryClip

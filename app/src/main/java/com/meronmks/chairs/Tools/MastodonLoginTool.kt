@@ -10,9 +10,7 @@ import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Accounts
 import com.sys1yagi.mastodon4j.api.method.Apps
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.*
 import okhttp3.OkHttpClient
 
 /**
@@ -25,7 +23,7 @@ class MastodonLoginTool(private val instanceName: String){
     /**
      * アプリケーション登録
      */
-    fun registerAppAsync(): Deferred<AppRegistration> = async(CommonPool){
+    fun registerAppAsync(): Deferred<AppRegistration> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return@async apps.createApp(
@@ -39,7 +37,7 @@ class MastodonLoginTool(private val instanceName: String){
     /**
      * OAuth認証
      */
-    fun oAuthAsync(clientId : String) :Deferred<Uri> = async(CommonPool){
+    fun oAuthAsync(clientId : String) :Deferred<Uri> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
 
@@ -50,7 +48,7 @@ class MastodonLoginTool(private val instanceName: String){
     /**
      * Login処理
      */
-    fun loginAsync(clientId: String, clientSecret : String, authCode : String) : Deferred<AccessToken> = async(CommonPool){
+    fun loginAsync(clientId: String, clientSecret : String, authCode : String) : Deferred<AccessToken> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson()).build()
         val apps = Apps(client)
         return@async apps.getAccessToken(clientId, clientSecret, code = authCode).execute()

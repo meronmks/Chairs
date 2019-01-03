@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import com.deploygate.sdk.DeployGate
 import com.meronmks.chairs.BuildConfig
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
@@ -21,7 +23,7 @@ fun String.showToast(context: Context?, duration: Int, tag: String = "Info"){
     if (BuildConfig.DEBUG){
         Log.i(tag, msg)
     }
-    launch(UI) {
+    GlobalScope.launch(Dispatchers.Unconfined) {
         Toast.makeText(context, msg, duration).show()
     }
 }
@@ -35,7 +37,7 @@ fun String.showToastLogI(context: Context?, duration: Int, tag: String = "Info")
         DeployGate.logInfo(msg)
         Log.i(tag, msg)
     }
-    launch(UI) {
+    GlobalScope.launch(Dispatchers.Unconfined) {
         Toast.makeText(context, msg, duration).show()
     }
 }
@@ -49,7 +51,7 @@ fun String.showToastLogD(context: Context?, tag: String = "Debug"){
         DeployGate.logDebug(msg)
         Log.d(tag, msg)
     }
-    launch(UI) {
+    GlobalScope.launch(Dispatchers.Unconfined) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 }
@@ -63,7 +65,7 @@ fun String.showToastLogE(context: Context?, tag: String = "Error"){
         DeployGate.logError(msg)
         Log.e(tag, msg)
     }
-    launch(UI) {
+    GlobalScope.launch(Dispatchers.Unconfined) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 }

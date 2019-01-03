@@ -16,6 +16,8 @@ import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import java.net.SocketTimeoutException
@@ -49,7 +51,7 @@ class NotificationFragment : BaseFragment(), ItemClickListener {
         CreateNotificationHandler(itemList)
     }
 
-    private fun refreshNotification(range: Range = Range()) = launch(UI){
+    private fun refreshNotification(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
         if(loadLock)return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true

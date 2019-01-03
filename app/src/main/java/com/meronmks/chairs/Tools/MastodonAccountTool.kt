@@ -4,9 +4,7 @@ import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.method.Accounts
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.*
 import okhttp3.OkHttpClient
 
 /**
@@ -18,7 +16,7 @@ class MastodonAccountTool(private val instanceName : String, private val accessT
     /**
      * ログインユーザー取得（と同時にアクセストークンが正しいかを調べる）
      */
-    fun getVerifyCredentialsAsync() : Deferred<Account> = async(CommonPool){
+    fun getVerifyCredentialsAsync() : Deferred<Account> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()

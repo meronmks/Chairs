@@ -24,6 +24,8 @@ import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import java.net.SocketTimeoutException
@@ -61,7 +63,7 @@ class PublicTLFragment : BaseFragment(), ItemClickListener {
         CreateStatusHandler(itemList, "Public")
     }
 
-    private fun refreshPublicTimeLine(range: Range = Range()) = launch(UI){
+    private fun refreshPublicTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true

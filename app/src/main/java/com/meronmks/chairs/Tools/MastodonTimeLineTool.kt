@@ -9,9 +9,7 @@ import com.sys1yagi.mastodon4j.api.method.Accounts
 import com.sys1yagi.mastodon4j.api.method.MastodonLists
 import com.sys1yagi.mastodon4j.api.method.Public
 import com.sys1yagi.mastodon4j.api.method.Timelines
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.*
 import okhttp3.OkHttpClient
 
 /**
@@ -19,7 +17,7 @@ import okhttp3.OkHttpClient
  * タイムラインを取得する奴
  */
 class MastodonTimeLineTool(private val instanceName : String, private val accessToken : String){
-    fun getHomeAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+    fun getHomeAsync(range: Range = Range()) : Deferred<List<Status>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()
@@ -27,7 +25,7 @@ class MastodonTimeLineTool(private val instanceName : String, private val access
         return@async timeLine.getHome(range).execute().part
     }
 
-    fun getPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+    fun getPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()
@@ -35,7 +33,7 @@ class MastodonTimeLineTool(private val instanceName : String, private val access
         return@async publicTL.getFederatedPublic(range).execute().part
     }
 
-    fun getLocalPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+    fun getLocalPublicTLAsync(range: Range = Range()) : Deferred<List<Status>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()
@@ -43,7 +41,7 @@ class MastodonTimeLineTool(private val instanceName : String, private val access
         return@async publicTL.getLocalPublic(range).execute().part
     }
 
-    fun getListTLAsync(listID: Long, range: Range = Range()) : Deferred<List<Status>> = async(CommonPool){
+    fun getListTLAsync(listID: Long, range: Range = Range()) : Deferred<List<Status>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()
@@ -51,7 +49,7 @@ class MastodonTimeLineTool(private val instanceName : String, private val access
         return@async listTL.getListTimeLine(listID, range).execute().part
     }
 
-    fun getListsAsync() : Deferred<List<MastodonList>> = async(CommonPool){
+    fun getListsAsync() : Deferred<List<MastodonList>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()

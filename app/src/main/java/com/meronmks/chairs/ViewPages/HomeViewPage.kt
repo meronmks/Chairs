@@ -32,6 +32,8 @@ import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Attachment
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -172,7 +174,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
             tootEditText.setSelection(tootEditText.text.length)
         }
         reblogButton.setOnClickListener {
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Unconfined) {
                 try {
                     homeViewTools.postAsyncReblog(statusID).await()
                     getString(R.string.SuccessReblog).showToast(baseContext, Toast.LENGTH_SHORT)
@@ -182,7 +184,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
             }
         }
         favButton.setOnClickListener {
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Unconfined) {
                 try {
                     homeViewTools.postAsyncFavourite(statusID).await()
                     getString(R.string.fovouriteSuccess).showToast(baseContext, Toast.LENGTH_SHORT)
@@ -223,7 +225,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         }
     }
 
-    fun uploadMedia(multipart: MultipartBody.Part) = launch(UI) {
+    fun uploadMedia(multipart: MultipartBody.Part) = GlobalScope.launch(Dispatchers.Unconfined) {
         val attachment = homeViewTools.uploadMedia(multipart).await()
         if(attachment != null){
             medias.add(attachment)
@@ -245,7 +247,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
     /**
      * トゥートを送信する
      **/
-    private fun postToot() = launch(UI){
+    private fun postToot() = GlobalScope.launch(Dispatchers.Unconfined){
         try {
             if(lock) return@launch
             lock = true

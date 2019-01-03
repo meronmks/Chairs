@@ -24,6 +24,8 @@ import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import okhttp3.internal.http2.StreamResetException
@@ -41,7 +43,7 @@ open class BaseFragment : Fragment(){
     protected fun CreateStatusHandler(itemList: ArrayAdapter<TimeLineStatus>, timeLineType: String, listID: String = "None"){
         val handler = object : com.sys1yagi.mastodon4j.api.Handler{
             override fun onStatus(status: Status) {
-                launch(UI){
+                GlobalScope.launch(Dispatchers.Unconfined){
                     itemList.insert(TimeLineStatus(status), 0)
                     tootList.adapter?.notifyItemInserted(0)
                     if(checkListPosTop()) {
@@ -54,7 +56,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onDelete(id: Long) {
-                launch(UI){
+                GlobalScope.launch(Dispatchers.Unconfined){
                     for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).tootID) continue
                         itemList.remove(itemList.getItem(i))
@@ -77,7 +79,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onNotification(notification: Notification) {
-                launch(UI){
+                GlobalScope.launch(Dispatchers.Unconfined){
                     itemList.insert(NotificationModel(notification), 0)
                     tootList.adapter?.notifyItemInserted(0)
                     if(checkListPosTop()) {
@@ -87,7 +89,7 @@ open class BaseFragment : Fragment(){
             }
 
             override fun onDelete(id: Long) {
-                launch(UI){
+                GlobalScope.launch(Dispatchers.Unconfined){
                     for(i in itemList.count - 1 downTo 0){
                         if(id != itemList.getItem(i).id) continue
                         itemList.remove(itemList.getItem(i))

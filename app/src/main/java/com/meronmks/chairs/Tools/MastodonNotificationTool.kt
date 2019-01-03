@@ -5,9 +5,7 @@ import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.method.Notifications
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.*
 import okhttp3.OkHttpClient
 
 /**
@@ -15,7 +13,7 @@ import okhttp3.OkHttpClient
  * 通知に関するもの
  */
 class MastodonNotificationTool(private val instanceName : String, private val accessToken : String){
-    fun getNotificationAsync(range: Range = Range()) : Deferred<List<Notification>> = async(CommonPool){
+    fun getNotificationAsync(range: Range = Range()) : Deferred<List<Notification>> = GlobalScope.async(Dispatchers.Default){
         val client: MastodonClient = MastodonClient.Builder(instanceName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken)
                 .build()

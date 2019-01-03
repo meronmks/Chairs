@@ -26,6 +26,8 @@ import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
 import java.net.SocketTimeoutException
 
 
@@ -64,7 +66,7 @@ class HomeFragment : BaseFragment(), ItemClickListener {
         CreateStatusHandler(itemList, "Home")
     }
 
-    private fun refreshHomeTimeLine(range: Range = Range()) = launch(UI){
+    private fun refreshHomeTimeLine(range: Range = Range()) = GlobalScope.launch(Dispatchers.Unconfined){
         if(loadLock) return@launch
         loadLock = true
         homeTootListRefresh.isRefreshing = true
