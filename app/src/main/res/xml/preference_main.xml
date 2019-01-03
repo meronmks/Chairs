@@ -4,22 +4,19 @@
     android:layout_height="match_parent">
     <Preference
         android:title="基本"
-        android:key="preference_foo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Preference
         android:title="テーマとデザイン"
-        android:key="preferenceDesign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Preference
         android:title="このインスタンスについて"
-        android:key="preferenceInstanceAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Preference
         android:title="このアプリについて"
-        android:key="preferenceAbout"
+        android:fragment="com.meronmks.chairs.Settings.AboutFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -20,10 +20,10 @@
         </activity>
         <activity android:name=".OAuth.SetInstanceNameActivity" />
         <activity android:name=".OAuth.LoginActivity" />
-        <activity android:name=".ViewPages.HomeViewPage"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Settings.SettingsActivity"
             android:label="@string/settingText"/>
+        <activity android:name=".ViewPages.HomeViewPage"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Images.PhotoViewActivity"/>
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"

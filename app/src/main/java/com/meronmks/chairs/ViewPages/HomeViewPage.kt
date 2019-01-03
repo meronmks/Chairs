@@ -27,7 +27,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.meronmks.chairs.Settings.MainPreferenceFragment
+import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Attachment
@@ -132,7 +132,7 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         }
 
         settingsButton.setOnClickListener {
-            val intent = Intent(baseContext, MainPreferenceFragment::class.java)
+            val intent = Intent(baseContext, SettingsActivity::class.java)
             startActivity(intent)
         }
 
