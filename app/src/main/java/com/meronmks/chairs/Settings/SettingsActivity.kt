@@ -10,6 +10,7 @@ class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPrefere
     override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?, pref: Preference?): Boolean {
         val fragment = when (pref?.fragment) {
             AboutFragment::class.java.name -> AboutFragment()
+            InstanceInfoFragment::class.java.name -> InstanceInfoFragment()
             else -> throw InvalidParameterException("Invalid fragment, fragment name is " + pref?.fragment)
         }
         fragment.setTargetFragment(caller, 0)

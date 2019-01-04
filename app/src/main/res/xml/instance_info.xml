@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="instanceTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:title="インスタンス名"
+        android:summary="hoge"/>
+    <Preference
+        android:key="instanceVer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:title="インスタンスのMastodonバージョン"
+        android:summary="hoge"/>
+    <Preference
+        android:key="instanceDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:title="説明"
+        android:summary="hoge"/>
+</PreferenceScreen>
