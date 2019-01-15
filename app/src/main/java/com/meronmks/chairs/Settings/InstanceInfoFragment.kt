@@ -7,9 +7,9 @@ import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool
 import com.meronmks.chairs.Tools.MastodonPublicTools
 import com.sys1yagi.mastodon4j.api.entity.Instance
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class InstanceInfoFragment : PreferenceFragmentCompat(){
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {

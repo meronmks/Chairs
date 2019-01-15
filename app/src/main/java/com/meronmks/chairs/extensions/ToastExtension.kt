@@ -5,10 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.deploygate.sdk.DeployGate
 import com.meronmks.chairs.BuildConfig
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.*
 
 /**
  * Created by meron on 2018/02/15.
