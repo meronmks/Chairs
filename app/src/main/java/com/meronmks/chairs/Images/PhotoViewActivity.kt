@@ -19,5 +19,13 @@ class PhotoViewActivity : AppCompatActivity() {
                 .placeholder(R.drawable.ic_autorenew_black_24dp)
                 .error(R.drawable.ic_error_24dp)
         Glide.with(baseContext).load(url).apply(options).into(photoView)
+
+        mainMenuButtons()
+    }
+
+    private fun mainMenuButtons(){
+        imageCloseButton.setOnClickListener {
+            finish()
+        }
     }
 }
