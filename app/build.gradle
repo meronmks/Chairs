@@ -74,6 +74,7 @@ dependencies {
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-phoenix:0.9.21'
     debugImplementation 'com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.21'
     kapt 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
 }
 
 deploygate {

@@ -297,13 +297,11 @@
         android:id="@+id/postImage4"
         android:layout_width="48dp"
         android:layout_height="72dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/image_button_feedback"
         android:scaleType="fitCenter"
         android:src="@mipmap/ic_launcher_round"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="355dp"
+        tools:layout_editor_absoluteY="8dp" />
 
     <ImageButton
         android:id="@+id/postImage3"

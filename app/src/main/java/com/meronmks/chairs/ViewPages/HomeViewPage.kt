@@ -31,6 +31,7 @@ import com.meronmks.chairs.Settings.SettingsActivity
 import com.meronmks.chairs.ViewPages.Fragments.*
 import com.meronmks.chairs.extensions.fromHtml
 import com.sys1yagi.mastodon4j.api.entity.Attachment
+import kotlinx.android.synthetic.main.toot_item.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import okhttp3.MediaType
@@ -268,6 +269,16 @@ class HomeViewPage : AppCompatActivity(), TextWatcher {
         }finally {
             lock = false
             sendTootProgressBar.visibility = View.GONE
+        }
+    }
+
+    private fun imageButtonsAction(){
+        var i = 0
+        postImages.forEach {
+            it.setOnClickListener {
+
+            }
+            i++
         }
     }
 
