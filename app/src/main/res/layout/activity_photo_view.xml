@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -35,6 +34,34 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/image_button_feedback"
-            android:src="@drawable/ic_close_black_24dp" />
+            android:src="@drawable/ic_close_black_24dp"
+            android:contentDescription="@string/imageclosebuttonText" />
+
+        <ImageButton
+            android:id="@+id/imageLeftButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_rotate_left_black_24dp"
+            android:contentDescription="@string/imageleftrotationbuttonText" />
+
+        <ImageButton
+            android:id="@+id/imageRightButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_rotate_right_black_24dp"
+            android:contentDescription="@string/imagerightrotationbuttonText" />
+
+        <ImageButton
+            android:id="@+id/imageSubMenuButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/image_button_feedback"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:contentDescription="@string/imagesubmenubuttonText" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

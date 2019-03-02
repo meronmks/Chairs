@@ -19,4 +19,8 @@
     <string name="settingText">設定</string>
     <string name="sensitiveText">閲覧注意\nタップで表示</string>
     <string name="cwEditTextHint">ここに警告文を入力</string>
+    <string name="imageclosebuttonText">ImageCloseButton</string>
+    <string name="imageleftrotationbuttonText">ImageLeftRotationButton</string>
+    <string name="imagerightrotationbuttonText">ImageRightRotationButton</string>
+    <string name="imagesubmenubuttonText">ImageSubMenuButton</string>
 </resources>

@@ -27,5 +27,11 @@ class PhotoViewActivity : AppCompatActivity() {
         imageCloseButton.setOnClickListener {
             finish()
         }
+        imageLeftButton.setOnClickListener {
+            photoView.rotation += -90.0f
+        }
+        imageRightButton.setOnClickListener {
+            photoView.rotation += 90.0f
+        }
     }
 }
