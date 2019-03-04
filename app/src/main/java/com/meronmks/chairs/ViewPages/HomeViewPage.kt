@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.support.design.widget.TabLayout
+import com.google.android.material.tabs.TabLayout
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast

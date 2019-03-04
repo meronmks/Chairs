@@ -1,9 +1,9 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +26,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.internal.http2.StreamResetException
 
-open class BaseFragment : Fragment(){
+open class BaseFragment : androidx.fragment.app.Fragment(){
     protected lateinit var accountDataBase: AccountDataBaseTool
     protected var loadLock : Boolean = false
     protected var shutdownable : Shutdownable? = null
-    protected val tootList: RecyclerView by lazy { homeTootList }
+    protected val tootList: androidx.recyclerview.widget.RecyclerView by lazy { homeTootList }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home_time_line, container, false)
@@ -184,7 +184,7 @@ open class BaseFragment : Fragment(){
     }
 
     protected fun checkListPosTop(): Boolean {
-        return ((tootList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() == 0)
+        return ((tootList.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).findFirstVisibleItemPosition() == 0)
     }
 
     fun listScroll2Top(){

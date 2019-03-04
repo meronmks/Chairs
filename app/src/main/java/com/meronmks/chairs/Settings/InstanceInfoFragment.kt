@@ -1,7 +1,7 @@
 package com.meronmks.chairs.Settings
 
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
 import com.meronmks.chairs.Tools.Database.AccountDataBaseTool

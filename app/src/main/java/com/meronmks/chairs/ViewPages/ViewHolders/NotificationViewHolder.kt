@@ -1,6 +1,6 @@
 package com.meronmks.chairs.ViewPages.ViewHolders
 
-import android.support.v7.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import android.view.View
 import kotlinx.android.synthetic.main.toot_item.view.*
 

@@ -1,10 +1,10 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * Created by meron on 2018/01/04.
  */
-class DummyFragment : Fragment() {
+class DummyFragment : androidx.fragment.app.Fragment() {
 
 }

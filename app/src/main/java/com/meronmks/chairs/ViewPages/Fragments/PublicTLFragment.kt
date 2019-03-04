@@ -1,7 +1,7 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ArrayAdapter
 import com.meronmks.chairs.Interfaces.ItemClickListener
@@ -42,12 +42,12 @@ class PublicTLFragment : BaseFragment(), ItemClickListener {
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<TimeLineStatus>(context,0)
         tootList.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         refreshPublicTimeLine()
         homeTootListRefresh.setOnRefreshListener {
             refreshPublicTimeLine(Range(sinceId = itemList.getItem(0).tootID))
         }
-        tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(homeTootList.layoutManager as androidx.recyclerview.widget.LinearLayoutManager){
             refreshPublicTimeLine(Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
         CreateStatusHandler(itemList, "Public")
@@ -63,7 +63,7 @@ class PublicTLFragment : BaseFragment(), ItemClickListener {
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootList.adapter?.notifyDataSetChanged()
-        if(range.maxId == null) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
+        if(range.maxId == null) (tootList.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(list.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }

@@ -1,7 +1,7 @@
 package com.meronmks.chairs.ViewPages.Fragments
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +49,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         itemList = ArrayAdapter(context,0)
         listsList = ArrayAdapter(context, 0)
         tootList.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
             if(listsList.isEmpty) return@setOnRefreshListener
@@ -61,7 +61,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
 
         }
 
-        tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as LinearLayoutManager){
+        tootList.addOnScrollListener(InfiniteScrollListener(tootList.layoutManager as androidx.recyclerview.widget.LinearLayoutManager){
             if(listsList.isEmpty) return@InfiniteScrollListener
             refreshListTimeLine(listsList.getItem(listSpinner.selectedItemPosition).id, Range(maxId = itemList.getItem(itemList.count - 1).tootID))
         })
@@ -82,7 +82,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         }
         itemList.sort { item1, item2 -> return@sort item2.tootCreateAt.compareTo(item1.tootCreateAt) }
         tootList.adapter?.notifyDataSetChanged()
-        if(range.maxId == null) (tootList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(toots.size, 0)
+        if(range.maxId == null) (tootList.layoutManager as androidx.recyclerview.widget.LinearLayoutManager).scrollToPositionWithOffset(toots.size, 0)
         homeTootListRefresh.isRefreshing = false
         loadLock = false
     }

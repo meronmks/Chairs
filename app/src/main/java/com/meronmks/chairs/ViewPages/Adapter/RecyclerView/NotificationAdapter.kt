@@ -1,7 +1,7 @@
 package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,15 +20,15 @@ import com.meronmks.chairs.Interfaces.ItemClickListener
 /**
  * Created by meron on 2018/03/10.
  */
-class NotificationAdapter(private val context: Context, private val itemClickListener: ItemClickListener, private val itemList: ArrayAdapter<NotificationModel>): RecyclerView.Adapter<NotificationViewHolder>() {
-    private var mRecyclerView : RecyclerView? = null
+class NotificationAdapter(private val context: Context, private val itemClickListener: ItemClickListener, private val itemList: ArrayAdapter<NotificationModel>): androidx.recyclerview.widget.RecyclerView.Adapter<NotificationViewHolder>() {
+    private var mRecyclerView : androidx.recyclerview.widget.RecyclerView? = null
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         mRecyclerView = recyclerView
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+    override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         mRecyclerView = null
 

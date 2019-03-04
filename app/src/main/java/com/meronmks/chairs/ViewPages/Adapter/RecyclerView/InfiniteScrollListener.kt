@@ -1,15 +1,15 @@
 package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 /**
  * https://qiita.com/mss634/items/7f1750e332b3e06f8ff0
  */
 
 class InfiniteScrollListener(
-        val layoutManager: LinearLayoutManager,
-        val func: () -> Unit /*呼び出し元でcallback引数として{}を実装*/) : RecyclerView.OnScrollListener() {
+        val layoutManager: androidx.recyclerview.widget.LinearLayoutManager,
+        val func: () -> Unit /*呼び出し元でcallback引数として{}を実装*/) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
 
     private var previousTotal = 0
     private var loading = true
@@ -18,7 +18,7 @@ class InfiniteScrollListener(
     private var visibleItemCount = 0
     private var totalItemCount = 0
 
-    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 
         if (dy > 0) {

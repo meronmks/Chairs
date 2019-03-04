@@ -2,7 +2,7 @@ package com.meronmks.chairs.ViewPages.Adapter.RecyclerView
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -25,16 +25,16 @@ import com.meronmks.chairs.Interfaces.ItemClickListener
  * Created by meron on 2018/03/08.
  */
 
-class TimeLineAdapter(private val context: Context, private val itemClickListener: ItemClickListener?, private val itemList: ArrayAdapter<TimeLineStatus>?): RecyclerView.Adapter<TimeLineViewHolder>() {
+class TimeLineAdapter(private val context: Context, private val itemClickListener: ItemClickListener?, private val itemList: ArrayAdapter<TimeLineStatus>?): androidx.recyclerview.widget.RecyclerView.Adapter<TimeLineViewHolder>() {
 
-    private var mRecyclerView : RecyclerView? = null
+    private var mRecyclerView : androidx.recyclerview.widget.RecyclerView? = null
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    override fun onAttachedToRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         mRecyclerView = recyclerView
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+    override fun onDetachedFromRecyclerView(recyclerView: androidx.recyclerview.widget.RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         mRecyclerView = null
 

@@ -1,10 +1,10 @@
 package com.meronmks.chairs.Settings
 
 import android.os.Bundle
-import android.support.v14.preference.PreferenceFragment
-import android.support.v4.app.Fragment
-import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceFragment
+import androidx.fragment.app.Fragment
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.meronmks.chairs.R
 
 class MainPreferenceFragment : PreferenceFragmentCompat(){

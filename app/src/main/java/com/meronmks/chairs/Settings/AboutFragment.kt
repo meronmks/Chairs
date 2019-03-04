@@ -2,17 +2,17 @@ package com.meronmks.chairs.Settings
 
 import android.os.Bundle
 import android.preference.Preference
-import android.support.v14.preference.PreferenceFragment
-import android.support.v7.app.AlertDialog
-import android.support.v7.preference.PreferenceFragmentCompat
-import android.support.v7.preference.R.layout.preference
+import androidx.preference.PreferenceFragment
+import androidx.appcompat.app.AlertDialog
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.R.layout.preference
 import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
 import android.webkit.WebView
 import android.view.LayoutInflater
 
-class AboutFragment : PreferenceFragmentCompat(), android.support.v7.preference.Preference.OnPreferenceClickListener {
-    override fun onPreferenceClick(p0: android.support.v7.preference.Preference?): Boolean {
+class AboutFragment : PreferenceFragmentCompat(), androidx.preference.Preference.OnPreferenceClickListener {
+    override fun onPreferenceClick(p0: androidx.preference.Preference?): Boolean {
         when (p0?.key) {
             "OSSlist" -> {
                 val factory = LayoutInflater.from(activity)
