@@ -174,9 +174,9 @@ open class BaseFragment : androidx.fragment.app.Fragment(){
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         accountDataBase?.close()
         shutdownable?.shutdown()
+        super.onDestroy()
     }
 
     protected fun listScrollToTop(){
