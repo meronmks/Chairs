@@ -16,7 +16,7 @@ open class HomeFragmentPagerAdapter(fm : androidx.fragment.app.FragmentManager) 
     private var currentFragment: androidx.fragment.app.Fragment? = null
     private var position: Int = 0
 
-    override fun getItem(position: Int): androidx.fragment.app.Fragment? {
+    override fun getItem(position: Int): Fragment {
         when(position){
             0 -> return HomeFragment()
             1 -> return NotificationFragment()
@@ -24,7 +24,7 @@ open class HomeFragmentPagerAdapter(fm : androidx.fragment.app.FragmentManager) 
             3 -> return LocalPublicTLFragment()
             4 -> return PublicTLFragment()
         }
-        return null
+        return DummyFragment()
     }
 
     override fun getCount(): Int {

@@ -42,7 +42,7 @@ class LocalPublicTLFragment : BaseFragment(), ItemClickListener {
         timeLine = MastodonTimeLineTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<TimeLineStatus>(context,0)
         tootList.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         refreshLocalPublicTimeLine()
         homeTootListRefresh.setOnRefreshListener {
             refreshLocalPublicTimeLine(Range(sinceId = itemList.getItem(0).tootID))

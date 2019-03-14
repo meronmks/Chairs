@@ -49,7 +49,7 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
         itemList = ArrayAdapter(context,0)
         listsList = ArrayAdapter(context, 0)
         tootList.adapter = TimeLineAdapter(context!!, this, itemList)
-        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         getLists()
         homeTootListRefresh.setOnRefreshListener {
             if(listsList.isEmpty) return@setOnRefreshListener

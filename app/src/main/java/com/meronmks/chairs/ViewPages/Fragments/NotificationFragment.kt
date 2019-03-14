@@ -38,7 +38,7 @@ class NotificationFragment : BaseFragment(), ItemClickListener {
         notification = MastodonNotificationTool(accountDataBase.readInstanceName(), accountDataBase.readAccessToken())
         itemList = ArrayAdapter<NotificationModel>(context,0)
         tootList.adapter = NotificationAdapter(context!!, this, itemList)
-        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+        tootList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         refreshNotification()
         homeTootListRefresh.setOnRefreshListener {
             refreshNotification(Range(sinceId = itemList.getItem(0).id))
