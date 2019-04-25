@@ -78,9 +78,9 @@ dependencies {
 }
 
 deploygate {
-    userName = "$System.env.DEPLOYGATE_USER"
-    token = "$System.env.DEPLOYGATE_TOKEN"
-    apks {
+    appOwnerName = "$System.env.DEPLOYGATE_USER"
+    apiToken = "$System.env.DEPLOYGATE_TOKEN"
+    deployments {
         // 'uploadDeployGateDevelopDebug'タスクで使用されます
         developDebug {
             sourceFile = file("${project.rootDir}/app/build/outputs/apk/debug/app-debug.apk")
