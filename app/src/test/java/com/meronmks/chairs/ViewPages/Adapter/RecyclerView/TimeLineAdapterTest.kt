@@ -27,7 +27,7 @@ import java.io.FileReader
  * Created by meron on 2018/06/10.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = [21])
+@Config(sdk = [21])
 class TimeLineAdapterTest{
 
     lateinit var holder: TimeLineViewHolder

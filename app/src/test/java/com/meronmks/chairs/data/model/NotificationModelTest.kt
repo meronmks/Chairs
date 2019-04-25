@@ -20,7 +20,7 @@ import java.io.FileReader
  * Created by meron on 2018/02/25.
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = [21])
+@Config(sdk = [21])
 class NotificationModelTest{
     lateinit var notificationModel : NotificationModel
     @Before

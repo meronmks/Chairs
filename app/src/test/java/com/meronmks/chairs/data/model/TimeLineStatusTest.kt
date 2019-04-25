@@ -21,7 +21,7 @@ import java.io.FileReader
  *
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = [21])
+@Config(sdk = [21])
 class TimeLineStatusTest {
 
     lateinit var timeLineStatus : TimeLineStatus
