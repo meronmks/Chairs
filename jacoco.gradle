@@ -2,7 +2,7 @@ apply plugin: 'jacoco'
 
 jacoco {
     // https://bintray.com/bintray/jcenter/org.jacoco:org.jacoco.core
-    toolVersion = "0.8.0"
+    toolVersion = "0.8.3"
 }
 
 android {
