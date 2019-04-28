@@ -38,7 +38,7 @@ class TimeLineAdapterTest{
 
     @Before
     fun setUp() {
-        context = RuntimeEnvironment.application
+        context = androidx.test.core.app.ApplicationProvider.getApplicationContext()
         val layoutInflater = LayoutInflater.from(context)
         val mView = layoutInflater.inflate(R.layout.toot_item, null, false)
         holder = TimeLineViewHolder(mView)

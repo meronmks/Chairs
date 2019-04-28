@@ -1,5 +1,6 @@
 package com.meronmks.chairs.data.model
 
+import android.app.Application
 import com.google.gson.Gson
 import com.meronmks.chairs.BuildConfig
 import com.meronmks.chairs.R
@@ -25,6 +26,7 @@ import java.io.FileReader
 class TimeLineStatusTest {
 
     lateinit var timeLineStatus : TimeLineStatus
+    lateinit var context : Application
     @Before
     fun setUp() {
         val file = File(TimeLineStatusTest::class.java.classLoader.getResource("status.json").path)
@@ -36,39 +38,35 @@ class TimeLineStatusTest {
         }
         fileReader.close()
         timeLineStatus = TimeLineStatus(Gson().fromJson(strbuilder.toString(), Status::class.java))
+        context = androidx.test.core.app.ApplicationProvider.getApplicationContext()
     }
 
     @Test
     fun トゥート時刻が3秒以内でnowとなるか(){
-        val context = RuntimeEnvironment.application
         val time = "2017-04-28T04:21:25.560Z".toIsoZonedDateTime().toInstant().toEpochMilli()
         assertEquals(context.getString(R.string.status_now), timeLineStatus.createAt(context, time))
     }
 
     @Test
     fun トゥート時刻が3秒を越えたら秒表記となるか(){
-        val context = RuntimeEnvironment.application
         val time = "2017-04-28T04:21:35.560Z".toIsoZonedDateTime().toInstant().toEpochMilli()
         assertEquals(context.getString(R.string.status_second, 10), timeLineStatus.createAt(context, time))
     }
 
     @Test
     fun トゥート時刻が60秒を越えたら分表記となるか(){
-        val context = RuntimeEnvironment.application
         val time = "2017-04-28T04:22:25.560Z".toIsoZonedDateTime().toInstant().toEpochMilli()
         assertEquals(context.getString(R.string.status_min, 1), timeLineStatus.createAt(context, time))
     }
 
     @Test
     fun トゥート時刻が60分を越えたら時間表記となるか(){
-        val context = RuntimeEnvironment.application
         val time = "2017-04-28T05:21:25.560Z".toIsoZonedDateTime().toInstant().toEpochMilli()
         assertEquals(context.getString(R.string.status_hour, 1), timeLineStatus.createAt(context, time))
     }
 
     @Test
     fun トゥート時刻が24時を越えたら日付表記となるか(){
-        val context = RuntimeEnvironment.application
         val time = "2017-04-29T04:21:25.560Z".toIsoZonedDateTime().toInstant().toEpochMilli()
         assertEquals(context.getString(R.string.status_day, 1), timeLineStatus.createAt(context, time))
     }
