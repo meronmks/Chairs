@@ -18,6 +18,7 @@ import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.MastodonList
 import com.sys1yagi.mastodon4j.api.entity.Status
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_list_time_line.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -93,6 +94,9 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
             list.addAll(timeLine.getListTLAsync(listID, range).await())
         }catch (timeoutE : SocketTimeoutException){
             timeoutE.localizedMessage.showToastLogE(context)
+        }catch (requestException : Mastodon4jRequestException)
+        {
+            requestException.localizedMessage.showToastLogE(context)
         }
         return list
     }
@@ -103,6 +107,9 @@ class ListTLFragment : BaseFragment(), ItemClickListener {
             lists.addAll(timeLine.getListsAsync().await())
         }catch (timeoutE : SocketTimeoutException){
             timeoutE.localizedMessage.showToastLogE(context)
+        }catch (requestException : Mastodon4jRequestException)
+        {
+            requestException.localizedMessage.showToastLogE(context)
         }
         val adapter = ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

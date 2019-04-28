@@ -14,6 +14,7 @@ import com.meronmks.chairs.data.model.TimeLineStatus
 import com.meronmks.chairs.extensions.showToastLogE
 import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status
+import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import kotlinx.android.synthetic.main.fragment_home_time_line.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -74,6 +75,9 @@ class LocalPublicTLFragment : BaseFragment(), ItemClickListener {
             list.addAll(timeLine.getLocalPublicTLAsync(range).await())
         }catch (timeoutE : SocketTimeoutException){
             timeoutE.localizedMessage.showToastLogE(context)
+        }catch (requestException : Mastodon4jRequestException)
+        {
+            requestException.localizedMessage.showToastLogE(context)
         }
         return list
     }
